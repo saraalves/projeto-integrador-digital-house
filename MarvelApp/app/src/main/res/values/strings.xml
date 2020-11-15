@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">MarvelApp</string>
+    <string name="logo_do_aplicativo">Logo do aplicativo</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="log_in">LOGIN</string>
+    <string name="logo_facebook">Logo Facebook</string>
+    <string name="logo_google">Logo Google</string>
+    <string name="esqueci_minha_senha">Esqueci minha senha</string>
+    <string name="logar_com">Logar com:</string>
+    <string name="n_o_tenho_cadastro">Não tenho cadastro</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todos">TODOS</string>
