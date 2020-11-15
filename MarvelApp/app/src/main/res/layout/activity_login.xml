@@ -12,44 +12,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dim_100_dp"
+        android:layout_marginTop="@dimen/dim_68_dp"
         android:contentDescription="@string/logo_do_aplicativo"
         android:src="@drawable/marvel_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginTop="@dimen/dim_50_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:hint="@string/email"
-        android:textColorHint="@color/colorPrincipal">
+        android:textColorHint="@color/colorPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmailLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:inputType="textEmailAddress"
-            android:textColor="@color/colorGray"
-            android:theme="@style/MarvelAppTheme" />
+            android:textSize="@dimen/dim_16_sp"
+            android:textColor="@color/colorText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:boxBackgroundColor="@android:color/transparent"
         android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginTop="@dimen/dim_10_dp"
+        android:layout_marginTop="@dimen/dim_20_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:hint="@string/senha"
-        android:textColorHint="@color/colorPrincipal">
+        android:textColorHint="@color/colorPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSenhaLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:inputType="textPassword"
-            android:textColor="@color/colorGray"
-            android:theme="@style/MarvelAppTheme" />
+            android:textSize="@dimen/dim_16_sp"
+            android:textColor="@color/colorText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -63,10 +69,11 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_8_dp"
             android:layout_marginStart="@dimen/dim_20_dp"
             android:layout_marginEnd="@dimen/dim_20_dp"
             android:text="@string/esqueci_minha_senha"
-            android:textSize="@dimen/dim_15_sp"
+            android:textSize="@dimen/dim_14_sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -76,13 +83,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginTop="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
-        android:background="@color/colorPrincipal"
+        android:background="@color/colorPrimary"
         android:padding="@dimen/dim_15_dp"
         android:text="@string/log_in"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/dim_25_sp" />
+        android:textSize="@dimen/dim_24_sp" />
 
 
     <Button
@@ -92,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginTop="@dimen/dim_20_sp"
+        android:layout_marginTop="@dimen/dim_30_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:text="@string/n_o_tenho_cadastro"
         android:textSize="@dimen/dim_20_sp"
@@ -104,21 +111,23 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dim_30_dp"
         android:text="@string/logar_com"
-        android:textColor="@color/colorPrincipal"
-        android:textSize="@dimen/dim_18_sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dim_16_sp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dim_8_dp"
+        android:layout_marginBottom="@dimen/dim_8_dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgLoginFacebook"
             android:layout_width="@dimen/dim_50_dp"
             android:layout_height="@dimen/dim_50_dp"
-            android:layout_margin="@dimen/dim_10_dp"
+            android:layout_marginEnd="@dimen/dim_24_dp"
             android:contentDescription="@string/logo_facebook"
             android:src="@drawable/facebook_logo" />
 
@@ -126,7 +135,6 @@
             android:id="@+id/imgLoginGoogle"
             android:layout_width="@dimen/dim_50_dp"
             android:layout_height="@dimen/dim_50_dp"
-            android:layout_margin="@dimen/dim_10_dp"
             android:contentDescription="@string/logo_google"
             android:src="@drawable/google_icon" />
 
