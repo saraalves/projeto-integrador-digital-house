@@ -8,7 +8,7 @@ import com.example.marvelapp.R
 import com.example.marvelapp.model.PersonagemModel
 import com.squareup.picasso.Picasso
 
-class PersonagemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class AvatarViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val imagem = view.findViewById<ImageView>(R.id.avatarPersonagem)
     private val nome = view.findViewById<TextView>(R.id.txtNameAvatar)
 

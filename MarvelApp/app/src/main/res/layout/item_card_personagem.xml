@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_background">
 
         <ImageView
             android:id="@+id/cardPersonagem"
@@ -27,11 +28,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="10sp"
-            android:textColor="#000000"
             android:text="Nome do personagem"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#000000"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/cardPersonagem"
             app:layout_constraintTop_toBottomOf="@+id/cardPersonagem" />
 
         <ImageView
@@ -39,7 +40,7 @@
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
             app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
             app:srcCompat="@drawable/ic_favorit_24" />
 

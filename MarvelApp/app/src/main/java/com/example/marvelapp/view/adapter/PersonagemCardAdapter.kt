@@ -6,16 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.model.PersonagemModel
 
-class PersonagemCardAdapter(private var personagem: MutableList<PersonagemModel>) : RecyclerView.Adapter<PersonagemViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonagemViewHolder {
+class PersonagemCardAdapter(private var personagem: MutableList<PersonagemModel>) : RecyclerView.Adapter<PersonagemCardViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonagemCardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card_personagem, parent, false)
 
-        return PersonagemViewHolder(view)
+        return PersonagemCardViewHolder(view)
     }
 
     override fun getItemCount() = personagem.size
 
-    override fun onBindViewHolder(holder: PersonagemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonagemCardViewHolder, position: Int) {
         val item = personagem[position]
 
         holder.bind(item)
