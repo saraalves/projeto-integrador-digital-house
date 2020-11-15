@@ -25,9 +25,6 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-//    LinearLayoutManager(applicationContext)
-//    mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
