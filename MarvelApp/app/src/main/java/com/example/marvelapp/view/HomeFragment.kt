@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         _view = view
 
         val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
-        val manager = LinearLayoutManager(view.context)
+        val manager = GridLayoutManager(view.context,4)
 
         val listaPersonagens = mutableListOf<PersonagemModel>()
         val listaAdapter = adapterAvatar()
@@ -88,6 +88,26 @@ class HomeFragment : Fragment() {
                     4,
                     "CAPITÃ MARVEL",
                     R.drawable.img_avatar
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_avatar
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_avatar
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_avatar
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_avatar
                 )
             )
         )
@@ -108,6 +128,31 @@ class HomeFragment : Fragment() {
                 ),
                 PersonagemModel(
                     3,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
                     "CAPITÃ MARVEL",
                     R.drawable.img_card
                 ),
