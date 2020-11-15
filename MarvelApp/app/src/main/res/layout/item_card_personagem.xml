@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
@@ -27,21 +26,22 @@
             android:id="@+id/txtNamePersongemCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome do personagem"
             android:layout_margin="8dp"
+            android:textSize="10sp"
+            android:textColor="#000000"
+            android:text="Nome do personagem"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardPersonagem" />
 
         <ImageView
             android:id="@+id/imgFavorit"
-            android:layout_width="wrap_content"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:srcCompat="@drawable/ic_favorit_24"
-            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txtNamePersongemCard"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
+            app:srcCompat="@drawable/ic_favorit_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
