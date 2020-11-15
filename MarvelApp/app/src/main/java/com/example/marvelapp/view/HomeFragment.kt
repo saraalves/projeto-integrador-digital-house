@@ -25,6 +25,9 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+//    LinearLayoutManager(applicationContext)
+//    mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,7 +39,9 @@ class HomeFragment : Fragment() {
         _view = view
 
         val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
-        val manager = GridLayoutManager(view.context,4)
+//        val manager = GridLayoutManager(view.context,4)
+        val manager = LinearLayoutManager(view.context)
+        manager.orientation = LinearLayoutManager.HORIZONTAL
 
         val listaPersonagens = mutableListOf<PersonagemModel>()
         val listaAdapter = adapterAvatar()

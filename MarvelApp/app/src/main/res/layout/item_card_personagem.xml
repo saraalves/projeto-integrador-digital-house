@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:clickable="true"
+    android:layout_margin="@dimen/dim_4_dp"
     android:focusable="true"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/img_background">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/cardPersonagem"
