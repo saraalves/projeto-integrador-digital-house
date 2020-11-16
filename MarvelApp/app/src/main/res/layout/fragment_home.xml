@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_background"
+    tools:context=".view.HomeFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtFieldBuscarPersonagem"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="Buscar personagem"
+        app:endIconDrawable="@drawable/ic_search_24"
+        app:endIconMode="custom"
+        app:endIconTint="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtBuscarPersonagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/dim_16_sp"
+            android:textColor="@color/colorText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtRecomendadosHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recomendados"
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:textSize="@dimen/dim_14_sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dim_24_dp"
+        android:layout_marginTop="@dimen/dim_30_dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFieldBuscarPersonagem"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dim_24_dp"
+        android:layout_marginTop="@dimen/dim_30_dp"
+        android:src="@drawable/ic_arrow_down_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFieldBuscarPersonagem" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dim_24_dp"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRecomendadosHome" />
+
+    <TextView
+        android:id="@+id/txtTodosHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/todos"
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:textSize="@dimen/dim_14_sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dim_24_dp"
+        android:layout_marginTop="@dimen/dim_30_dp"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerAvatar"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_24_dp"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTodosHome"
+        tools:listitem="@layout/item_card_personagem" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
