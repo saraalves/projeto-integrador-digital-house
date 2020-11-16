@@ -1,5 +1,6 @@
 package com.example.marvelapp.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.example.marvelapp.R
 import com.example.marvelapp.model.PersonagemModel
 import com.example.marvelapp.view.adapter.AvatarAdapter
 import com.example.marvelapp.view.adapter.PersonagemCardAdapter
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
     lateinit var _view: View
@@ -25,6 +28,8 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,7 +41,6 @@ class HomeFragment : Fragment() {
         _view = view
 
         val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
-//        val manager = GridLayoutManager(view.context,4)
         val manager = LinearLayoutManager(view.context)
         manager.orientation = LinearLayoutManager.HORIZONTAL
 

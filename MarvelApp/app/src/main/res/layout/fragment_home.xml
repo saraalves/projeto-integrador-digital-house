@@ -7,6 +7,33 @@
     android:background="@drawable/img_background"
     tools:context=".view.HomeFragment">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtFieldBuscarPersonagem"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="Buscar personagem"
+        app:endIconDrawable="@drawable/ic_search_24"
+        app:endIconMode="custom"
+        app:endIconTint="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtBuscarPersonagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textEmailAddress"
+            android:textSize="@dimen/dim_16_sp"
+            android:textColor="@color/colorText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/txtRecomendadosHome"
         android:layout_width="wrap_content"
@@ -18,7 +45,7 @@
         android:layout_marginStart="@dimen/dim_24_dp"
         android:layout_marginTop="@dimen/dim_30_dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtFieldBuscarPersonagem"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -27,7 +54,7 @@
         android:layout_marginTop="@dimen/dim_30_dp"
         android:src="@drawable/ic_arrow_down_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtFieldBuscarPersonagem" />
 
 
     <androidx.recyclerview.widget.RecyclerView
