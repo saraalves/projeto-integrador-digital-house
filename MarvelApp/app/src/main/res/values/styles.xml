@@ -1,8 +1,12 @@
 <resources>
-    <style name="MarvelAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="MarvelAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 </resources>
