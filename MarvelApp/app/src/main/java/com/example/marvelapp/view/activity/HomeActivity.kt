@@ -26,6 +26,11 @@ class HomeActivity : AppCompatActivity() {
         supportRequestWindowFeature(FEATURE_NO_TITLE)
         setContentView(R.layout.activity_home)
 
+        configViewPager()
+
+    }
+
+    private fun configViewPager() {
         val pager = findViewById<ViewPager>(R.id.viewPager)
 
         tabLayout.setupWithViewPager(pager)
@@ -33,7 +38,8 @@ class HomeActivity : AppCompatActivity() {
         homeFragment = HomeFragment()
 
         pager.adapter = ViewPagerAdapter(
-            listOf(homeFragment,
+            listOf(
+                homeFragment,
                 FavoritosFragment(),
                 PerfilFragment()
             ),
