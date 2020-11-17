@@ -9,8 +9,8 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity
-            android:name=".LoginActivity" />
+        <activity android:name=".AlterarSenhaActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.HomeActivity">
-        </activity>
+        <activity android:name=".view.HomeActivity"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

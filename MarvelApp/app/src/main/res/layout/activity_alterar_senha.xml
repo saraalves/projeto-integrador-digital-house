@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_background"
+    android:orientation="vertical"
+    tools:context=".AlterarSenhaActivity">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="@string/senha_atual"
+        android:textColorHint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSenhaAtual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_10_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="@string/nova_senha"
+        android:textColorHint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNovaSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_10_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="@string/repetir_senha"
+        android:textColorHint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etRepeateSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSalvar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/salvar"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/dim_20_sp" />
+
+</LinearLayout>

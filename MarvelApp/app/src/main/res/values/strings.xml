@@ -13,4 +13,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todos">TODOS</string>
     <string name="recomendados">RECOMENDADOS</string>
+    <string name="senha_atual">Senha atual</string>
+    <string name="nova_senha">Nova senha</string>
+    <string name="repetir_senha">Repetir senha</string>
+    <string name="salvar">Salvar</string>
 </resources>

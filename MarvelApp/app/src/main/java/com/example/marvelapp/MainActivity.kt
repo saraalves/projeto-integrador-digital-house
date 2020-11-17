@@ -17,5 +17,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, LoginActivity::class.java )
             startActivity(intent)
         }
+
+        val textOne = findViewById<TextView>(R.id.telaAlterar)
+        textOne.setOnClickListener {
+            val intent = Intent(this@MainActivity, AlterarSenhaActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
