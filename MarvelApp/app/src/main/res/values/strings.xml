@@ -17,4 +17,5 @@
     <string name="nova_senha">Nova senha</string>
     <string name="repetir_senha">Repetir senha</string>
     <string name="salvar">Salvar</string>
+    <string name="alterar_senha">Alterar Senha</string>
 </resources>

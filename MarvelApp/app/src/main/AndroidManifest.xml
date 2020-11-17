@@ -9,8 +9,8 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity android:name=".AlterarSenhaActivity"></activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".alterar_senha.AlterarSenhaActivity"/>
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
