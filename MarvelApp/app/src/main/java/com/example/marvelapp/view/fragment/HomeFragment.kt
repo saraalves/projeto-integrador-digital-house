@@ -1,6 +1,5 @@
-package com.example.marvelapp.view
+package com.example.marvelapp.view.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,8 +13,6 @@ import com.example.marvelapp.R
 import com.example.marvelapp.model.PersonagemModel
 import com.example.marvelapp.view.adapter.AvatarAdapter
 import com.example.marvelapp.view.adapter.PersonagemCardAdapter
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
     lateinit var _view: View
