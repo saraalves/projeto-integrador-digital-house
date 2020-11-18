@@ -1,12 +1,11 @@
 package com.example.marvelapp.login
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import com.example.marvelapp.R
-import com.example.marvelapp.view.HomeActivity
+import com.example.marvelapp.view.activity.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

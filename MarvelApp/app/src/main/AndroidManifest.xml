@@ -9,16 +9,17 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity android:name=".alterar_senha.AlterarSenhaActivity"/>
+
+        <activity android:name=".alterar_senha.AlterarSenhaActivity" />
         <activity android:name=".login.LoginActivity" />
+        <activity android:name=".view.activity.DetalhesActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.HomeActivity"></activity>
+        <activity android:name=".view.activity.HomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
