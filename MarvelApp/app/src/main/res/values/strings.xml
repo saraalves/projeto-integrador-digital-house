@@ -9,7 +9,6 @@
     <string name="esqueci_minha_senha">Esqueci minha senha</string>
     <string name="logar_com">Logar com:</string>
     <string name="n_o_tenho_cadastro">Não tenho cadastro</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todos">TODOS</string>
     <string name="recomendados">RECOMENDADOS</string>
@@ -18,4 +17,8 @@
     <string name="repetir_senha">Repetir senha</string>
     <string name="salvar">Salvar</string>
     <string name="alterar_senha">Alterar Senha</string>
+    <string name="confirmar_cancelamento">Confirmar Cancelamento?</string>
+    <string name="ao_cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
+    <string name="confirmar">CONFIRMAR</string>
+    <string name="continuar_editando">CONTINUAR EDITANDO</string>
 </resources>
