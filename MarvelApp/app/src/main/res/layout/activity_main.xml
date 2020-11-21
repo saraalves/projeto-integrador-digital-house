@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -12,11 +13,21 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/dim_16_dp"
         android:textStyle="bold"
+        android:layout_marginTop="@dimen/dim_30_dp"
+        android:layout_gravity="center"
         android:textColor="@color/colorPrimary"
-        android:text="Clique aqui para ir pro login!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Clique aqui para ir pro login!" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/telaAlterar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dim_16_dp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/dim_30_dp"
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:text="Clique aqui para ir para Alterar Senha" />
+
+</LinearLayout>

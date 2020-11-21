@@ -4,7 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.example.marvelapp.view.activity.LoginActivity
+import com.example.marvelapp.alterar_senha.AlterarSenhaActivity
+import com.example.marvelapp.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,6 +15,12 @@ class MainActivity : AppCompatActivity() {
         val text = findViewById<TextView>(R.id.helloWorld)
         text.setOnClickListener{
             val intent = Intent(this@MainActivity, LoginActivity::class.java )
+            startActivity(intent)
+        }
+
+        val textOne = findViewById<TextView>(R.id.telaAlterar)
+        textOne.setOnClickListener {
+            val intent = Intent(this@MainActivity, AlterarSenhaActivity::class.java)
             startActivity(intent)
         }
     }
