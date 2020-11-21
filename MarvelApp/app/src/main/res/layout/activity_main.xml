@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/helloWorld"
+        android:id="@+id/telaLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dim_16_dp"
@@ -29,5 +29,16 @@
         android:layout_gravity="center"
         android:textColor="@color/colorPrimary"
         android:text="Clique aqui para ir para Alterar Senha" />
+
+    <TextView
+        android:id="@+id/telaCadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dim_16_dp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/dim_30_dp"
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:text="Clique aqui para ir para o Cadastro" />
 
 </LinearLayout>
