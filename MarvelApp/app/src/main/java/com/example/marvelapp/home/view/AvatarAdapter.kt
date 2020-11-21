@@ -1,10 +1,10 @@
-package com.example.marvelapp.view.adapter
+package com.example.marvelapp.home.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
-import com.example.marvelapp.model.PersonagemModel
+import com.example.marvelapp.home.model.PersonagemModel
 
 class AvatarAdapter(private var avatar: MutableList<PersonagemModel>, private val listener: (PersonagemModel) -> Unit) : RecyclerView.Adapter<AvatarViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {

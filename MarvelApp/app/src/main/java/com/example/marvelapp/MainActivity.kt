@@ -4,9 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.example.marvelapp.alterar_senha.AlterarSenhaActivity
+import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
 import com.example.marvelapp.login.LoginActivity
-import com.example.marvelapp.view.activity.CadastroActivity
+import com.example.marvelapp.cadastro.CadastroActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

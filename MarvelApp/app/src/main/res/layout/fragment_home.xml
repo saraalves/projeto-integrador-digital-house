@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_background"
-    tools:context=".view.fragment.HomeFragment">
+    tools:context=".home.view.HomeFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtFieldBuscarPersonagem"

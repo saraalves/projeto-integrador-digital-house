@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.fragment
+package com.example.marvelapp.home.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,24 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
-import com.example.marvelapp.model.PersonagemModel
-import com.example.marvelapp.view.activity.DetalhesActivity
-import com.example.marvelapp.view.adapter.AvatarAdapter
-import com.example.marvelapp.view.adapter.PersonagemCardAdapter
+import com.example.marvelapp.home.model.PersonagemModel
+import com.example.marvelapp.detalhes.view.DetalhesActivity
 
 class HomeFragment : Fragment() {
-    lateinit var _view: View
+
+    private lateinit var _view: View
+    private lateinit var _info: PersonagemModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -32,8 +33,6 @@ class HomeFragment : Fragment() {
 
         listaAvatar(view)
         listaCard(view)
-
-
     }
 
     private fun listaAvatar(view: View) {
@@ -171,9 +170,25 @@ class HomeFragment : Fragment() {
                 )
             )
         ) {
+            _info = it
             val intent = Intent(view!!.context, DetalhesActivity::class.java)
             startActivity(intent)
+
+            _view.findViewById<ImageView>(R.id.imgFavorit).setOnClickListener {
+                bundleOf(
+                    KEY_ID to _info.id,
+                    KEY_IMAGEM to _info.imagem,
+                    KEY_NOME to _info.nome
+                )
+           }
         }
+    }
+
+    companion object{
+        val KEY_ID = "ID"
+        val KEY_IMAGEM = "IMAGEM"
+        val KEY_NOME = "NOME"
+        val KEY_FAVORITO = "FAV"
     }
 
 }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import com.example.marvelapp.R
-import com.example.marvelapp.view.activity.HomeActivity
+import com.example.marvelapp.home.view.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

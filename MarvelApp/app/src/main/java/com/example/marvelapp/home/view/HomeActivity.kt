@@ -1,14 +1,12 @@
-package com.example.marvelapp.view.activity
+package com.example.marvelapp.home.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window.FEATURE_NO_TITLE
 import androidx.viewpager.widget.ViewPager
 import com.example.marvelapp.R
-import com.example.marvelapp.view.fragment.FavoritosFragment
-import com.example.marvelapp.view.fragment.HomeFragment
-import com.example.marvelapp.view.fragment.PerfilFragment
-import com.example.marvelapp.view.adapter.ViewPagerAdapter
+import com.example.marvelapp.favoritos.FavoritosFragment
+import com.example.marvelapp.perfil.PerfilFragment
 import com.google.android.material.tabs.TabLayout
 
 const val HOME_FRAGMENT = 0

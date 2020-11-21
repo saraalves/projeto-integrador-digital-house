@@ -1,8 +1,5 @@
-package com.example.marvelapp.alterar_senha
+package com.example.marvelapp.alterarsenha
 
-import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toolbar

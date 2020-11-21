@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.activity
+package com.example.marvelapp.cadastro
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
