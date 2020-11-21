@@ -1,14 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_app"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.PerfilFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtNomePerfil"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="PERFIL" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="Nome completo"
+        app:endIconDrawable="@drawable/ic_edit_24"
+        app:endIconMode="custom"
+        app:endIconTint="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColorHint="@color/colorPrimary">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNomeAtual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtEmailPerfil"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="E-mail"
+        app:endIconDrawable="@drawable/ic_edit_24"
+        app:endIconMode="custom"
+        app:endIconTint="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNomePerfil"
+        android:textColorHint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmailAtual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/changePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/alterar_senha"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailPerfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/dim_18_sp"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:layout_marginTop="@dimen/dim_12_dp"
+        android:layout_marginEnd="@dimen/dim_20_sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSalvarPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/dim_15_dp"
+        android:layout_marginBottom="@dimen/dim_100_dp"
+        android:text="SALVAR"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/dim_24_sp"
+        app:layout_constraintBottom_toTopOf="@+id/lnlLogoutApp"/>
+
+    <LinearLayout
+        android:id="@+id/lnlLogoutApp"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="@dimen/dim_20_dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtSairApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:gravity="center"
+            android:text="Sair do app"
+            android:layout_marginStart="@dimen/dim_4_dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dim_16_dp"
+            app:layout_constraintEnd_toStartOf="@+id/imgLogout"/>
+
+        <ImageView
+            android:id="@+id/imgLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_8_dp"
+            android:layout_marginBottom="@dimen/dim_20_dp"
+            android:src="@drawable/ic_exit_to_app_24" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
