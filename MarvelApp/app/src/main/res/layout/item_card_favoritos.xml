@@ -1,51 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
+    app:cardCornerRadius="@dimen/dim_10_dp"
     android:layout_margin="@dimen/dim_4_dp"
-    android:focusable="true"
-    app:cardCornerRadius="10dp">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/cardPersonagem"
+    <ImageView
+            android:id="@+id/cardFavoritado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:src="@drawable/img_card"
+            android:layout_margin="@dimen/dim_8_dp"
             android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content">
+
         <TextView
-            android:id="@+id/txtNamePersongemCard"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtNamePersongemFavoritado"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:maxLines="1"
             android:text="Nome do personagem"
-            android:textColor="#000000"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/cardPersonagem"
-            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_15_sp"
+             />
 
         <ImageView
-            android:id="@+id/imgFavorit"
+            android:id="@+id/imgFavoritado"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:clickable="true"
             app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
             app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
-            app:srcCompat="@drawable/ic_favorit_24"
-            android:focusable="true" />
+            app:srcCompat="@drawable/ic_baseline_favorite_24"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

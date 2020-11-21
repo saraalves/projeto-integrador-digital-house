@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
 
-        <activity android:name=".alterar_senha.AlterarSenhaActivity" />
+        <activity android:name=".alterarsenha.AlterarSenhaActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".view.activity.DetalhesActivity"/>
+        <activity android:name=".detalhes.view.DetalhesActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.HomeActivity" />
+        <activity android:name=".home.view.HomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

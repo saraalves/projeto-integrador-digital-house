@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.adapter
+package com.example.marvelapp.home.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

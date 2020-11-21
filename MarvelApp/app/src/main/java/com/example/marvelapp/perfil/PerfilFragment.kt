@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.fragment
+package com.example.marvelapp.perfil
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

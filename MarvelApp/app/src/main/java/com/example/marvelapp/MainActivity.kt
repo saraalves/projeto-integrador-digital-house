@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.example.marvelapp.alterar_senha.AlterarSenhaActivity
+import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
 import com.example.marvelapp.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
