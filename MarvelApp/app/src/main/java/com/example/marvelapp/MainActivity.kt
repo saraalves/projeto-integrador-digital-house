@@ -6,21 +6,28 @@ import android.os.Bundle
 import android.widget.TextView
 import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
 import com.example.marvelapp.login.LoginActivity
+import com.example.marvelapp.cadastro.CadastroActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val text = findViewById<TextView>(R.id.helloWorld)
-        text.setOnClickListener{
+        val textIrProLogin = findViewById<TextView>(R.id.telaLogin)
+        textIrProLogin.setOnClickListener{
             val intent = Intent(this@MainActivity, LoginActivity::class.java )
             startActivity(intent)
         }
 
-        val textOne = findViewById<TextView>(R.id.telaAlterar)
-        textOne.setOnClickListener {
+        val textAlterarSenha = findViewById<TextView>(R.id.telaAlterar)
+        textAlterarSenha.setOnClickListener {
             val intent = Intent(this@MainActivity, AlterarSenhaActivity::class.java)
+            startActivity(intent)
+        }
+
+        val textIrProCadastro = findViewById<TextView>(R.id.telaCadastro)
+        textIrProCadastro.setOnClickListener {
+            val intent = Intent(this@MainActivity, CadastroActivity::class.java)
             startActivity(intent)
         }
     }

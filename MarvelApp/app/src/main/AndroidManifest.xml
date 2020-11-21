@@ -13,9 +13,12 @@
         <activity android:name=".alterarsenha.AlterarSenhaActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".detalhes.view.DetalhesActivity"/>
+        <activity android:name=".cadastro.CadastroActivity"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
