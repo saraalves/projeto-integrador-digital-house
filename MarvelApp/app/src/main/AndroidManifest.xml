@@ -9,12 +9,11 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-
+        <activity android:name=".SplashScreenActivity"></activity>
         <activity android:name=".alterarsenha.AlterarSenhaActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".detalhes.view.DetalhesActivity"/>
-        <activity android:name=".cadastro.CadastroActivity"/>
-
+        <activity android:name=".detalhes.view.DetalhesActivity" />
+        <activity android:name=".cadastro.CadastroActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

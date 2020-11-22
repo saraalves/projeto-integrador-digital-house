@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/background_app"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".perfil.PerfilFragment">
 
-    <ImageView
-        android:id="@+id/imgPhotoPerfil"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dim_20_dp"
-        android:src="@drawable/image_marvel_perfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/imgPhotoPerfil"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/image_marvel_perfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButtonCamera"
@@ -25,6 +30,8 @@
         android:src="@drawable/ic_photo_camera_24"
         app:layout_constraintBottom_toBottomOf="@+id/imgPhotoPerfil"
         app:layout_constraintEnd_toEndOf="@+id/imgPhotoPerfil"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtNomePerfil"
@@ -80,41 +87,44 @@
             android:textSize="@dimen/dim_16_sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/changePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alterar_senha"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailPerfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="@dimen/dim_18_sp"
-        android:textColor="@color/colorPrimary"
-        android:fontFamily="@font/roboto_condensed_bold"
-        android:layout_marginTop="@dimen/dim_12_dp"
-        android:layout_marginEnd="@dimen/dim_20_sp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSalvarPerfil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginEnd="@dimen/dim_20_dp"
-        android:background="@color/colorPrimary"
-        android:padding="@dimen/dim_15_dp"
-        android:layout_marginBottom="@dimen/dim_100_dp"
-        android:text="SALVAR"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/dim_24_sp"
-        app:layout_constraintBottom_toTopOf="@+id/lnlLogoutApp"/>
-
     <LinearLayout
         android:id="@+id/lnlLogoutApp"
-        android:layout_width="wrap_content"
-        android:layout_marginBottom="@dimen/dim_20_dp"
+        android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alterar_senha"
+            android:textSize="@dimen/dim_18_sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dim_20_dp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:layout_marginTop="@dimen/dim_12_dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSalvarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/dim_15_dp"
+            android:text="SALVAR"
+            android:layout_margin="@dimen/dim_20_dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/dim_24_sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dim_150_dp"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/txtSairApp"
@@ -133,9 +143,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dim_8_dp"
-            android:layout_marginBottom="@dimen/dim_20_dp"
             android:src="@drawable/ic_exit_to_app_24" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
