@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.TextView
 import com.example.marvelapp.R
+import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
+import com.example.marvelapp.cadastro.CadastroActivity
 import com.example.marvelapp.home.view.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -16,6 +18,18 @@ class LoginActivity : AppCompatActivity() {
         val buttonLogin = findViewById<TextView>(R.id.btnLogin)
         buttonLogin.setOnClickListener{
             val intent = Intent(this@LoginActivity, HomeActivity::class.java )
+            startActivity(intent)
+        }
+
+        val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
+        textAlterarSenha.setOnClickListener {
+            val intent = Intent(this@LoginActivity, AlterarSenhaActivity::class.java)
+            startActivity(intent)
+        }
+
+        val textIrProCadastro = findViewById<TextView>(R.id.btnNaoTenhoCadastro)
+        textIrProCadastro.setOnClickListener {
+            val intent = Intent(this@LoginActivity, CadastroActivity::class.java)
             startActivity(intent)
         }
     }
