@@ -7,13 +7,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.PerfilFragment">
 
+    <ImageView
+        android:id="@+id/imgPhotoPerfil"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/dim_20_dp"
+        android:src="@drawable/image_marvel_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCamera"
+        android:layout_width="53dp"
+        android:layout_height="46dp"
+        android:backgroundTint="@color/colorDetail"
+        android:src="@drawable/ic_photo_camera_24"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPhotoPerfil"
+        app:layout_constraintEnd_toEndOf="@+id/imgPhotoPerfil"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtNomePerfil"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginTop="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_40_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:hint="Nome completo"
         app:endIconDrawable="@drawable/ic_edit_24"
@@ -21,7 +40,7 @@
         app:endIconTint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPhotoPerfil"
         android:textColorHint="@color/colorPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
