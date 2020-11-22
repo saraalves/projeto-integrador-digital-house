@@ -3,6 +3,7 @@ package com.example.marvelapp.alterarsenha
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import com.example.marvelapp.R
@@ -21,6 +22,7 @@ class AlterarSenhaActivity : AppCompatActivity() {
 
         val btnAlterarSenha = findViewById<MaterialButton>(R.id.btnSalvarSenha)
         btnAlterarSenha.setOnClickListener {
+            Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@AlterarSenhaActivity, LoginActivity::class.java)
             startActivity(intent)
         }

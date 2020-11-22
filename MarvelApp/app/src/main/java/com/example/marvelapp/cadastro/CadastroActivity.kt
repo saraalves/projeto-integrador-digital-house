@@ -3,6 +3,7 @@ package com.example.marvelapp.cadastro
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.marvelapp.R
 import com.example.marvelapp.home.view.HomeActivity
@@ -21,6 +22,7 @@ class CadastroActivity : AppCompatActivity() {
 
         val btnCadastro = findViewById<MaterialButton>(R.id.btnCadastro)
         btnCadastro.setOnClickListener {
+            Toast.makeText(this, "Campos vazios", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@CadastroActivity, HomeActivity::class.java)
             startActivity(intent)
         }
