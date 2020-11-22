@@ -8,7 +8,7 @@ import com.example.marvelapp.home.model.PersonagemModel
 
 class AvatarAdapter(private var avatar: MutableList<PersonagemModel>, private val listener: (PersonagemModel) -> Unit) : RecyclerView.Adapter<AvatarViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_avatar_personagem, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_avatar, parent, false)
 
         return AvatarViewHolder(view)
     }

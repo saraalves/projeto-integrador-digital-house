@@ -6,4 +6,5 @@
     <color name="colorDetail">#FFF0F1</color>
     <color name="colorWhite">#fff</color>
     <color name="colorText">#000000</color>
+    <color name="colorTransparente">#00000000</color>
 </resources>
