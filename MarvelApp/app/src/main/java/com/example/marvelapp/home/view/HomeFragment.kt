@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = manager
             adapter = listaAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         }
     }
 
@@ -66,7 +65,6 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = manager
             adapter = listaAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 

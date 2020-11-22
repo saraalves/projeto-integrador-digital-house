@@ -51,7 +51,7 @@ class FavoritosFragment : Fragment() {
             val newFavorito = PersonagemModel(_id!!, _nome!!, _imagem!!)
             listaFavoritos.add(newFavorito)
         } catch (e: Exception){
-//            Toast.makeText(view.context, "ERRO", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context, "ERRO", Toast.LENGTH_SHORT).show()
         }
 
         val favoritosAdapter = FavoritosAdapter(listaFavoritos){

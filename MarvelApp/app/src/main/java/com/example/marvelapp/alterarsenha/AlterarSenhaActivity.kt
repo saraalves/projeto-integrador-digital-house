@@ -36,7 +36,6 @@ class AlterarSenhaActivity : AppCompatActivity() {
                 finish()
             }
             .setNegativeButton("CONTINUAR EDITANDO"){dialog, which ->
-
             }
             .show()
     }
