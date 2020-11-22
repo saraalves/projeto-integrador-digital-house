@@ -3,22 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dim_10_dp"
+    android:layout_marginStart="@dimen/dim_10_dp"
+    android:layout_marginEnd="@dimen/dim_10_dp"
+    android:layout_marginTop="@dimen/dim_10_dp"
     android:clickable="true"
-    android:layout_margin="@dimen/dim_4_dp"
     android:focusable="true"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
 
         <ImageView
             android:id="@+id/cardPersonagem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:src="@drawable/img_card"
             android:adjustViewBounds="true"
+            android:src="@drawable/img_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,10 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:clickable="true"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
             app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
-            app:srcCompat="@drawable/ic_favorit_24"
-            android:focusable="true" />
+            app:srcCompat="@drawable/ic_favorit_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

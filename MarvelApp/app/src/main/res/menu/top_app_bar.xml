@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/share"
         android:icon="@drawable/ic_share_24"
         app:showAsAction="ifRoom"
         android:title="share" />
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/favorite"
         android:icon="@drawable/ic_favorite_full_24"
         app:showAsAction="ifRoom"
         android:title="favorit" />
