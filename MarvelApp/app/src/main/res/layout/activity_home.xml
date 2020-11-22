@@ -18,12 +18,12 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             app:tabIndicator="@drawable/capsule_shape"
             app:tabBackground="@drawable/capsule_shape"
             app:tabInlineLabel="true"
-            app:tabIndicatorFullWidth="true"
-            android:background="@color/colorWhite" >
+            android:verticalScrollbarPosition="defaultPosition"
+            app:tabIndicatorFullWidth="true">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
