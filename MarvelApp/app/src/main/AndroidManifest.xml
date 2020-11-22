@@ -14,7 +14,7 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".detalhes.view.DetalhesActivity"/>
         <activity android:name=".cadastro.CadastroActivity"/>
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

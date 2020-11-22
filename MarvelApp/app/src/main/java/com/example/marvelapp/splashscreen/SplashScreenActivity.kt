@@ -1,14 +1,13 @@
-package com.example.marvelapp
+package com.example.marvelapp.splashscreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
+import com.example.marvelapp.MainActivity
+import com.example.marvelapp.R
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
