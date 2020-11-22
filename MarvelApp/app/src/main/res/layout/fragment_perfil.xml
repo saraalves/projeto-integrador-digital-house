@@ -12,6 +12,7 @@
         android:id="@+id/imgPhotoPerfil"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/image_marvel_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:textColor="@color/colorText"
             android:textSize="@dimen/dim_16_sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +67,7 @@
         android:textColorHint="@color/colorPrimary"
         app:endIconDrawable="@drawable/ic_edit_24"
         app:endIconMode="custom"
+        android:visibility="visible"
         app:endIconTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +78,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtEmailPerfilSocial"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginTop="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:hint="E-mail conta social"
+        android:visibility="invisible"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNomePerfil">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmailSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:textColor="@color/colorText"
             android:textSize="@dimen/dim_16_sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -90,6 +116,7 @@
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:fontFamily="@font/roboto_condensed_bold"
         android:text="@string/alterar_senha"
+        android:visibility="visible"
         android:textColor="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/txtEmailPerfil"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,17 +146,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/dim_20_dp"
+        android:layout_marginBottom="@dimen/dim_40_dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txtSairApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_4_dp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:gravity="center"
             android:text="Sair do app"
+            android:layout_marginStart="@dimen/dim_8_dp"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/dim_16_dp"
             app:layout_constraintEnd_toStartOf="@+id/imgLogout" />
