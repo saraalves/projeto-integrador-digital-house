@@ -165,6 +165,21 @@ class HomeFragment : Fragment() {
                     4,
                     "CAPITÃ MARVEL",
                     R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
                 )
             )
         ) {
