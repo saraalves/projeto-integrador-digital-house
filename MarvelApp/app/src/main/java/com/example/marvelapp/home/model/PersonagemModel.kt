@@ -1,4 +1,4 @@
-package com.example.marvelapp.model
+package com.example.marvelapp.home.model
 
 import com.google.gson.annotations.SerializedName
 
