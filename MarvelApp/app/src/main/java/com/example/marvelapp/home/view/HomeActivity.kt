@@ -1,13 +1,14 @@
 package com.example.marvelapp.home.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window.FEATURE_NO_TITLE
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.marvelapp.R
 import com.example.marvelapp.favoritos.FavoritosFragment
 import com.example.marvelapp.perfil.PerfilFragment
 import com.google.android.material.tabs.TabLayout
+
 
 const val HOME_FRAGMENT = 0
 const val FAVORITOS_FRAGMENT = 1
@@ -19,12 +20,19 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var homeFragment: HomeFragment
 
+    private val tabIcons = intArrayOf(
+        R.drawable.ic_home_24,
+        R.drawable.ic_favorite_gray_24,
+        R.drawable.ic_person_gray_24
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(FEATURE_NO_TITLE)
         setContentView(R.layout.activity_home)
 
         configViewPager()
+        setupTabIcons()
 
     }
 
@@ -44,5 +52,11 @@ class HomeActivity : AppCompatActivity() {
             listOf("Home", "Favoritos", "Perfil"),
             supportFragmentManager
         )
+    }
+
+    private fun setupTabIcons(){
+        tabLayout.getTabAt(0)?.setIcon(tabIcons[0])
+        tabLayout.getTabAt(1)?.setIcon(tabIcons[1])
+        tabLayout.getTabAt(2)?.setIcon(tabIcons[2])
     }
 }
