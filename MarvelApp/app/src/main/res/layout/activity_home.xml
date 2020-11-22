@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             app:tabIndicator="@drawable/capsule_shape"
             app:tabBackground="@drawable/capsule_shape"
+            app:tabInlineLabel="true"
             app:tabIndicatorFullWidth="true"
             android:background="@color/colorWhite" >
 
