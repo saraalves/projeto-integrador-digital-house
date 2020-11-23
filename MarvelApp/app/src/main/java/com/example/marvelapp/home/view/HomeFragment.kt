@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = manager
             adapter = listaAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         }
     }
 
@@ -66,7 +65,6 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = manager
             adapter = listaAdapter
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 
@@ -167,20 +165,46 @@ class HomeFragment : Fragment() {
                     4,
                     "CAPITÃ MARVEL",
                     R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
+                ),
+                PersonagemModel(
+                    4,
+                    "CAPITÃ MARVEL",
+                    R.drawable.img_card
                 )
             )
         ) {
-            _info = it
-            val intent = Intent(view!!.context, DetalhesActivity::class.java)
-            startActivity(intent)
 
-            _view.findViewById<ImageView>(R.id.imgFavorit).setOnClickListener {
+            _info = it
+            val icon = _view.findViewById<ImageView>(R.id.imgFavorit)
+            val iconTwo = _view.findViewById<ImageView>(R.id.imgFavoritadoHome)
+
+            icon.setOnClickListener {
+                icon.visibility = View.GONE
+                iconTwo.visibility = View.VISIBLE
                 bundleOf(
                     KEY_ID to _info.id,
                     KEY_IMAGEM to _info.imagem,
                     KEY_NOME to _info.nome
                 )
            }
+
+            iconTwo.setOnClickListener {
+                iconTwo.visibility = View.GONE
+                icon.visibility = View.VISIBLE
+            }
+
+            val intent = Intent(view!!.context, DetalhesActivity::class.java)
+            startActivity(intent)
         }
     }
 

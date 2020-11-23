@@ -26,4 +26,6 @@
     <dimen name="dim_170_dp">170dp</dimen>
     <dimen name="dim_45_dp">45dp</dimen>
     <dimen name="dim_8_dp">8dp</dimen>
+    <dimen name="dim_12_sp">12sp</dimen>
+    <dimen name="dim_6_dp">6dp</dimen>
 </resources>

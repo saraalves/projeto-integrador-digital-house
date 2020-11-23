@@ -30,19 +30,34 @@
             android:id="@+id/txtNamePersongemCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/dim_10_dp"
             android:text="Nome do personagem"
-            android:textColor="#000000"
-            android:textSize="10sp"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_12_sp"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cardPersonagem"
             app:layout_constraintTop_toBottomOf="@+id/cardPersonagem" />
 
         <ImageView
+            android:id="@+id/imgFavoritadoHome"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dim_8_dp"
+            android:layout_marginTop="@dimen/dim_6_dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
+            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
+            android:src="@drawable/ic_baseline_favorite_24" />
+
+        <ImageView
             android:id="@+id/imgFavorit"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginEnd="@dimen/dim_8_dp"
+            android:layout_marginTop="@dimen/dim_6_dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
