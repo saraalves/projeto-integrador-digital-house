@@ -7,4 +7,5 @@
     <color name="colorWhite">#fff</color>
     <color name="colorText">#000000</color>
     <color name="colorTransparente">#00000000</color>
+    <color name="colorGray">#666666</color>
 </resources>
