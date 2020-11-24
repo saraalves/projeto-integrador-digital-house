@@ -23,25 +23,26 @@ class AlterarSenhaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_alterar_senha)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbarAlterarSenha)
-        toolbar.setNavigationOnClickListener{
+        toolbar.setNavigationOnClickListener {
             showDialog()
         }
 
         val btnAlterarSenha = findViewById<MaterialButton>(R.id.btnSalvarSenha)
         btnAlterarSenha.setOnClickListener {
             Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show()
+
             val intent = Intent(this@AlterarSenhaActivity, LoginActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun showDialog(){
+    private fun showDialog() {
 
         val dialogBuilder = AlertDialog.Builder(this@AlterarSenhaActivity)
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_confirmacao, null, false)
         dialogBuilder.setView(dialogView)
 
-        dialogView.btnContinuarEditando.setOnClickListener{ alertDialog?.dismiss()}
+        dialogView.btnContinuarEditando.setOnClickListener { alertDialog?.dismiss() }
 
         dialogView.btnConfirmar.setOnClickListener { finish() }
 

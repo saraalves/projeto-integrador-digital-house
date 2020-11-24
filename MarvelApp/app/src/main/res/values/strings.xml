@@ -16,7 +16,7 @@
     <string name="nova_senha">Nova senha</string>
     <string name="repetir_senha">Repetir senha</string>
     <string name="salvar">Salvar</string>
-    <string name="alterar_senha">alterar senha</string>
+    <string name="alterar_senha">Alterar senha</string>
     <string name="confirmar_cancelamento">Confirmar Cancelamento?</string>
     <string name="ao_cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
     <string name="confirmar">CONFIRMAR</string>
@@ -25,4 +25,16 @@
     <string name="sobre">Sobre</string>
     <string name="share">share</string>
     <string name="favorit">favorit</string>
+    <string name="buscar_personagem">Buscar personagem</string>
+    <string name="declaro">Declaro que li e concordo com a Política de Privacidade</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="nome">Nome</string>
+    <string name="nome_do_personagem">NOME DO PERSONAGEM</string>
+    <string name="home">Home</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="perfil">Perfil</string>
+    <string name="cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
+    <string name="nome_completo">Nome completo</string>
+    <string name="e_mail_conta_social">E-mail conta social</string>
+    <string name="sair_do_app">Sair do app</string>
 </resources>

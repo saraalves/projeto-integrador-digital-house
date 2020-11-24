@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dim_10_dp"
     android:layout_marginStart="@dimen/dim_10_dp"
-    android:layout_marginEnd="@dimen/dim_10_dp"
     android:layout_marginTop="@dimen/dim_10_dp"
+    android:layout_marginEnd="@dimen/dim_10_dp"
+    android:layout_marginBottom="@dimen/dim_10_dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="@dimen/dim_10_dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,32 +31,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dim_10_dp"
-            android:text="Nome do personagem"
+            android:maxLines="1"
+            android:text="@string/nome_do_personagem"
             android:textColor="@color/colorText"
             android:textSize="@dimen/dim_12_sp"
-            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cardFavoritado"
             app:layout_constraintTop_toBottomOf="@+id/cardFavoritado" />
 
         <ImageView
             android:id="@+id/imgFavoritado"
-            android:layout_width="24dp"
+            android:layout_width="@dimen/dim_24_dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dim_8_dp"
             android:layout_marginTop="@dimen/dim_6_dp"
+            android:layout_marginEnd="@dimen/dim_8_dp"
             android:clickable="true"
             android:focusable="true"
+            android:src="@drawable/ic_baseline_favorite_24"
             app:layout_constraintEnd_toEndOf="@id/cardFavoritado"
-            app:layout_constraintTop_toBottomOf="@+id/cardFavoritado"
-            android:src="@drawable/ic_baseline_favorite_24" />
+            app:layout_constraintTop_toBottomOf="@+id/cardFavoritado" />
 
         <ImageView
             android:id="@+id/imgFavoritar"
-            android:layout_width="24dp"
+            android:layout_width="@dimen/dim_24_dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dim_8_dp"
             android:layout_marginTop="@dimen/dim_6_dp"
+            android:layout_marginEnd="@dimen/dim_8_dp"
             android:clickable="true"
             android:focusable="true"
             android:visibility="gone"

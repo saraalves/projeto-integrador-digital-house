@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim_20_dp"
         android:layout_marginBottom="@dimen/dim_12_dp"
-        android:text="NOME DO PERSONAGEM"
+        android:text="@string/nome_do_personagem"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/dim_24_sp"
         android:textStyle="bold"
@@ -68,18 +68,17 @@
         android:id="@+id/txtDescricao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="@dimen/dim_22_dp"
         android:layout_marginTop="@dimen/dim_8_dp"
         android:layout_marginEnd="22dp"
         android:fontFamily="@font/roboto_condensed_regular"
-        android:text="@string/description"
-        android:textColor="@color/colorText"
-        android:textAlignment="viewStart"
-        android:textSize="@dimen/dim_14_sp"
         android:lineSpacingExtra="@dimen/dim_2_dp"
+        android:text="@string/description"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/dim_14_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSobre" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

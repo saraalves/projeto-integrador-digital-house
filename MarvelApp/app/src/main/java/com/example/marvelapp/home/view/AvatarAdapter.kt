@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.home.model.PersonagemModel
 
-class AvatarAdapter(private var avatar: MutableList<PersonagemModel>, private val listener: (PersonagemModel) -> Unit) : RecyclerView.Adapter<AvatarViewHolder>() {
+class AvatarAdapter(
+    private var avatar: MutableList<PersonagemModel>,
+    private val listener: (PersonagemModel) -> Unit
+) : RecyclerView.Adapter<AvatarViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_avatar, parent, false)
 
@@ -19,6 +22,6 @@ class AvatarAdapter(private var avatar: MutableList<PersonagemModel>, private va
         val item = avatar[position]
         holder.bind(item)
 
-        holder.itemView.setOnClickListener{ listener(item)}
+        holder.itemView.setOnClickListener { listener(item) }
     }
 }

@@ -16,26 +16,27 @@ class CadastroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cadastro)
 
         val toolbarCadastro = findViewById<MaterialToolbar>(R.id.toolbarCadastro)
-        toolbarCadastro.setOnClickListener{
+        toolbarCadastro.setOnClickListener {
             showDialog()
         }
 
         val btnCadastro = findViewById<MaterialButton>(R.id.btnCadastro)
         btnCadastro.setOnClickListener {
             Toast.makeText(this, "Campos vazios", Toast.LENGTH_SHORT).show()
+
             val intent = Intent(this@CadastroActivity, HomeActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun showDialog(){
+    private fun showDialog() {
         AlertDialog.Builder(this)
             .setTitle("Confirmar cancelamento?")
             .setMessage("Ao cancelar essa ação, seus dados cadastrais não serão alterados.")
-            .setPositiveButton("CONFIRMAR"){dialog, which ->
+            .setPositiveButton("CONFIRMAR") { dialog, which ->
                 finish()
             }
-            .setNegativeButton("CONTINUAR EDITANDO"){dialog, which ->
+            .setNegativeButton("CONTINUAR EDITANDO") { dialog, which ->
 
             }
             .show()

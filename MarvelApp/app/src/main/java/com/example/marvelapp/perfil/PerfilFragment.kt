@@ -6,19 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.marvelapp.R
 import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
+import com.example.marvelapp.splashscreen.SplashScreenActivity
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.fragment_perfil.*
 
 class PerfilFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_perfil, container, false)
     }
 
@@ -35,6 +35,11 @@ class PerfilFragment : Fragment() {
         btnSalvar.setOnClickListener {
             Toast.makeText(view.context, "Dados salvos com sucesso", Toast.LENGTH_SHORT).show()
         }
-    }
 
+        val logout = view.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
+        logout.setOnClickListener {
+            val intent = Intent(view.context, SplashScreenActivity::class.java)
+            startActivity(intent)
+        }
+    }
 }

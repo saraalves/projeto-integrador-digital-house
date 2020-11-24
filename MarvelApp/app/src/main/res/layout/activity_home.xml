@@ -18,30 +18,31 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            app:tabIndicator="@drawable/capsule_shape"
-            app:tabBackground="@drawable/capsule_shape"
-            app:tabInlineLabel="true"
+            android:layout_height="@dimen/dim_64_dp"
             android:verticalScrollbarPosition="defaultPosition"
-            app:tabIndicatorFullWidth="true">
+            app:tabBackground="@drawable/capsule_shape"
+            app:tabIndicator="@drawable/capsule_shape"
+            app:tabIndicatorFullWidth="true"
+            app:tabInlineLabel="true">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Home"
-                android:icon="@drawable/ic_home_24"/>
+                android:icon="@drawable/ic_home_24"
+                android:text="@string/home" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Favoritos"
-                android:icon="@drawable/ic_favorite_gray_24" />
+                android:icon="@drawable/ic_favorite_gray_24"
+                android:text="@string/favoritos" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Perfil"
-                android:icon="@drawable/ic_person_gray_24" />
+                android:icon="@drawable/ic_person_gray_24"
+                android:text="@string/perfil" />
+
         </com.google.android.material.tabs.TabLayout>
 
     </androidx.viewpager.widget.ViewPager>
