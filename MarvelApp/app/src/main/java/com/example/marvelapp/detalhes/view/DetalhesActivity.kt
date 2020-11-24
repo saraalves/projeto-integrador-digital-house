@@ -2,6 +2,7 @@ package com.example.marvelapp.detalhes.view
 
 import android.annotation.SuppressLint
 import android.content.ClipData
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -23,11 +24,19 @@ class DetalhesActivity : AppCompatActivity() {
         val iconShare = findViewById<View>(R.id.share)
         iconShare.setOnClickListener {
             Toast.makeText(this, "Compartilhando nas redes sociais", Toast.LENGTH_SHORT).show()
+            val sendIntent: Intent = Intent().apply{
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Compartilhando personagens favoritos.")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
         }
 
         val iconFavorite = findViewById<View>(R.id.favorite)
         iconFavorite.setOnClickListener {
             Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
         }
+
     }
 }
