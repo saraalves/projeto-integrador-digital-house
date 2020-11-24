@@ -28,4 +28,12 @@
     <dimen name="dim_8_dp">8dp</dimen>
     <dimen name="dim_12_sp">12sp</dimen>
     <dimen name="dim_6_dp">6dp</dimen>
+    <dimen name="dim_2_dp">2dp</dimen>
+    <dimen name="dim_34_dp">34dp</dimen>
+    <dimen name="dim_0_dp">0dp</dimen>
+    <dimen name="dim_22_dp">22dp</dimen>
+    <dimen name="dim_64_dp">64dp</dimen>
+    <dimen name="dim_53_dp">53dp</dimen>
+    <dimen name="dim_46_dp">46dp</dimen>
+    <dimen name="dim_10_sp">10sp</dimen>
 </resources>

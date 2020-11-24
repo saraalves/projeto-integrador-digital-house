@@ -1,4 +1,5 @@
 package com.example.marvelapp.login
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,9 +19,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val buttonLogin = findViewById<TextView>(R.id.btnLogin)
-        buttonLogin.setOnClickListener{
+        buttonLogin.setOnClickListener {
             Toast.makeText(this, "Campos vazios", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@LoginActivity, HomeActivity::class.java )
+            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
             startActivity(intent)
         }
 
@@ -49,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
             startActivity(intent)
         }
-
 
     }
 }

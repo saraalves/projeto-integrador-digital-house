@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/dim_8_dp"
+    android:backgroundTint="@color/colorTransparente"
     android:clickable="true"
     android:focusable="true"
-    app:cardPreventCornerOverlap="false"
-    android:backgroundTint="@color/colorTransparente"
+    android:orientation="horizontal"
     app:cardBackgroundColor="@color/material_on_surface_disabled"
-    app:cardElevation="0dp"
-    android:orientation="horizontal">
+    app:cardElevation="@dimen/dim_0_dp"
+    app:cardPreventCornerOverlap="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:backgroundTint="@color/colorTransparente"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorTransparente">
 
         <ImageView
             android:id="@+id/avatarPersonagem"
@@ -24,23 +24,24 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/img_avatar"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtNameAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_4_dp"
             android:fontFamily="@font/roboto_condensed_regular"
-            android:text="Nome do personagem"
-            android:textSize="10sp"
+            android:text="@string/nome_do_personagem"
+            android:textSize="@dimen/dim_10_sp"
             app:layout_constraintEnd_toEndOf="@+id/avatarPersonagem"
             app:layout_constraintStart_toStartOf="@id/avatarPersonagem"
-            app:layout_constraintTop_toBottomOf="@+id/avatarPersonagem" />
+            app:layout_constraintTop_toBottomOf="@+id/avatarPersonagem"
+            tools:ignore="SmallSp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </com.google.android.material.card.MaterialCardView>
 

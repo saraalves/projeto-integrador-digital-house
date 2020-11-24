@@ -22,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
         }, 3000)
     }
 
-    fun animaImagem(){
+    fun animaImagem() {
         val appLogo = findViewById<LinearLayout>(R.id.imgSplash)
         appLogo.alpha = 0f
         appLogo.y = 900f

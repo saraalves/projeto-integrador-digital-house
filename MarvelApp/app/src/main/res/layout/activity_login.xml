@@ -32,21 +32,21 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:inputType="textEmailAddress"
-            android:textSize="@dimen/dim_16_sp"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:boxBackgroundColor="@android:color/transparent"
         android:layout_marginStart="@dimen/dim_20_dp"
         android:layout_marginTop="@dimen/dim_20_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
+        android:background="@android:color/transparent"
         android:hint="@string/senha"
-        android:textColorHint="@color/colorPrimary">
+        android:textColorHint="@color/colorPrimary"
+        app:boxBackgroundColor="@android:color/transparent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSenhaLogin"
@@ -54,8 +54,8 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:inputType="textPassword"
-            android:textSize="@dimen/dim_16_sp"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_16_sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -69,8 +69,8 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_8_dp"
             android:layout_marginStart="@dimen/dim_20_dp"
+            android:layout_marginTop="@dimen/dim_8_dp"
             android:layout_marginEnd="@dimen/dim_20_dp"
             android:text="@string/esqueci_minha_senha"
             android:textSize="@dimen/dim_14_sp"
@@ -90,7 +90,6 @@
         android:text="@string/log_in"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/dim_24_sp" />
-
 
     <Button
         android:id="@+id/btnNaoTenhoCadastro"

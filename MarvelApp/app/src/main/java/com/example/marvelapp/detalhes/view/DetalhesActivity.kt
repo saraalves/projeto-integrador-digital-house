@@ -23,7 +23,6 @@ class DetalhesActivity : AppCompatActivity() {
 
         val iconShare = findViewById<View>(R.id.share)
         iconShare.setOnClickListener {
-            Toast.makeText(this, "Compartilhando nas redes sociais", Toast.LENGTH_SHORT).show()
             val sendIntent: Intent = Intent().apply{
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, "Compartilhando personagens favoritos.")

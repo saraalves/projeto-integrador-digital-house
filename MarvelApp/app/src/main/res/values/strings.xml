@@ -16,9 +16,25 @@
     <string name="nova_senha">Nova senha</string>
     <string name="repetir_senha">Repetir senha</string>
     <string name="salvar">Salvar</string>
-    <string name="alterar_senha">alterar senha</string>
+    <string name="alterar_senha">Alterar senha</string>
     <string name="confirmar_cancelamento">Confirmar Cancelamento?</string>
     <string name="ao_cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
     <string name="confirmar">CONFIRMAR</string>
     <string name="continuar_editando">CONTINUAR EDITANDO</string>
+    <string name="description">Captain Marvel (no Brasil, Capitã Marvel; em Portugal, Captain Marvel (Capitão Marvel)) é um filme estadunidense de super-herói de 2019, baseado na personagem Carol Danvers da Marvel Comics, produzido pela Marvel Studios e distribuído pela Walt Disney Studios Motion Pictures, sendo o vigésimo primeiro filme do Universo Cinematográfico Marvel. Dirigido por Anna Boden e Ryan Fleck, e escrito por Geneva Robertson-Dworet, é estrelado por Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Djimon Hounsou, Lee Pace, Lashana Lynch, Gemma Chan, Algenis Perez Soto, Rune Temte, Mckenna Grace, Clark Gregg e Jude Law. Em 1995, a história segue Danvers quando ela se torna a Captain Marvel depois que a Terra é pego no centro de um conflito galáctico entre dois mundos alienígenas.</string>
+    <string name="sobre">Sobre</string>
+    <string name="share">share</string>
+    <string name="favorit">favorit</string>
+    <string name="buscar_personagem">Buscar personagem</string>
+    <string name="declaro">Declaro que li e concordo com a Política de Privacidade</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="nome">Nome</string>
+    <string name="nome_do_personagem">NOME DO PERSONAGEM</string>
+    <string name="home">Home</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="perfil">Perfil</string>
+    <string name="cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
+    <string name="nome_completo">Nome completo</string>
+    <string name="e_mail_conta_social">E-mail conta social</string>
+    <string name="sair_do_app">Sair do app</string>
 </resources>

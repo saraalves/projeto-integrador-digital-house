@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim_20_dp"
         android:layout_marginBottom="@dimen/dim_12_dp"
-        android:text="NOME DO PERSONAGEM"
+        android:text="@string/nome_do_personagem"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/dim_24_sp"
         android:textStyle="bold"
@@ -57,7 +57,7 @@
         android:layout_marginStart="22dp"
         android:layout_marginTop="@dimen/dim_40_dp"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:text="Sobre"
+        android:text="@string/sobre"
         android:textColor="@color/colorText"
         android:textSize="@dimen/dim_20_sp"
         android:textStyle="bold"
@@ -68,20 +68,17 @@
         android:id="@+id/txtDescricao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="@dimen/dim_22_dp"
         android:layout_marginTop="@dimen/dim_8_dp"
         android:layout_marginEnd="22dp"
         android:fontFamily="@font/roboto_condensed_regular"
-        android:text="Captain Marvel (no Brasil, Capitã Marvel; em
-        Portugal, Captain Marvel (Capitão Marvel)) é um filme estadunidense
-        de super-herói de 2019, baseado na personagem Carol Danvers da Marvel Comics, produzido pela Marvel Studios e distribuído pela Walt Disney Studios Motion Pictures, sendo o vigésimo primeiro filme do Universo Cinematográfico Marvel. Dirigido por Anna Boden e Ryan Fleck, e escrito por Geneva Robertson-Dworet, é estrelado por Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Djimon Hounsou, Lee Pace, Lashana Lynch, Gemma Chan, Algenis Perez Soto, Rune Temte, Mckenna Grace, Clark Gregg e Jude Law. Em 1995, a história segue Danvers quando ela se torna a Captain Marvel depois que a Terra é pego no centro de um conflito galáctico entre dois mundos alienígenas."
-        android:textColor="@color/colorText"
+        android:lineSpacingExtra="@dimen/dim_2_dp"
+        android:text="@string/description"
         android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
         android:textSize="@dimen/dim_14_sp"
-        android:lineSpacingExtra="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSobre" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
