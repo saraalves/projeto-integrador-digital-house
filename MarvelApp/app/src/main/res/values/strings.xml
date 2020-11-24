@@ -21,4 +21,8 @@
     <string name="ao_cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
     <string name="confirmar">CONFIRMAR</string>
     <string name="continuar_editando">CONTINUAR EDITANDO</string>
+    <string name="description">Captain Marvel (no Brasil, Capitã Marvel; em Portugal, Captain Marvel (Capitão Marvel)) é um filme estadunidense de super-herói de 2019, baseado na personagem Carol Danvers da Marvel Comics, produzido pela Marvel Studios e distribuído pela Walt Disney Studios Motion Pictures, sendo o vigésimo primeiro filme do Universo Cinematográfico Marvel. Dirigido por Anna Boden e Ryan Fleck, e escrito por Geneva Robertson-Dworet, é estrelado por Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Djimon Hounsou, Lee Pace, Lashana Lynch, Gemma Chan, Algenis Perez Soto, Rune Temte, Mckenna Grace, Clark Gregg e Jude Law. Em 1995, a história segue Danvers quando ela se torna a Captain Marvel depois que a Terra é pego no centro de um conflito galáctico entre dois mundos alienígenas.</string>
+    <string name="sobre">Sobre</string>
+    <string name="share">share</string>
+    <string name="favorit">favorit</string>
 </resources>

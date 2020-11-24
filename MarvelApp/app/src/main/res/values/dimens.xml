@@ -28,4 +28,5 @@
     <dimen name="dim_8_dp">8dp</dimen>
     <dimen name="dim_12_sp">12sp</dimen>
     <dimen name="dim_6_dp">6dp</dimen>
+    <dimen name="dim_2_dp">2dp</dimen>
 </resources>

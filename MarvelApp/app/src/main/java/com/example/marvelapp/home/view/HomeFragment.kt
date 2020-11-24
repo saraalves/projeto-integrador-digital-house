@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +16,6 @@ import com.example.marvelapp.detalhes.view.DetalhesActivity
 class HomeFragment : Fragment() {
 
     private lateinit var _view: View
-    private lateinit var _info: PersonagemModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -183,36 +179,9 @@ class HomeFragment : Fragment() {
                 )
             )
         ) {
-
-            _info = it
-            val icon = _view.findViewById<ImageView>(R.id.imgFavorit)
-            val iconTwo = _view.findViewById<ImageView>(R.id.imgFavoritadoHome)
-
-            icon.setOnClickListener {
-                icon.visibility = View.GONE
-                iconTwo.visibility = View.VISIBLE
-                bundleOf(
-                    KEY_ID to _info.id,
-                    KEY_IMAGEM to _info.imagem,
-                    KEY_NOME to _info.nome
-                )
-           }
-
-            iconTwo.setOnClickListener {
-                iconTwo.visibility = View.GONE
-                icon.visibility = View.VISIBLE
-            }
-
             val intent = Intent(view!!.context, DetalhesActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    companion object{
-        val KEY_ID = "ID"
-        val KEY_IMAGEM = "IMAGEM"
-        val KEY_NOME = "NOME"
-        val KEY_FAVORITO = "FAV"
     }
 
 }

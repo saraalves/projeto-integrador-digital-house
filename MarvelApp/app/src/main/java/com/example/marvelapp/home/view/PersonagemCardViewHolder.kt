@@ -20,5 +20,4 @@ class PersonagemCardViewHolder(private val view: View) : RecyclerView.ViewHolder
             .load(personagemModel.imagem)
             .into(imagem)
     }
-
 }

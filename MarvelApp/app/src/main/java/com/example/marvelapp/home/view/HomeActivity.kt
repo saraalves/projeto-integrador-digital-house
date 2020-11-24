@@ -5,7 +5,7 @@ import android.view.Window.FEATURE_NO_TITLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.marvelapp.R
-import com.example.marvelapp.favoritos.FavoritosFragment
+import com.example.marvelapp.favoritos.view.FavoritosFragment
 import com.example.marvelapp.perfil.PerfilFragment
 import com.google.android.material.tabs.TabLayout
 

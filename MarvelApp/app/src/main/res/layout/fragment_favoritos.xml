@@ -3,12 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favoritos.FavoritosFragment">
+    tools:context=".favoritos.view.FavoritosFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavoritos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_card_favoritos"/>
+
+    <View
+        android:id="@+id/viewSnackbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_50_dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/dim_20_dp"/>
 
 </FrameLayout>

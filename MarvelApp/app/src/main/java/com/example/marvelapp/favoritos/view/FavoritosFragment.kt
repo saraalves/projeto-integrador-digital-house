@@ -1,31 +1,30 @@
-package com.example.marvelapp.favoritos
+package com.example.marvelapp.favoritos.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.detalhes.view.DetalhesActivity
 import com.example.marvelapp.home.model.PersonagemModel
 import com.example.marvelapp.home.view.HomeFragment
-import com.squareup.picasso.Picasso
+
 
 class FavoritosFragment : Fragment() {
 
     private lateinit var _view: View
+    private lateinit var _favoritosAdapter: FavoritosAdapter
 
-    private val _imagem = arguments?.getInt(HomeFragment.KEY_IMAGEM)
-    private val _nome = arguments?.getString(HomeFragment.KEY_NOME)
-    private val _id = arguments?.getInt(HomeFragment.KEY_ID)
+    private  var _listaFavoritos = mutableListOf<PersonagemModel>(
+        PersonagemModel(20, "CAPITÃ MARVEL", R.drawable.img_card),
+        PersonagemModel(21, "CAPITÃ MARVEL", R.drawable.img_card),
+        PersonagemModel(22, "CAPITÃ MARVEL", R.drawable.img_card)
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,16 +44,8 @@ class FavoritosFragment : Fragment() {
         val favorito = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
         val manager = GridLayoutManager(view.context, 2)
 
-        val listaFavoritos = mutableListOf<PersonagemModel>()
-
-        try {
-            val newFavorito = PersonagemModel(_id!!, _nome!!, _imagem!!)
-            listaFavoritos.add(newFavorito)
-        } catch (e: Exception){
-            Toast.makeText(view.context, "ERRO", Toast.LENGTH_SHORT).show()
-        }
-
-        val favoritosAdapter = FavoritosAdapter(listaFavoritos){
+        _listaFavoritos
+        _favoritosAdapter = FavoritosAdapter(_listaFavoritos){
             val intent = Intent(view.context, DetalhesActivity::class.java)
             startActivity(intent)
         }
@@ -62,7 +53,8 @@ class FavoritosFragment : Fragment() {
         favorito.apply {
             setHasFixedSize(true)
             layoutManager = manager
-            adapter = favoritosAdapter
+            adapter = _favoritosAdapter
         }
     }
+
 }
