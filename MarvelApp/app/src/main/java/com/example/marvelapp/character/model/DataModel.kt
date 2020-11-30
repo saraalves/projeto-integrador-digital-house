@@ -2,7 +2,7 @@ package com.example.marvelapp.character.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DataModel(
+data class DataModel<T>(
     @SerializedName("offset")
     val offset: Int,
     @SerializedName("limit")
