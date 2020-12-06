@@ -12,5 +12,7 @@ data class DataModel<T>(
     @SerializedName("count")
     val count: Int,
     @SerializedName("results")
-    val results: CharacterModel
+    val results: List<T>
 )
+
+

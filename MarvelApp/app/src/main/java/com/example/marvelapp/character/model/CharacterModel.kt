@@ -9,5 +9,7 @@ data class CharacterModel(
     @SerializedName("description")
     val descricao: String,
     @SerializedName("thumbnail")
-    val thumbnail: ThumbnailModel
+    val thumbnail: ThumbnailModel?,
+    @SerializedName("images")
+    val imagem: List<ImagemModel>
 )
