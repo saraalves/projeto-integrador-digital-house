@@ -10,12 +10,11 @@
         android:id="@+id/avatarPersonagem"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars[5]"/>
+        android:src="@drawable/img_background"/>
 
     <TextView
         android:id="@+id/txtNameAvatar"

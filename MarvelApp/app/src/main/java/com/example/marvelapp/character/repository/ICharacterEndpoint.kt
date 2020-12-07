@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ICharacterEndpoint {
-    @GET("/v1/public/characters")
+    @GET("v1/public/characters")
     suspend fun getCharacter(@Query("offset") offset: Int? = 0): ResponseModel<CharacterModel>
 
     companion object {

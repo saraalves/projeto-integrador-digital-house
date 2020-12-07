@@ -59,8 +59,6 @@ class HomeFragment : Fragment() {
         setScrollViewAvatar()
     }
 
-
-
     private fun setupRecyclerViewCard(
         recyclerView: RecyclerView?,
         viewGridManager: GridLayoutManager
@@ -129,7 +127,7 @@ class HomeFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    val target = recyclerView.layoutManager as GridLayoutManager?
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
                     val totalItemCount = target!!.itemCount
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 6 >= totalItemCount
