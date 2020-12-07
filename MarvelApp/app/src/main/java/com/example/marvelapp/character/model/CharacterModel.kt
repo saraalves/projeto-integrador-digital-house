@@ -11,5 +11,5 @@ data class CharacterModel(
     @SerializedName("thumbnail")
     val thumbnail: ThumbnailModel?,
     @SerializedName("images")
-    val imagem: List<ImagemModel>
+    val imagem: List<ImagemModel>?
 )

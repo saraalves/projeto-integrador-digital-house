@@ -23,6 +23,8 @@ class HomeFragment : Fragment() {
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
     private lateinit var _characterAdapter: CharacterAdapter
+    private lateinit var _avatarAdapter: AvatarAdapter
+
     private var _character = mutableListOf<CharacterModel>()
 
     override fun onCreateView(
@@ -35,88 +37,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewGridManager = GridLayoutManager(view.context, 2)
+        _view = view
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerCard)
+        val manager = LinearLayoutManager(view.context)
+        manager.orientation = LinearLayoutManager.HORIZONTAL
+        val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
+
+        val viewGridManager = GridLayoutManager(view.context, 2)
+        val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
 
         setupNavigation()
-        setupRecyclerView(recyclerView, viewGridManager)
+        setupNavigationAvatar()
+        setupRecyclerViewAvatar(avatar, manager)
+        setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
         getList()
+        getListAvatar()
         showLoading(true)
         setScrollView()
-        listaAvatar(view)
+        setScrollViewAvatar()
     }
 
-    private fun listaAvatar(view: View) {
-        _view = view
 
-        val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
-        val manager = LinearLayoutManager(view.context)
-        manager.orientation = LinearLayoutManager.HORIZONTAL
 
-        val listaPersonagens = mutableListOf<PersonagemModel>()
-        val listaAdapter = adapterAvatar()
-
-        avatar.apply {
-            setHasFixedSize(true)
-            layoutManager = manager
-            adapter = listaAdapter
-        }
-    }
-
-    private fun adapterAvatar(): AvatarAdapter {
-        return AvatarAdapter(
-            arrayListOf(
-                PersonagemModel(
-                    1,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    2,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    3,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    4,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    4,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    4,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    4,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                ),
-                PersonagemModel(
-                    4,
-                    "CAPITÃ MARVEL",
-                    R.drawable.img_avatar
-                )
-            )
-        ) {
-            val intent = Intent(view!!.context, DetalhesActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    private fun setupRecyclerView(
+    private fun setupRecyclerViewCard(
         recyclerView: RecyclerView?,
         viewGridManager: GridLayoutManager
     ) {
@@ -127,8 +72,26 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setupRecyclerViewAvatar(
+        recyclerView: RecyclerView?,
+        viewLayoutManager: LinearLayoutManager
+    ) {
+        recyclerView?.apply {
+            setHasFixedSize(true)
+            layoutManager = viewLayoutManager
+            adapter = _avatarAdapter
+        }
+    }
+
     private fun setupNavigation() {
         _characterAdapter = CharacterAdapter(_character) {
+            val intent = Intent(view?.context, DetalhesActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setupNavigationAvatar() {
+        _avatarAdapter = AvatarAdapter(_character) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             startActivity(intent)
         }
@@ -142,12 +105,45 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun getListAvatar() {
+        _viewModel.getList().observe(viewLifecycleOwner) {
+            _character.addAll(it)
+            _avatarAdapter.notifyDataSetChanged()
+            showLoading(false)
+        }
+    }
+
     private fun showLoading(isLoading: Boolean) {
         val viewLoading = view?.findViewById<View>(R.id.loading)
         if (isLoading) {
             viewLoading?.visibility = View.VISIBLE
         } else {
             viewLoading?.visibility = View.GONE
+        }
+    }
+
+    private fun setScrollViewAvatar() {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerAvatar)
+        recyclerView?.run {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val target = recyclerView.layoutManager as GridLayoutManager?
+                    val totalItemCount = target!!.itemCount
+                    val lastVisible = target.findLastVisibleItemPosition()
+                    val lastItem = lastVisible + 6 >= totalItemCount
+
+                    if (totalItemCount > 0 && lastItem) {
+                        showLoading(true)
+                        _viewModel.nextPage().observe({ lifecycle }, {
+                            _character.addAll(it)
+                            _avatarAdapter.notifyDataSetChanged()
+                            showLoading(false)
+                        })
+                    }
+                }
+            })
         }
     }
 

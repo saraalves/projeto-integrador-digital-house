@@ -4,7 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class ImagemModel(
     @SerializedName("path")
-    val pathImagem: String,
+    val path: String,
     @SerializedName("extension")
-    val extensaoImagem: String
-)
+    val extensao: String
+) {
+    fun getImagePath(imageResolution: String? = "detail"): String {
+        return "$path/$imageResolution.$extensao".replace("http://", "https://")
+    }
+}

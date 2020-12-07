@@ -15,8 +15,6 @@ class CharacterAdapter(
 ) :
     RecyclerView.Adapter<CharacterViewHolder>() {
 
-    val listaFavoritos = mutableListOf<PersonagemModel>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_card_personagem, parent, false)
