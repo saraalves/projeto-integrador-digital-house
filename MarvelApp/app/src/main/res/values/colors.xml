@@ -8,4 +8,5 @@
     <color name="colorText">#000000</color>
     <color name="colorTransparente">#00000000</color>
     <color name="colorGray">#666666</color>
+    <color name="colorBlackOpaca">#80000000</color>
 </resources>
