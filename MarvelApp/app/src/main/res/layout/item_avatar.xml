@@ -18,12 +18,12 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorTransparente">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatarPersonagem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/img_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/img_background"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,15 +32,16 @@
             android:id="@+id/txtNameAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="@dimen/dim_8_dp"
             android:layout_marginTop="@dimen/dim_4_dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:text="@string/nome_do_personagem"
             android:textSize="@dimen/dim_10_sp"
-            app:layout_constraintEnd_toEndOf="@+id/avatarPersonagem"
-            app:layout_constraintStart_toStartOf="@id/avatarPersonagem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/avatarPersonagem"
             tools:ignore="SmallSp" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
