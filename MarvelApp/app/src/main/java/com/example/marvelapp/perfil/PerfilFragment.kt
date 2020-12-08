@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +14,9 @@ import com.example.marvelapp.R
 import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
 import com.example.marvelapp.splashscreen.SplashScreenActivity
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class PerfilFragment : Fragment() {
     override fun onCreateView(
@@ -41,5 +45,20 @@ class PerfilFragment : Fragment() {
             val intent = Intent(view.context, SplashScreenActivity::class.java)
             startActivity(intent)
         }
+
+        val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
+        toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
+            if(isChecked) {
+                view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = true
+            } else view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = false
+        }
+
+        val toggleEmail = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleEmail)
+        toggleEmail.addOnButtonCheckedListener { _, _, isChecked ->
+            if(isChecked) {
+                view.findViewById<TextInputLayout>(R.id.txtEmailPerfil).isEnabled = true
+            } else  view.findViewById<TextInputLayout>(R.id.txtEmailPerfil).isEnabled = false
+        }
+
     }
 }

@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 class ViewPagerAdapter(
     private val _fragments: List<Fragment>,
-    private val _titulos: List<String>,
     manager: FragmentManager
 ) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -14,5 +13,4 @@ class ViewPagerAdapter(
 
     override fun getCount() = _fragments.size
 
-    override fun getPageTitle(position: Int) = _titulos[position]
 }

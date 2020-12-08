@@ -10,4 +10,14 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="ToggleIcon" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconEndPadding">@dimen/dim_0_dp</item>
+        <item name="android:insetTop">@dimen/dim_0_dp</item>
+        <item name="android:insetBottom">@dimen/dim_0_dp</item>
+        <item name="android:paddingLeft">@dimen/dim_12_dp</item>
+        <item name="android:paddingRight">@dimen/dim_12_dp</item>
+        <item name="android:minWidth">@dimen/dim_30_dp</item>
+        <item name="minHeight">@dimen/dim_30_dp</item>
+    </style>
+
 </resources>

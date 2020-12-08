@@ -30,16 +30,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtNomePerfil"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim_20_dp"
         android:layout_marginTop="@dimen/dim_40_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
+        android:layout_weight="1"
+        android:enabled="false"
         android:hint="@string/nome_completo"
         android:textColorHint="@color/colorPrimary"
-        app:endIconDrawable="@drawable/ic_edit_24"
-        app:endIconMode="custom"
-        app:endIconTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgPhotoPerfil">
@@ -49,11 +48,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:enabled="false"
             android:inputType="text"
             android:textColor="@color/colorText"
             android:textSize="@dimen/dim_16_sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgPhotoPerfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHabilitaNome"
+            style="@style/ToggleIcon"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="78dp"
+            android:backgroundTint="@color/colorTransparente"
+            app:icon="@drawable/ic_edit_24"
+            app:iconTint="@color/colorPrimary" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtEmailPerfil"
@@ -63,15 +86,15 @@
         android:layout_marginStart="@dimen/dim_20_dp"
         android:layout_marginTop="@dimen/dim_20_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
-        android:hint="E-mail"
+        android:layout_weight="1"
+        android:enabled="false"
+        android:hint="@string/email"
         android:textColorHint="@color/colorPrimary"
         android:visibility="visible"
-        app:endIconDrawable="@drawable/ic_edit_24"
-        app:endIconMode="custom"
         app:endIconTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNomePerfil">
+        app:layout_constraintTop_toBottomOf="@id/txtNomePerfil">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmailAtual"
@@ -83,6 +106,29 @@
             android:textSize="@dimen/dim_16_sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imgPhotoPerfil"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHabilitaEmail"
+            style="@style/ToggleIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorTransparente"
+            app:icon="@drawable/ic_edit_24"
+            app:iconTint="@color/colorPrimary"
+            tools:layout_editor_absoluteX="322dp"
+            tools:layout_editor_absoluteY="3dp" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtEmailPerfilSocial"
@@ -97,7 +143,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNomePerfil">
+        app:layout_constraintTop_toBottomOf="@id/txtNomePerfil">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmailSocial"
@@ -121,7 +167,7 @@
         android:textSize="@dimen/dim_18_sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailPerfil" />
+        app:layout_constraintTop_toBottomOf="@id/txtEmailPerfil" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSalvarPerfil"
@@ -131,7 +177,6 @@
         android:layout_marginTop="@dimen/dim_45_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:background="@color/colorPrimary"
-        android:padding="@dimen/dim_15_dp"
         android:text="@string/salvar"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/dim_24_sp"
@@ -157,9 +202,9 @@
             android:layout_marginStart="@dimen/dim_8_dp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:gravity="center"
-            android:textSize="@dimen/dim_18_sp"
             android:text="@string/sair_do_app"
             android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dim_18_sp"
             app:layout_constraintEnd_toStartOf="@+id/imgLogout" />
 
         <ImageView
