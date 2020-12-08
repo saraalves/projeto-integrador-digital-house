@@ -61,20 +61,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginEnd="@dimen/dim_20_dp"
-        app:layout_constraintEnd_toStartOf="@+id/imgPhotoPerfil"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtNomePerfil"
+        app:layout_constraintBottom_toBottomOf="@+id/txtNomePerfil">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnHabilitaNome"
             style="@style/ToggleIcon"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_marginEnd="78dp"
             android:backgroundTint="@color/colorTransparente"
             app:icon="@drawable/ic_edit_24"
-            app:iconTint="@color/colorPrimary" />
+            app:iconTint="@color/colorPrimary"/>
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -114,8 +113,8 @@
         android:layout_gravity="bottom"
         android:layout_marginEnd="@dimen/dim_20_dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imgPhotoPerfil"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/txtEmailPerfil"
+        app:layout_constraintBottom_toBottomOf="@+id/txtEmailPerfil">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnHabilitaEmail"
@@ -124,9 +123,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorTransparente"
             app:icon="@drawable/ic_edit_24"
-            app:iconTint="@color/colorPrimary"
-            tools:layout_editor_absoluteX="322dp"
-            tools:layout_editor_absoluteY="3dp" />
+            app:iconTint="@color/colorPrimary" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
