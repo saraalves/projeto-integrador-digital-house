@@ -18,9 +18,9 @@
             android:layout_marginStart="@dimen/dim_20_dp"
             android:layout_marginTop="@dimen/dim_10_dp"
             android:layout_marginEnd="@dimen/dim_20_dp"
-            android:layout_marginBottom="16dp"
-            android:background="#fff"
-            android:elevation="2dp"
+            android:layout_marginBottom="@dimen/dim_15_dp"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/dim_2_dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -86,4 +86,5 @@
             style="?android:attr/progressBarStyle"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

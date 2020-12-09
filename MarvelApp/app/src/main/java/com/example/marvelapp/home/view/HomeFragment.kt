@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,7 @@ import com.example.marvelapp.character.repository.CharacterRepository
 import com.example.marvelapp.character.viewmodel.CharactersViewModel
 import com.example.marvelapp.home.model.PersonagemModel
 import com.example.marvelapp.detalhes.view.DetalhesActivity
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -46,13 +48,13 @@ class HomeFragment : Fragment() {
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
-
         setupNavigation()
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
-        getList()
+        getList(_character)
+        searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
         setScrollView()
@@ -95,9 +97,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getList() {
+    private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            _character.addAll(it)
+            list?.let {_character.addAll(it)}
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -170,11 +172,40 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun searchByName(view: View, list: MutableList<CharacterModel>){
+
+        val searchView = view.findViewById<SearchView>(R.id.searchView)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                for (character in list) {
+                    if (character.nome.equals(query?.toLowerCase(Locale.ROOT))) {
+                        _viewModel.searchByName(character.id).observe(viewLifecycleOwner) {
+                            _character.clear()
+                            getList(it)
+                        }
+                    }
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText.isNullOrEmpty()){
+                    _character.clear()
+                    getList(_viewModel.initialList())
+                }
+                return false
+            }
+        })
+    }
+
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
             this,
             CharactersViewModel.CharactersViewModelFactory(CharacterRepository())
         ).get(CharactersViewModel::class.java)
     }
+
+
 
 }
