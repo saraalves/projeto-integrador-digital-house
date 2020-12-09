@@ -48,7 +48,6 @@ class HomeActivity : AppCompatActivity() {
                 FavoritosFragment(),
                 PerfilFragment()
             ),
-            listOf("Home", "Favoritos", "Perfil"),
             supportFragmentManager
         )
     }

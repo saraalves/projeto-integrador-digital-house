@@ -86,7 +86,6 @@
         android:layout_marginTop="@dimen/dim_40_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:background="@color/colorPrimary"
-        android:padding="@dimen/dim_15_dp"
         android:text="@string/log_in"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/dim_24_sp" />

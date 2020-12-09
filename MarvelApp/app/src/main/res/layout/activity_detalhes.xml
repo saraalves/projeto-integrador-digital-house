@@ -39,13 +39,13 @@
 
     <TextView
         android:id="@+id/txtNomePersonagemDetail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginBottom="@dimen/dim_12_dp"
         android:text="@string/nome_do_personagem"
         android:textColor="@color/colorWhite"
+        android:background="@color/colorBlackOpaca"
         android:textSize="@dimen/dim_24_sp"
+        android:padding="@dimen/dim_10_dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imgPersonagemDetail"
         app:layout_constraintStart_toStartOf="parent" />

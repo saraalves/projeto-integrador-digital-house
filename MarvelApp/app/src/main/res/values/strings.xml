@@ -7,7 +7,7 @@
     <string name="logo_facebook">Logo Facebook</string>
     <string name="logo_google">Logo Google</string>
     <string name="esqueci_minha_senha">esqueci minha senha</string>
-    <string name="logar_com">Logar com:</string>
+    <string name="logar_com">Logar com</string>
     <string name="n_o_tenho_cadastro">Não tenho cadastro</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todos">TODOS</string>
@@ -16,7 +16,7 @@
     <string name="nova_senha">Nova senha</string>
     <string name="repetir_senha">Repetir senha</string>
     <string name="salvar">Salvar</string>
-    <string name="alterar_senha">Alterar senha</string>
+    <string name="alterar_senha">alterar senha</string>
     <string name="confirmar_cancelamento">Confirmar Cancelamento?</string>
     <string name="ao_cancelar">Ao cancelar essa ação, seus dados cadastrais não serão alterados.</string>
     <string name="confirmar">CONFIRMAR</string>
