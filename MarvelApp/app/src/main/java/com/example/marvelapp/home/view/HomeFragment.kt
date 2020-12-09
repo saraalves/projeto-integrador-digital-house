@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         setScrollViewAvatar()
     }
 
+
     private fun setupRecyclerViewCard(
         recyclerView: RecyclerView?,
         viewGridManager: GridLayoutManager
