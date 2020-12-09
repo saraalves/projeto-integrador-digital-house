@@ -23,18 +23,19 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Campos vazios", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
         textAlterarSenha.setOnClickListener {
-            val intent = Intent(this@LoginActivity, AlterarSenhaActivity::class.java)
-            startActivity(intent)
+            Toast.makeText(this, "Alterar senha", Toast.LENGTH_SHORT).show()
         }
 
         val textIrProCadastro = findViewById<TextView>(R.id.btnNaoTenhoCadastro)
         textIrProCadastro.setOnClickListener {
             val intent = Intent(this@LoginActivity, CadastroActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         val imageFacebook = findViewById<ImageView>(R.id.imgLoginFacebook)

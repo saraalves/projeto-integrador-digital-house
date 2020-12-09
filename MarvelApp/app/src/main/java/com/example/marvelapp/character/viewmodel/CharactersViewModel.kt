@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
 
     private var _characterList: List<CharacterModel> = listOf()
+    private var _characterBeforeSearch = listOf<CharacterModel>()
     private var _totalPages: Int = 0
     private var _offset: Int = 0
     private var _count: Int = 0
@@ -26,6 +27,14 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         _characterList = response.data.results
         emit(response.data.results)
     }
+
+    fun searchByName(id: Int) = liveData(Dispatchers.IO) {
+        _characterBeforeSearch = _characterList
+        val response = _repository.getCharacterById(id)
+        emit(response.data.results)
+    }
+
+    fun initialList() = _characterBeforeSearch
 
     fun nextPage() = liveData(Dispatchers.IO){
         if( _offset.plus(_count) <= _totalPages) {

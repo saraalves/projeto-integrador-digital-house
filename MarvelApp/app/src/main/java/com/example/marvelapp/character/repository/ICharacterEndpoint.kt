@@ -11,8 +11,8 @@ interface ICharacterEndpoint {
     @GET("v1/public/characters")
     suspend fun getCharacter(@Query("offset") offset: Int? = 0): ResponseModel<CharacterModel>
 
-    @GET("v1/public/characters/{characterId}")
-    suspend fun getCharacterById(@Path("characterId") id: String): ResponseModel<CharacterModel>
+    @GET("v1/public/characters/{id}")
+    suspend fun getCharacterById(@Path("id") id: Int): ResponseModel<CharacterModel>
 
     companion object {
         val Endpoint: ICharacterEndpoint by lazy {

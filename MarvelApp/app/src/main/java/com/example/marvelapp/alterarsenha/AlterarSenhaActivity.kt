@@ -11,6 +11,7 @@ import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import com.example.marvelapp.R
 import com.example.marvelapp.login.LoginActivity
+import com.example.marvelapp.perfil.PerfilFragment
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
 
@@ -29,10 +30,11 @@ class AlterarSenhaActivity : AppCompatActivity() {
 
         val btnAlterarSenha = findViewById<MaterialButton>(R.id.btnSalvarSenha)
         btnAlterarSenha.setOnClickListener {
-            Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this@AlterarSenhaActivity, LoginActivity::class.java)
+            Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@AlterarSenhaActivity, PerfilFragment::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

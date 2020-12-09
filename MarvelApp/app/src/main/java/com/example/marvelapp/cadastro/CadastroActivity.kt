@@ -31,6 +31,7 @@ class CadastroActivity : AppCompatActivity() {
 
             val intent = Intent(this@CadastroActivity, HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
