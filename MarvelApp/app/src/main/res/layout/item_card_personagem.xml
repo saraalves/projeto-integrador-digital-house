@@ -26,43 +26,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtNamePersongemCard"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/lnlCard"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dim_10_dp"
-            android:maxLines="1"
-            android:text="@string/nome_do_personagem"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/dim_12_sp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardPersonagem"
             app:layout_constraintStart_toStartOf="@+id/cardPersonagem"
-            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem" />
+            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem">
 
-        <ImageView
-            android:id="@+id/imgFavoritadoHome"
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_6_dp"
-            android:layout_marginEnd="@dimen/dim_8_dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_baseline_favorite_24"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
-            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem" />
+            <TextView
+                android:id="@+id/txtNamePersongemCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dim_10_dp"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="@string/nome_do_personagem"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/dim_12_sp" />
 
-        <ImageView
-            android:id="@+id/imgFavorit"
-            android:layout_width="@dimen/dim_24_dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_6_dp"
-            android:layout_marginEnd="@dimen/dim_8_dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintEnd_toEndOf="@id/cardPersonagem"
-            app:layout_constraintTop_toBottomOf="@+id/cardPersonagem"
-            app:srcCompat="@drawable/ic_favorit_24" />
+            <ImageView
+                android:id="@+id/imgFavoritadoHome"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_6_dp"
+                android:layout_marginEnd="@dimen/dim_8_dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_favorite_24"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imgFavorit"
+                android:layout_width="@dimen/dim_24_dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_6_dp"
+                android:layout_marginEnd="@dimen/dim_8_dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_favorit_24" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
