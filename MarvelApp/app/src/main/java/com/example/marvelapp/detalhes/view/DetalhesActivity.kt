@@ -26,7 +26,8 @@ class DetalhesActivity : AppCompatActivity() {
         val imagem = intent.getStringExtra("IMAGEM")
 
         if(descricao.isNullOrEmpty()){
-            findViewById<TextView>(R.id.txtDescricao).text = "Hi, i'm ${nome}!"
+            findViewById<TextView>(R.id.txtDescricao).text = "Hi, i'm ${nome} !"
+
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
 
         findViewById<TextView>(R.id.txtNomePersonagemDetail).text = nome

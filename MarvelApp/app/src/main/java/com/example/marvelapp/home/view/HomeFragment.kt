@@ -32,8 +32,8 @@ class HomeFragment : Fragment() {
     private var _character = mutableListOf<CharacterModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -66,8 +66,8 @@ class HomeFragment : Fragment() {
 
 
     private fun setupRecyclerViewCard(
-        recyclerView: RecyclerView?,
-        viewGridManager: GridLayoutManager
+            recyclerView: RecyclerView?,
+            viewGridManager: GridLayoutManager
     ) {
         recyclerView?.apply {
             setHasFixedSize(true)
@@ -77,8 +77,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerViewAvatar(
-        recyclerView: RecyclerView?,
-        viewLayoutManager: LinearLayoutManager
+            recyclerView: RecyclerView?,
+            viewLayoutManager: LinearLayoutManager
     ) {
         recyclerView?.apply {
             setHasFixedSize(true)
@@ -109,7 +109,7 @@ class HomeFragment : Fragment() {
 
     private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let {_character.addAll(it)}
+            list?.let { _character.addAll(it) }
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -182,27 +182,28 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun searchByName(view: View, list: MutableList<CharacterModel>){
+    private fun searchByName(view: View, list: MutableList<CharacterModel>) {
 
         val searchView = view.findViewById<SearchView>(R.id.searchView)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                for (character in list) {
-                    if (character.nome.equals(query?.toLowerCase(Locale.ROOT))) {
-                        _viewModel.searchByName(character.id).observe(viewLifecycleOwner) {
-                            _character.clear()
-                            getList(it)
-                        }
-                    }
+                _viewModel.searchByName(query).observe(viewLifecycleOwner) {
+                    _character.clear()
+                    getList(it)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText.isNullOrEmpty()){
+                if (newText.isNullOrEmpty()) {
                     _character.clear()
                     getList(_viewModel.initialList())
+                } else {
+                    _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner){
+                        _character.clear()
+                        getList(it)
+                    }
                 }
                 return false
             }
@@ -211,8 +212,8 @@ class HomeFragment : Fragment() {
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
-            this,
-            CharactersViewModel.CharactersViewModelFactory(CharacterRepository())
+                this,
+                CharactersViewModel.CharactersViewModelFactory(CharacterRepository())
         ).get(CharactersViewModel::class.java)
     }
 
@@ -224,7 +225,6 @@ class HomeFragment : Fragment() {
             } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_favorit_24)
         }
     }
-
 
 
 }

@@ -28,9 +28,15 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         emit(response.data.results)
     }
 
-    fun searchByName(id: Int) = liveData(Dispatchers.IO) {
+    fun searchByName(name: String?) = liveData(Dispatchers.IO) {
         _characterBeforeSearch = _characterList
-        val response = _repository.getCharacterById(id)
+        val response = _repository.getCharacterByName(name)
+        emit(response.data.results)
+    }
+
+    fun searchByStartsWith(string: String?) = liveData(Dispatchers.IO) {
+        _characterBeforeSearch = _characterList
+        val response = _repository.getCharacterByStartsWith(string)
         emit(response.data.results)
     }
 
