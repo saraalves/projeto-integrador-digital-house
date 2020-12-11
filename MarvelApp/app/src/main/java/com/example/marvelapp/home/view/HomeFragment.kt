@@ -18,6 +18,8 @@ import com.example.marvelapp.character.repository.CharacterRepository
 import com.example.marvelapp.character.viewmodel.CharactersViewModel
 import com.example.marvelapp.home.model.PersonagemModel
 import com.example.marvelapp.detalhes.view.DetalhesActivity
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
 import java.util.*
 
 class HomeFragment : Fragment() {
@@ -58,6 +60,7 @@ class HomeFragment : Fragment() {
         getListAvatar()
         showLoading(true)
         setScrollView()
+        favoritar()
         setScrollViewAvatar()
     }
 
@@ -211,6 +214,15 @@ class HomeFragment : Fragment() {
             this,
             CharactersViewModel.CharactersViewModelFactory(CharacterRepository())
         ).get(CharactersViewModel::class.java)
+    }
+
+    private fun favoritar() {
+        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
+        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
+            if(isChecked) {
+                view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_baseline_favorite_24)
+            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_favorit_24)
+        }
     }
 
 

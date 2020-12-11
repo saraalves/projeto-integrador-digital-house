@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.example.marvelapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
@@ -25,7 +26,7 @@ class DetalhesActivity : AppCompatActivity() {
         val imagem = intent.getStringExtra("IMAGEM")
 
         if(descricao.isNullOrEmpty()){
-            findViewById<TextView>(R.id.txtDescricao).text = "Description not avaliable"
+            findViewById<TextView>(R.id.txtDescricao).text = "Hi, i'm ${nome}!"
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
 
         findViewById<TextView>(R.id.txtNomePersonagemDetail).text = nome
@@ -47,8 +48,19 @@ class DetalhesActivity : AppCompatActivity() {
         }
 
         val iconFavorite = findViewById<View>(R.id.favorite)
+        val iconFavorit = findViewById<View>(R.id.favorit)
+        iconFavorit.isVisible = false
+
         iconFavorite.setOnClickListener {
-            Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+                iconFavorite.isVisible = false
+                iconFavorit.isVisible = true
+                Toast.makeText(this, "Favorito adicionado", Toast.LENGTH_SHORT).show()
+        }
+
+        iconFavorit.setOnClickListener {
+                iconFavorite.isVisible = true
+                iconFavorit.isVisible = false
+                Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
         }
 
     }

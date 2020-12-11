@@ -19,50 +19,52 @@
         <ImageView
             android:id="@+id/cardFavoritado"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dim_150_dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/img_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtNamePersongemFavoritado"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/lnlCardFavoritado"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dim_10_dp"
-            android:maxLines="1"
-            android:text="@string/nome_do_personagem"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/dim_12_sp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardFavoritado"
             app:layout_constraintStart_toStartOf="@+id/cardFavoritado"
-            app:layout_constraintTop_toBottomOf="@+id/cardFavoritado" />
+            app:layout_constraintTop_toBottomOf="@+id/cardFavoritado">
 
-        <ImageView
-            android:id="@+id/imgFavoritado"
-            android:layout_width="@dimen/dim_24_dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_6_dp"
-            android:layout_marginEnd="@dimen/dim_8_dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_baseline_favorite_24"
-            app:layout_constraintEnd_toEndOf="@id/cardFavoritado"
-            app:layout_constraintTop_toBottomOf="@+id/cardFavoritado" />
+            <TextView
+                android:id="@+id/txtNamePersongemFavoritado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dim_10_dp"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:layout_gravity="center"
+                android:text="@string/nome_do_personagem"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/dim_12_sp" />
 
-        <ImageView
-            android:id="@+id/imgFavoritar"
-            android:layout_width="@dimen/dim_24_dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_6_dp"
-            android:layout_marginEnd="@dimen/dim_8_dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/cardFavoritado"
-            app:layout_constraintTop_toBottomOf="@+id/cardFavoritado"
-            app:srcCompat="@drawable/ic_favorit_24" />
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleFavoritarFavoritos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFavoritarFavoritos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ToggleIcon"
+                    app:icon="@drawable/ic_baseline_favorite_24"
+                    android:backgroundTint="@color/colorTransparente"/>
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

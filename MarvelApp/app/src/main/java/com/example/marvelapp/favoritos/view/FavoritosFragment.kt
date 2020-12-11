@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.detalhes.view.DetalhesActivity
 import com.example.marvelapp.home.model.PersonagemModel
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.textfield.TextInputLayout
 
 class FavoritosFragment : Fragment() {
 
@@ -33,6 +36,7 @@ class FavoritosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listaFavorito(view)
+        favoritar()
     }
 
     private fun listaFavorito(view: View) {
@@ -51,6 +55,16 @@ class FavoritosFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = manager
             adapter = _favoritosAdapter
+        }
+    }
+
+    private fun favoritar() {
+        view?.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)?.setIconResource(R.drawable.ic_baseline_favorite_24)
+        val toggleFavoritarFavoritos = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritarFavoritos)
+        toggleFavoritarFavoritos?.addOnButtonCheckedListener { _, _, isChecked ->
+            if(isChecked) {
+                view?.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)?.setIconResource(R.drawable.ic_favorite_gray_24)
+            } else view?.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)?.setIconResource(R.drawable.ic_baseline_favorite_24)
         }
     }
 

@@ -24,19 +24,6 @@ class FavoritosAdapter(
     override fun onBindViewHolder(holder: FavoritosViewHolder, position: Int) {
         val item = _personagem[position]
         holder.bind(item)
-
-        holder.itemView.findViewById<ImageView>(R.id.imgFavoritar).setOnClickListener {
-            holder.itemView.findViewById<ImageView>(R.id.imgFavoritar).visibility = View.GONE
-            holder.itemView.findViewById<ImageView>(R.id.imgFavoritado).visibility = View.VISIBLE
-            _personagem.add(_personagem[position])
-        }
-
-        holder.itemView.findViewById<ImageView>(R.id.imgFavoritado).setOnClickListener {
-            holder.itemView.findViewById<ImageView>(R.id.imgFavoritar).visibility = View.VISIBLE
-            holder.itemView.findViewById<ImageView>(R.id.imgFavoritado).visibility = View.GONE
-            _personagem.remove(_personagem[position])
-        }
-
         holder.itemView.setOnClickListener { listener(item) }
     }
 }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.marvelapp.R
 import com.example.marvelapp.home.view.HomeActivity
+import com.example.marvelapp.login.LoginActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
@@ -43,7 +44,11 @@ class CadastroActivity : AppCompatActivity() {
 
         dialogView.btnContinuarEditando.setOnClickListener { alertDialog?.dismiss() }
 
-        dialogView.btnConfirmar.setOnClickListener { finish() }
+        dialogView.btnConfirmar.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         alertDialog = dialogBuilder.create()
         alertDialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)

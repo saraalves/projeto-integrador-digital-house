@@ -87,7 +87,6 @@
         android:background="@color/colorPrimary"
         android:text="@string/salvar"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/dim_20_sp"
-        android:padding="@dimen/dim_15_dp"/>
+        android:textSize="@dimen/dim_20_sp" />
 
 </LinearLayout>

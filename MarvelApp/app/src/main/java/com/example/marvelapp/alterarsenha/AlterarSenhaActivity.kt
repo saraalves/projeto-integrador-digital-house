@@ -32,7 +32,7 @@ class AlterarSenhaActivity : AppCompatActivity() {
         btnAlterarSenha.setOnClickListener {
 
             Toast.makeText(this, "Senha alterada com sucesso", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@AlterarSenhaActivity, PerfilFragment::class.java)
+            val intent = Intent(this@AlterarSenhaActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
