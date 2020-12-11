@@ -5,5 +5,6 @@ class CharacterRepository {
     private val client = ICharacterEndpoint.Endpoint
 
     suspend fun getCharacter(offset: Int? = 0) = client.getCharacter(offset)
-    suspend fun getCharacterById(id: Int) = client.getCharacterById(id)
+    suspend fun getCharacterByName(name: String?) = client.getCharacterByName(name)
+    suspend fun getCharacterByStartsWith (string: String?) = client.getCharacterByStartsWith(string)
 }

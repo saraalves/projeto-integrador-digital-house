@@ -25,7 +25,7 @@ class DetalhesActivity : AppCompatActivity() {
         val imagem = intent.getStringExtra("IMAGEM")
 
         if(descricao.isNullOrEmpty()){
-            findViewById<TextView>(R.id.txtDescricao).text = "Description not avaliable"
+            findViewById<TextView>(R.id.txtDescricao).text = "Hi, I'm ${nome}!"
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
 
         findViewById<TextView>(R.id.txtNomePersonagemDetail).text = nome
