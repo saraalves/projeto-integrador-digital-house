@@ -11,12 +11,12 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity android:name=".alterarsenha.AlterarSenhaActivity" />
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".alterarsenha.view.AlterarSenhaActivity" />
+        <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".detalhes.view.DetalhesActivity"/>
-        <activity android:name=".cadastro.CadastroActivity"/>
+        <activity android:name=".cadastro.view.CadastroActivity"/>
 
-        <activity android:name=".splashscreen.SplashScreenActivity">
+        <activity android:name=".splashscreen.view.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

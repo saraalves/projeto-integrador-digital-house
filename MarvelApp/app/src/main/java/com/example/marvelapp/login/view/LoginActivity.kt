@@ -1,4 +1,4 @@
-package com.example.marvelapp.login
+package com.example.marvelapp.login.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.marvelapp.R
-import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
-import com.example.marvelapp.cadastro.CadastroActivity
+import com.example.marvelapp.cadastro.view.CadastroActivity
 import com.example.marvelapp.home.view.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -43,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Logar com Facebook", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         val imageGoogle = findViewById<ImageView>(R.id.imgLoginGoogle)
@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Logar com Google", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
     }

@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.marvelapp.R
 import com.example.marvelapp.favoritos.view.FavoritosFragment
-import com.example.marvelapp.perfil.PerfilFragment
+import com.example.marvelapp.perfil.view.PerfilFragment
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_home.*
 
 const val HOME_FRAGMENT = 0
 const val FAVORITOS_FRAGMENT = 1
@@ -36,25 +37,34 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun configViewPager() {
-        val pager = findViewById<ViewPager>(R.id.viewPager)
 
-        _tabLayout.setupWithViewPager(pager)
+        val _pager = findViewById<ViewPager>(R.id.viewPager)
+
+        _tabLayout.setupWithViewPager(_pager)
 
         _homeFragment = HomeFragment()
 
-        pager.adapter = ViewPagerAdapter(
-            listOf(
+       val listaFragmentos = listOf(
                 _homeFragment,
                 FavoritosFragment(),
                 PerfilFragment()
-            ),
-            supportFragmentManager
         )
+
+        _pager.adapter = ViewPagerAdapter(listaFragmentos, supportFragmentManager)
+
     }
 
     private fun setupTabIcons() {
         _tabLayout.getTabAt(0)?.setIcon(_tabIcons[0])
         _tabLayout.getTabAt(1)?.setIcon(_tabIcons[1])
         _tabLayout.getTabAt(2)?.setIcon(_tabIcons[2])
+    }
+
+    override fun onBackPressed() {
+        when (tabLayout.selectedTabPosition) {
+            0 -> super.onBackPressed()
+            1 -> _tabLayout.getTabAt(0)!!.select()
+            2 -> _tabLayout.getTabAt(1)!!.select()
+        }
     }
 }
