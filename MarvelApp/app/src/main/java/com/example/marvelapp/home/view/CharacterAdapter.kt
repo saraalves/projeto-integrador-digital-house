@@ -26,20 +26,6 @@ class CharacterAdapter(
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val item = _personagens[position]
         holder.bind(item)
-
-//        holder.itemView.findViewById<ImageView>(R.id.imgFavorit).setOnClickListener {
-//            holder.itemView.findViewById<ImageView>(R.id.imgFavorit).visibility = View.GONE
-//            holder.itemView.findViewById<ImageView>(R.id.imgFavoritadoHome).visibility =
-//                View.VISIBLE
-//            listaFavoritos.add(item)
-//        }
-//
-//        holder.itemView.findViewById<ImageView>(R.id.imgFavoritadoHome).setOnClickListener {
-//            holder.itemView.findViewById<ImageView>(R.id.imgFavorit).visibility = View.VISIBLE
-//            holder.itemView.findViewById<ImageView>(R.id.imgFavoritadoHome).visibility = View.GONE
-//            listaFavoritos.remove(item)
-//        }
-
         holder.itemView.setOnClickListener { _listener(item) }
     }
 }

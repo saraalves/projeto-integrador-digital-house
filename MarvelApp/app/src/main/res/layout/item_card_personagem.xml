@@ -19,8 +19,9 @@
         <ImageView
             android:id="@+id/cardPersonagem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dim_150_dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/img_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,33 +41,29 @@
                 android:id="@+id/txtNamePersongemCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dim_10_dp"
+                android:layout_marginStart="@dimen/dim_10_dp"
                 android:layout_weight="1"
                 android:maxLines="2"
+                android:layout_gravity="center"
                 android:text="@string/nome_do_personagem"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/dim_12_sp" />
 
-            <ImageView
-                android:id="@+id/imgFavoritadoHome"
-                android:layout_width="24dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_6_dp"
-                android:layout_marginEnd="@dimen/dim_8_dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_baseline_favorite_24"
-                android:visibility="gone" />
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleFavoritar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imgFavorit"
-                android:layout_width="@dimen/dim_24_dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_6_dp"
-                android:layout_marginEnd="@dimen/dim_8_dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:srcCompat="@drawable/ic_favorit_24" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFavoritar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ToggleIcon"
+                    app:icon="@drawable/ic_favorite_gray_24"
+                    android:backgroundTint="@color/colorTransparente"
+                    />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
         </LinearLayout>
 

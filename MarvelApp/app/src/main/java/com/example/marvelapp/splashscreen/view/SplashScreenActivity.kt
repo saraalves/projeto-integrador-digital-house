@@ -1,4 +1,4 @@
-package com.example.marvelapp.splashscreen
+package com.example.marvelapp.splashscreen.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.LinearLayout
 import com.example.marvelapp.R
-import com.example.marvelapp.login.LoginActivity
+import com.example.marvelapp.login.view.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

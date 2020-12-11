@@ -1,4 +1,4 @@
-package com.example.marvelapp.perfil
+package com.example.marvelapp.perfil.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.marvelapp.R
-import com.example.marvelapp.alterarsenha.AlterarSenhaActivity
-import com.example.marvelapp.splashscreen.SplashScreenActivity
+import com.example.marvelapp.alterarsenha.view.AlterarSenhaActivity
+import com.example.marvelapp.splashscreen.view.SplashScreenActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class PerfilFragment : Fragment() {

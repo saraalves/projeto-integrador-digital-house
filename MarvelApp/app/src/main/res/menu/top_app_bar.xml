@@ -9,6 +9,12 @@
 
     <item
         android:id="@+id/favorite"
+        android:icon="@drawable/ic_favorite_gray_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/favorit" />
+
+    <item
+        android:id="@+id/favorit"
         android:icon="@drawable/ic_baseline_favorite_24"
         app:showAsAction="ifRoom"
         android:title="@string/favorit" />

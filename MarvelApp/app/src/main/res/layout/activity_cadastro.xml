@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
-    tools:context=".cadastro.CadastroActivity">
+    tools:context=".cadastro.view.CadastroActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarCadastro"
@@ -146,7 +146,6 @@
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:layout_marginBottom="@dimen/dim_50_dp"
         android:background="@color/colorPrimary"
-        android:padding="@dimen/dim_15_dp"
         android:text="@string/cadastrar"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/dim_24_sp"
