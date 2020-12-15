@@ -1,4 +1,4 @@
-package com.example.marvelapp.home.view
+package com.example.marvelapp.home.view.character
 
 import android.view.View
 import android.widget.ImageView

@@ -1,11 +1,10 @@
-package com.example.marvelapp.home.view
+package com.example.marvelapp.home.view.avatar
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.character.model.CharacterModel
-import com.example.marvelapp.home.model.PersonagemModel
 
 class AvatarAdapter(
     private var avatar: MutableList<CharacterModel>,

@@ -1,10 +1,9 @@
 package com.example.marvelapp.character.repository
 
 import com.example.marvelapp.character.model.CharacterModel
-import com.example.marvelapp.character.model.ResponseModel
+import com.example.marvelapp.data.model.ResponseModel
 import com.example.marvelapp.network.NetworkUtils
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ICharacterEndpoint {

@@ -1,13 +1,10 @@
-package com.example.marvelapp.home.view
+package com.example.marvelapp.home.view.character
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.R
 import com.example.marvelapp.character.model.CharacterModel
-import com.example.marvelapp.home.model.PersonagemModel
 
 class CharacterAdapter(
     private val _personagens: MutableList<CharacterModel>,

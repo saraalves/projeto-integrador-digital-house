@@ -16,11 +16,12 @@ import com.example.marvelapp.R
 import com.example.marvelapp.character.model.CharacterModel
 import com.example.marvelapp.character.repository.CharacterRepository
 import com.example.marvelapp.character.viewmodel.CharactersViewModel
-import com.example.marvelapp.home.model.PersonagemModel
 import com.example.marvelapp.detalhes.view.DetalhesActivity
+import com.example.marvelapp.home.view.avatar.AvatarAdapter
+import com.example.marvelapp.home.view.character.CharacterAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
-import java.util.*
+import java.io.Serializable
 
 class HomeFragment : Fragment() {
 
@@ -90,6 +91,7 @@ class HomeFragment : Fragment() {
     private fun setupNavigation() {
         _characterAdapter = CharacterAdapter(_character) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
+            intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
             intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
@@ -99,7 +101,9 @@ class HomeFragment : Fragment() {
 
     private fun setupNavigationAvatar() {
         _avatarAdapter = AvatarAdapter(_character) {
+
             val intent = Intent(view?.context, DetalhesActivity::class.java)
+            intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
             intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
