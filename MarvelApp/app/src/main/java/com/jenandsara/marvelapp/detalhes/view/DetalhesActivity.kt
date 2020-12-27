@@ -1,0 +1,66 @@
+package com.jenandsara.marvelapp.detalhes.view
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
+import com.jenandsara.marvelapp.R
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_detalhes.*
+
+class DetalhesActivity : AppCompatActivity() {
+    @SuppressLint("UseCompatLoadingForDrawables")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_detalhes)
+
+        val nome = intent.getStringExtra("NOME")
+        val descricao = intent.getStringExtra("DESCRIÇÃO")
+        val imagem = intent.getStringExtra("IMAGEM")
+
+        if(descricao.isNullOrEmpty()){
+            findViewById<TextView>(R.id.txtDescricao).text = "Hi, I'm ${nome} !"
+
+        } else findViewById<TextView>(R.id.txtDescricao).text = descricao
+
+        findViewById<TextView>(R.id.txtNomePersonagemDetail).text = nome
+        Picasso.get().load(imagem).into(findViewById<ImageView>(R.id.imgPersonagemDetail))
+
+        topAppBar.setOnClickListener {
+            onBackPressed()
+        }
+
+        val iconShare = findViewById<View>(R.id.share)
+        iconShare.setOnClickListener {
+            val sendIntent: Intent = Intent().apply{
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Compartilhando personagens favoritos.")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
+        val iconFavorite = findViewById<View>(R.id.favorite)
+        val iconFavorit = findViewById<View>(R.id.favorit)
+        iconFavorit.isVisible = false
+
+        iconFavorite.setOnClickListener {
+                iconFavorite.isVisible = false
+                iconFavorit.isVisible = true
+                Toast.makeText(this, "Favorito adicionado", Toast.LENGTH_SHORT).show()
+        }
+
+        iconFavorit.setOnClickListener {
+                iconFavorite.isVisible = true
+                iconFavorit.isVisible = false
+                Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+}
