@@ -20,4 +20,15 @@
         <item name="minHeight">@dimen/dim_30_dp</item>
     </style>
 
+    <style name="TitleCollapseBar">
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowRadius">30</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dim_25_sp</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:shadowColor">@color/colorText</item>
+    </style>
+
 </resources>

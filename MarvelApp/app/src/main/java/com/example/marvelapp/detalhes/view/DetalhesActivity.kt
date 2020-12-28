@@ -2,12 +2,15 @@ package com.example.marvelapp.detalhes.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +24,8 @@ import com.example.marvelapp.detalhes.view.stories.StoriesAdapter
 import com.example.marvelapp.stories.repository.StoriesRepository
 import com.example.marvelapp.stories.model.StoriesModel
 import com.example.marvelapp.stories.viewmodel.StoriesViewModel
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
 
@@ -77,7 +82,9 @@ class DetalhesActivity : AppCompatActivity() {
 
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
 
-        findViewById<TextView>(R.id.txtNomePersonagemDetail).text = nome
+        val toolbarCollapse = findViewById<CollapsingToolbarLayout>(R.id.collapseToolbar)
+        toolbarCollapse.title = nome
+
         Picasso.get().load(imagem).into(findViewById<ImageView>(R.id.imgPersonagemDetail))
 
         topAppBar.setOnClickListener {
@@ -137,14 +144,14 @@ class DetalhesActivity : AppCompatActivity() {
         ).get(ComicViewModel::class.java)
     }
 
-    private fun setupNavigationComic() {
-        _comicsAdapter = ComicsAdapter(_comics){
+    private fun setupNavigationStories() {
+        _storiesAdapter = StoriesAdapter(_stories){
             Toast.makeText(this@DetalhesActivity, "Nothing to show", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun setupNavigationStories() {
-        _storiesAdapter = StoriesAdapter(_stories){
+    private fun setupNavigationComic() {
+        _comicsAdapter = ComicsAdapter(_comics){
             Toast.makeText(this@DetalhesActivity, "Nothing to show", Toast.LENGTH_SHORT).show()
         }
     }
