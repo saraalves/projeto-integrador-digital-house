@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
     android:orientation="vertical"
-    tools:context="com.jenandsara.marvelapp.perfil.view.PerfilFragment">
+    tools:context=".perfil.view.PerfilFragment">
 
     <ImageView
         android:id="@+id/imgPhotoPerfil"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/img_background"
     android:orientation="vertical"
-    tools:context="com.jenandsara.marvelapp.alterarsenha.view.AlterarSenhaActivity">
+    tools:context=".alterarsenha.view.AlterarSenhaActivity">
 
     <Toolbar
         android:id="@+id/toolbarAlterarSenha"

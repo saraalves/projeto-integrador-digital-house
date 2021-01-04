@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
-    tools:context="com.jenandsara.marvelapp.cadastro.view.CadastroActivity">
+    tools:context=".cadastro.view.CadastroActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarCadastro"

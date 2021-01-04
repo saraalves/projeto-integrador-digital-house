@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
     android:orientation="vertical"
-    tools:context="com.jenandsara.marvelapp.login.view.LoginActivity">
+    tools:context=".login.view.LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
