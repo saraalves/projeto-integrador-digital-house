@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/txtNamePersongemCard"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dim_10_dp"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
                 android:layout_gravity="center"
                 android:text="@string/nome_do_personagem"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/dim_12_sp" />
+                android:textSize="@dimen/dim_15_sp" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggleFavoritar"

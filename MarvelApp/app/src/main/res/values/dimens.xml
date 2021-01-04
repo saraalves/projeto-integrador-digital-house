@@ -41,4 +41,7 @@
     <dimen name="dim_3_dp">3dp</dimen>
     <dimen name="dim_400_dp">400dp</dimen>
     <dimen name="dim_350_dp">350dp</dimen>
+    <dimen name="dim_300_dp">300dp</dimen>
+    <dimen name="dim_500_dp">500dp</dimen>
+    <dimen name="dim_35_dp">35dp</dimen>
 </resources>

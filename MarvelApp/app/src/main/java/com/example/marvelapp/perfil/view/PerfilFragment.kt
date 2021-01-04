@@ -46,16 +46,12 @@ class PerfilFragment : Fragment() {
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
         toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
-            if(isChecked) {
-                view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = true
-            } else view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = false
+            view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = isChecked
         }
 
         val toggleEmail = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleEmail)
         toggleEmail.addOnButtonCheckedListener { _, _, isChecked ->
-            if(isChecked) {
-                view.findViewById<TextInputLayout>(R.id.txtEmailPerfil).isEnabled = true
-            } else  view.findViewById<TextInputLayout>(R.id.txtEmailPerfil).isEnabled = false
+            view.findViewById<TextInputLayout>(R.id.txtEmailPerfil).isEnabled = isChecked
         }
 
     }

@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             app:expandedTitleTextAppearance="@style/TitleCollapseBar"
             android:fitsSystemWindows="true"
-            app:title="NOME"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:layout_height="wrap_content">
 
@@ -32,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="70dp"
                 android:contentDescription="@string/character"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
@@ -47,6 +46,7 @@
                 android:background="@color/colorWhite"
                 app:layout_collapseMode="pin"
                 app:menu="@menu/top_app_bar"
+                app:title="NOME"
                 app:navigationIcon="@drawable/ic_back_24"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -54,6 +54,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -62,7 +63,7 @@
             android:id="@+id/txtSobre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_22_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
             android:layout_marginTop="@dimen/dim_20_dp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/sobre"
@@ -74,26 +75,26 @@
 
         <TextView
             android:id="@+id/txtDescricao"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_22_dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="22dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:lineSpacingExtra="@dimen/dim_2_dp"
             android:text="@string/drescricao"
             android:textAlignment="viewStart"
+            android:layout_marginEnd="@dimen/dim_15_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/dim_18_sp"
+            android:textSize="@dimen/dim_20_sp"
+            android:layout_marginTop="@dimen/dim_10_dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtSobre"
-            app:layout_constraintTop_toTopOf="@id/txtSobre" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtSobre" />
 
         <TextView
             android:id="@+id/txtComics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_22_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
             android:layout_marginTop="@dimen/dim_10_dp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/comics"
@@ -106,12 +107,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerComics"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_22_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginEnd="@dimen/dim_15_dp"
             android:layout_marginTop="@dimen/dim_10_dp"
-            android:layout_marginEnd="@dimen/dim_22_dp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtComics"
             tools:listitem="@layout/chip_item" />
@@ -120,7 +122,7 @@
             android:id="@+id/txtStories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_22_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
             android:layout_marginTop="@dimen/dim_10_dp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/stories"
@@ -132,13 +134,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerStrories"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_22_dp"
             android:layout_marginTop="@dimen/dim_10_dp"
-            android:layout_marginEnd="@dimen/dim_22_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginEnd="@dimen/dim_15_dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtStories"
             tools:listitem="@layout/chip_item" />
 

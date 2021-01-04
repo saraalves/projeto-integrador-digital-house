@@ -5,10 +5,12 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -21,6 +23,7 @@ import com.example.marvelapp.comics.repository.ComicRepository
 import com.example.marvelapp.comics.viewmodel.ComicViewModel
 import com.example.marvelapp.detalhes.view.comics.ComicsAdapter
 import com.example.marvelapp.detalhes.view.stories.StoriesAdapter
+import com.example.marvelapp.login.view.LoginActivity
 import com.example.marvelapp.stories.repository.StoriesRepository
 import com.example.marvelapp.stories.model.StoriesModel
 import com.example.marvelapp.stories.viewmodel.StoriesViewModel
@@ -28,6 +31,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
+import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
+import kotlinx.android.synthetic.main.dialog_image.view.*
 
 class DetalhesActivity : AppCompatActivity() {
 
@@ -82,7 +87,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
 
-        val toolbarCollapse = findViewById<CollapsingToolbarLayout>(R.id.collapseToolbar)
+        val toolbarCollapse = findViewById<MaterialToolbar>(R.id.topAppBar)
         toolbarCollapse.title = nome
 
         Picasso.get().load(imagem).into(findViewById<ImageView>(R.id.imgPersonagemDetail))
@@ -152,7 +157,7 @@ class DetalhesActivity : AppCompatActivity() {
 
     private fun setupNavigationComic() {
         _comicsAdapter = ComicsAdapter(_comics){
-            Toast.makeText(this@DetalhesActivity, "Nothing to show", Toast.LENGTH_SHORT).show()
+            showFullComicImage(it.thumbnail?.getImagePath())
         }
     }
 
@@ -179,5 +184,20 @@ class DetalhesActivity : AppCompatActivity() {
                 this,
                 StoriesViewModel.StoriesViewModelFactory(StoriesRepository())
         ).get(StoriesViewModel::class.java)
+    }
+
+    private fun showFullComicImage(path: String) {
+
+        var imageDialog: AlertDialog?
+
+        val dialogBuilder = AlertDialog.Builder(this@DetalhesActivity)
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_image, null, false)
+        dialogBuilder.setView(dialogView)
+
+        imageDialog = dialogBuilder.create()
+        imageDialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        Picasso.get().load(path).into(dialogView.imgComicExpanded)
+        imageDialog?.show()
+
     }
 }
