@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favoritos.view.FavoritosFragment">
+    tools:context="com.jenandsara.marvelapp.favoritos.view.FavoritosFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavoritos"

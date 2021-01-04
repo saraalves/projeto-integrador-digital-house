@@ -11,19 +11,19 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity android:name=".alterarsenha.view.AlterarSenhaActivity" />
-        <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".detalhes.view.DetalhesActivity"/>
-        <activity android:name=".cadastro.view.CadastroActivity"/>
+        <activity android:name="com.jenandsara.marvelapp.alterarsenha.view.AlterarSenhaActivity" />
+        <activity android:name="com.jenandsara.marvelapp.login.view.LoginActivity" />
+        <activity android:name="com.jenandsara.marvelapp.detalhes.view.DetalhesActivity"/>
+        <activity android:name="com.jenandsara.marvelapp.cadastro.view.CadastroActivity"/>
 
-        <activity android:name=".splashscreen.view.SplashScreenActivity">
+        <activity android:name="com.jenandsara.marvelapp.splashscreen.view.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.view.HomeActivity" />
+        <activity android:name="com.jenandsara.marvelapp.home.view.HomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
