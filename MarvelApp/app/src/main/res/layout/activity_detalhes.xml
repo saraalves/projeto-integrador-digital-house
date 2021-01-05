@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constLayoutDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@drawable/background_app"
     tools:context=".detalhes.view.DetalhesActivity">
 
@@ -11,74 +13,138 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapseToolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorWhite"
-            app:menu="@menu/top_app_bar"
-            app:navigationIcon="@drawable/ic_back_24"
-            app:title="Detalhes" />
+            app:expandedTitleTextAppearance="@style/TitleCollapseBar"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgPersonagemDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="70dp"
+                android:contentDescription="@string/character"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_detalhes"
+                app:layout_collapseMode="parallax" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorWhite"
+                app:layout_collapseMode="pin"
+                app:menu="@menu/top_app_bar"
+                app:title="NOME"
+                app:navigationIcon="@drawable/ic_back_24"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/imgPersonagemDetail"
+    <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:src="@drawable/img_detalhes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/txtNomePersonagemDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/nome_do_personagem"
-        android:textColor="@color/colorWhite"
-        android:background="@color/colorBlackOpaca"
-        android:textSize="@dimen/dim_24_sp"
-        android:padding="@dimen/dim_10_dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imgPersonagemDetail"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/txtSobre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginTop="@dimen/dim_20_dp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/sobre"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_20_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtSobre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="@dimen/dim_40_dp"
-        android:fontFamily="@font/roboto_condensed_bold"
-        android:text="@string/sobre"
-        android:textColor="@color/colorText"
-        android:textSize="@dimen/dim_20_sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgPersonagemDetail" />
+        <TextView
+            android:id="@+id/txtDescricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:lineSpacingExtra="@dimen/dim_2_dp"
+            android:text="@string/drescricao"
+            android:textAlignment="viewStart"
+            android:layout_marginEnd="@dimen/dim_15_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_20_sp"
+            android:layout_marginTop="@dimen/dim_10_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtSobre" />
 
-    <TextView
-        android:id="@+id/txtDescricao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dim_22_dp"
-        android:layout_marginTop="@dimen/dim_8_dp"
-        android:layout_marginEnd="22dp"
-        android:fontFamily="@font/roboto_condensed_regular"
-        android:lineSpacingExtra="@dimen/dim_2_dp"
-        android:text="@string/description"
-        android:textAlignment="viewStart"
-        android:textColor="@color/colorText"
-        android:textSize="@dimen/dim_14_sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSobre" />
+        <TextView
+            android:id="@+id/txtComics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginTop="@dimen/dim_10_dp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/comics"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_20_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDescricao" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerComics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginEnd="@dimen/dim_15_dp"
+            android:layout_marginTop="@dimen/dim_10_dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtComics"
+            tools:listitem="@layout/chip_item" />
+
+        <TextView
+            android:id="@+id/txtStories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginTop="@dimen/dim_10_dp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/stories"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/dim_20_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerComics" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerStrories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_10_dp"
+            android:layout_marginStart="@dimen/dim_15_dp"
+            android:layout_marginEnd="@dimen/dim_15_dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtStories"
+            tools:listitem="@layout/chip_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
