@@ -88,6 +88,7 @@ class HomeFragment : Fragment() {
     private fun setupNavigation() {
         _characterAdapter = CharacterAdapter(_character) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
+            intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
             intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
@@ -98,6 +99,7 @@ class HomeFragment : Fragment() {
     private fun setupNavigationAvatar() {
         _avatarAdapter = AvatarAdapter(_character) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
+            intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
             intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())

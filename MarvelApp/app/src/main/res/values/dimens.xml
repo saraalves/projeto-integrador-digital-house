@@ -31,10 +31,17 @@
     <dimen name="dim_2_dp">2dp</dimen>
     <dimen name="dim_34_dp">34dp</dimen>
     <dimen name="dim_0_dp">0dp</dimen>
-    <dimen name="dim_22_dp">22dp</dimen>
     <dimen name="dim_64_dp">64dp</dimen>
     <dimen name="dim_53_dp">53dp</dimen>
     <dimen name="dim_46_dp">46dp</dimen>
     <dimen name="dim_10_sp">10sp</dimen>
     <dimen name="dim_200_dp">200dp</dimen>
+    <dimen name="dim_5_dp">5dp</dimen>
+    <dimen name="dim_22_dp">22dp</dimen>
+    <dimen name="dim_3_dp">3dp</dimen>
+    <dimen name="dim_400_dp">400dp</dimen>
+    <dimen name="dim_350_dp">350dp</dimen>
+    <dimen name="dim_300_dp">300dp</dimen>
+    <dimen name="dim_500_dp">500dp</dimen>
+    <dimen name="dim_35_dp">35dp</dimen>
 </resources>
