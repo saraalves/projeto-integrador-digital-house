@@ -1,7 +1,7 @@
 package com.jenandsara.marvelapp.character.repository
 
 import com.jenandsara.marvelapp.character.model.CharacterModel
-import com.jenandsara.marvelapp.character.model.ResponseModel
+import com.jenandsara.marvelapp.data.model.ResponseModel
 import com.jenandsara.marvelapp.network.NetworkUtils
 import retrofit2.http.GET
 import retrofit2.http.Query
