@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "315775888550-8ip861sako9prh3df5usitdbqmq71ith.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jenandsara.marvelapp",
+            "certificate_hash": "f8124eb5fb4356662f2b6b31d0be870cd8c55d86"
+          }
+        },
+        {
           "client_id": "315775888550-vjultq0m3a4ksrhpmuqipl80lp0afadp.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "315775888550-vjultq0m3a4ksrhpmuqipl80lp0afadp.apps.googleusercontent.com",
+              "client_id": "315775888550-bcprvvs1rfu16v272v1uc8583l2pli06.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
