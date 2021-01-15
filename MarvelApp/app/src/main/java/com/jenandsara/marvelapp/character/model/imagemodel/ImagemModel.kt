@@ -1,8 +1,8 @@
-package com.jenandsara.marvelapp.character.model
+package com.jenandsara.marvelapp.character.model.imagemodel
 
 import com.google.gson.annotations.SerializedName
 
-data class ThumbnailModel(
+data class ImagemModel(
     @SerializedName("path")
     val path: String,
     @SerializedName("extension")

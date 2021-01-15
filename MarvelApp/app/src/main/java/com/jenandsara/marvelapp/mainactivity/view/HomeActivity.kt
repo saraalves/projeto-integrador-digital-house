@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.home.view
+package com.jenandsara.marvelapp.mainactivity.view
 
 import android.os.Bundle
 import android.view.Window.FEATURE_NO_TITLE
@@ -8,6 +8,7 @@ import com.jenandsara.marvelapp.favoritos.view.FavoritosFragment
 import com.jenandsara.marvelapp.perfil.view.PerfilFragment
 import com.google.android.material.tabs.TabLayout
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.home.view.HomeFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 const val HOME_FRAGMENT = 0

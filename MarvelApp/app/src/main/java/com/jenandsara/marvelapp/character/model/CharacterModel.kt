@@ -1,6 +1,8 @@
 package com.jenandsara.marvelapp.character.model
 
 import com.google.gson.annotations.SerializedName
+import com.jenandsara.marvelapp.character.model.imagemodel.ImagemModel
+import com.jenandsara.marvelapp.character.model.imagemodel.ThumbnailModel
 
 data class CharacterModel(
     val id: Int,
@@ -11,5 +13,6 @@ data class CharacterModel(
     @SerializedName("thumbnail")
     val thumbnail: ThumbnailModel?,
     @SerializedName("images")
-    val imagem: List<ImagemModel>?
+    val imagem: List<ImagemModel>?,
+    var isFavorite: Int
 )

@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.home.view
+package com.jenandsara.marvelapp.home.view.avatar
 
 import android.view.View
 import android.widget.ImageView

@@ -23,7 +23,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/img_background"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/dim_5_dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,12 +36,13 @@
             android:layout_marginTop="@dimen/dim_4_dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:text="@string/nome_do_personagem"
-            android:textSize="@dimen/dim_10_sp"
+            android:textSize="@dimen/dim_14_sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/avatarPersonagem"
-            tools:ignore="SmallSp" />
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

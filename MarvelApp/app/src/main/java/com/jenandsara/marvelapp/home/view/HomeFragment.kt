@@ -16,9 +16,13 @@ import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
+import com.jenandsara.marvelapp.datalocal.repository.LocalCharacterRepository
+import com.jenandsara.marvelapp.datalocal.viewmodel.LocalCharacterViewModel
+import com.jenandsara.marvelapp.db.AppDatabase
+import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
+import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 
 class HomeFragment : Fragment() {
 
@@ -48,6 +52,7 @@ class HomeFragment : Fragment() {
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
+
         setupNavigation()
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
@@ -58,7 +63,6 @@ class HomeFragment : Fragment() {
         getListAvatar()
         showLoading(true)
         setScrollView()
-        favoritar()
         setScrollViewAvatar()
     }
 
@@ -87,11 +91,14 @@ class HomeFragment : Fragment() {
 
     private fun setupNavigation() {
         _characterAdapter = CharacterAdapter(_character) {
+
+
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
             intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
+
             startActivity(intent)
         }
     }
@@ -216,15 +223,5 @@ class HomeFragment : Fragment() {
                 CharactersViewModel.CharactersViewModelFactory(CharacterRepository())
         ).get(CharactersViewModel::class.java)
     }
-
-    private fun favoritar() {
-        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
-        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
-            if(isChecked) {
-                view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_baseline_favorite_24)
-            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_favorit_24)
-        }
-    }
-
 
 }

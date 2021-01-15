@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.jenandsara.marvelapp.home.view.HomeActivity
+import com.jenandsara.marvelapp.mainactivity.view.HomeActivity
 import com.jenandsara.marvelapp.login.view.LoginActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
