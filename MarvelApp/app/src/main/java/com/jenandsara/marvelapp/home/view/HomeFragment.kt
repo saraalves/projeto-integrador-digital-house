@@ -30,8 +30,9 @@ class HomeFragment : Fragment() {
     private lateinit var _viewModel: CharactersViewModel
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
+    private lateinit var _localViewModel: LocalCharacterViewModel
 
-    private var _character = mutableListOf<CharacterModel>()
+    var _character = mutableListOf<CharacterModel>()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +59,7 @@ class HomeFragment : Fragment() {
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
-        getList(_character)
+        getList()
         searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
@@ -90,14 +91,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        _characterAdapter = CharacterAdapter(_character) {
+        _characterAdapter = CharacterAdapter() {
 
 
             val intent = Intent(view?.context, DetalhesActivity::class.java)
-            intent.putExtra("ID", it.id)
-            intent.putExtra("NOME", it.nome)
-            intent.putExtra("DESCRIÇÃO", it.descricao)
-            intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
+            intent.putExtra("ID", it.id_api)
+            intent.putExtra("NOME", it.name)
+            intent.putExtra("DESCRIÇÃO", it.description)
+            intent.putExtra("IMAGEM", it.imgUrl)
 
             startActivity(intent)
         }
@@ -114,9 +115,16 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getList(list: List<CharacterModel>) {
+    private fun getList() {
+        localViewModelProvider()
         _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let { _character.addAll(it) }
+            for(character in it){
+                _localViewModel.adiconarChracter(character.nome, character.id, character.descricao,
+                    character.thumbnail!!.getImagePath(), character.isFavorite).observe(viewLifecycleOwner) {
+                    _characterAdapter.setList(it)
+                }
+            }
+            _localViewModel.obterTodos()
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -196,20 +204,20 @@ class HomeFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
-                    _character.clear()
-                    getList(it)
+                    //_character.clear()
+                   // getList(it)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    _character.clear()
-                    getList(_viewModel.initialList())
+                    //_character.clear()
+                    //getList(_viewModel.initialList())
                 } else {
                     _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner){
-                        _character.clear()
-                        getList(it)
+                        //_character.clear()
+                        //getList(it)
                     }
                 }
                 return false
@@ -224,4 +232,10 @@ class HomeFragment : Fragment() {
         ).get(CharactersViewModel::class.java)
     }
 
+    private fun localViewModelProvider() {
+        _localViewModel = ViewModelProvider(
+            this,
+            LocalCharacterViewModel.LocalCharacterViewModelFactory(LocalCharacterRepository(AppDatabase.getDatabase(_view.context).characterDao()))
+        ).get(LocalCharacterViewModel::class.java)
+    }
 }

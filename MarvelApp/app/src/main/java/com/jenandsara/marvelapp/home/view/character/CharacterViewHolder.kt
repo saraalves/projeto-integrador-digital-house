@@ -8,6 +8,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 import com.squareup.picasso.Picasso
 
 class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -17,10 +18,10 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val _toggleFavorita = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
     val _btnFavorita = view.findViewById<MaterialButton>(R.id.btnFavoritar)
 
-    fun bind(character: CharacterModel) {
-        nome.text = character.nome
+    fun bind(character: CharacterEntity) {
+        nome.text = character.name
 
-        val imagePath = character.thumbnail?.getImagePath()
+        val imagePath = character.imgUrl
         Picasso.get()
             .load(imagePath)
             .into(imagem)

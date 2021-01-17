@@ -8,8 +8,7 @@ import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 
 class CharacterAdapter(
-    private val _personagens: MutableList<CharacterModel>,
-    private val _listener: (CharacterModel) -> Unit
+    private val _listener: (CharacterEntity) -> Unit
 ) :
     RecyclerView.Adapter<CharacterViewHolder>() {
 
@@ -21,11 +20,11 @@ class CharacterAdapter(
         return CharacterViewHolder(view)
     }
 
-    override fun getItemCount() = _personagens.size
+    override fun getItemCount() = _localPersonagens.size
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
 
-        val item = _personagens[position]
+        val item = _localPersonagens[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { _listener(item) }
 
@@ -42,5 +41,9 @@ class CharacterAdapter(
                 }
             }
         }
+    }
+
+    fun setList(character: CharacterEntity){
+        _localPersonagens.add(character)
     }
 }
