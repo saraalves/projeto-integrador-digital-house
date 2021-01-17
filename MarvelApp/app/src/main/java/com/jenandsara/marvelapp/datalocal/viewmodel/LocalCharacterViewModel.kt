@@ -9,12 +9,17 @@ import kotlinx.coroutines.Dispatchers
 
 class LocalCharacterViewModel(private val characterRepository: LocalCharacterRepository): ViewModel() {
 
-    fun adiconarChracter(name: String, id_api: Int, description: String, imgUrl: String, isFavorite: Int) = liveData(Dispatchers.IO) {
+//    fun adiconarCharacter(name: String, id_api: Int, description: String, imgUrl: String, isFavorite: Int) = liveData(Dispatchers.IO) {
+//
+//        val character = CharacterEntity(0, name, id_api, description, imgUrl, isFavorite)
+//
+//        characterRepository.adicionarCharacter(character)
+//        emit(character)
+//    }
 
-        val character = CharacterEntity(0, name, id_api, description, imgUrl, isFavorite)
-
-        characterRepository.adicionarCharacter(character)
-        emit(character)
+    fun adiconarCharacter(characterEntity: CharacterEntity) = liveData(Dispatchers.IO) {
+        characterRepository.adicionarCharacter(characterEntity)
+        emit(true)
     }
 
     fun obterFavoritos() = liveData(Dispatchers.IO) {

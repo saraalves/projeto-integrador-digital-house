@@ -11,7 +11,7 @@ interface CharacterDao {
 
     @Transaction
     @Query("UPDATE LocalData SET isFavorite = :int WHERE id_api = :id_api")
-    suspend fun atalizarIsFavorite(int: Int, id_api: Int)
+    suspend fun atualizarIsFavorite(int: Int, id_api: Int)
 
     @Query("SELECT * FROM LocalData")
     suspend fun obterTodos(): List<CharacterEntity>
