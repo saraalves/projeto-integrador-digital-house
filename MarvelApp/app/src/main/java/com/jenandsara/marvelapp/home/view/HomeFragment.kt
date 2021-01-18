@@ -130,6 +130,15 @@ class HomeFragment : Fragment() {
                 _characterAdapter.notifyDataSetChanged()
                 showLoading(false)
             } else{
+                for(character in _character){
+                    _viewModel.adiconarCharacter(_characterEntity).observe(viewLifecycleOwner) {
+                        _characterAdapter.notifyDataSetChanged()
+                        showLoading(false)
+                    }
+                }
+                _viewModel.obterTodos()
+                _characterAdapter.notifyDataSetChanged()
+                showLoading(false)
 
             }
 
@@ -138,7 +147,7 @@ class HomeFragment : Fragment() {
 
     private fun getListAvatar() {
         _viewModel.getList(_context, _characterEntity).observe(viewLifecycleOwner) {
-            _character.addAll(it)
+            _character.addAll(it as Collection<CharacterModel>)
             _avatarAdapter.notifyDataSetChanged()
             showLoading(false)
         }
