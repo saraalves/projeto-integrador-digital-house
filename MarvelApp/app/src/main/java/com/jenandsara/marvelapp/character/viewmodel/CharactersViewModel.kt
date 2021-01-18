@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
+import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 import kotlinx.coroutines.Dispatchers
 
 class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
@@ -48,6 +49,32 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
             val response = _repository.getCharacter(_offset)
             emit(response.data.results)
         }
+    }
+
+    //    fun adiconarCharacter(name: String, id_api: Int, description: String, imgUrl: String, isFavorite: Int) = liveData(Dispatchers.IO) {
+//
+//        val character = CharacterEntity(0, name, id_api, description, imgUrl, isFavorite)
+//
+//        characterRepository.adicionarCharacter(character)
+//        emit(character)
+//    }
+
+    fun adiconarCharacter(characterEntity: CharacterEntity) = liveData(Dispatchers.IO) {
+        _repository.adicionarCharacter(characterEntity)
+        emit(true)
+    }
+
+    fun obterFavoritos() = liveData(Dispatchers.IO) {
+        emit(_repository.obterFavoritos())
+    }
+
+    fun obterTodos() = liveData(Dispatchers.IO) {
+        emit(_repository.obterTodos())
+    }
+
+    fun atualizarIsFavorite(int: Int, id_api: Int) = liveData(Dispatchers.IO) {
+        _repository.atualizarIsFavorite(int, id_api)
+        emit(true)
     }
 
     class CharactersViewModelFactory(private val _repository: CharacterRepository): ViewModelProvider.Factory {

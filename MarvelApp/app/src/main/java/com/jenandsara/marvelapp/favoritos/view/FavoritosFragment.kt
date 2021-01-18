@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.character.repository.CharacterRepository
+import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.db.AppDatabase
-import com.jenandsara.marvelapp.datalocal.repository.LocalCharacterRepository
-import com.jenandsara.marvelapp.datalocal.viewmodel.LocalCharacterViewModel
 
 class FavoritosFragment : Fragment() {
 
@@ -58,8 +58,8 @@ class FavoritosFragment : Fragment() {
 
     private fun getFavoritos(){
 
-        val localViewModel = ViewModelProvider(this, LocalCharacterViewModel.LocalCharacterViewModelFactory(
-            LocalCharacterRepository((AppDatabase.getDatabase(_view.context).characterDao()))
-        )).get(LocalCharacterViewModel::class.java)
+        val viewModel = ViewModelProvider(this, CharactersViewModel.CharactersViewModelFactory(
+            CharacterRepository((AppDatabase.getDatabase(_view.context).characterDao()))
+        )).get(CharactersViewModel::class.java)
     }
 }

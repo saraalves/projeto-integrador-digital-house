@@ -17,10 +17,6 @@ import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
-import com.jenandsara.marvelapp.datalocal.repository.LocalCharacterRepository
-import com.jenandsara.marvelapp.datalocal.viewmodel.LocalCharacterViewModel
-import com.jenandsara.marvelapp.db.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 
