@@ -5,11 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 
 class AvatarAdapter(
-    private var avatar: MutableList<CharacterModel>,
-    private val listener: (CharacterModel) -> Unit
+    private val listener: (CharacterEntity) -> Unit
 ) : RecyclerView.Adapter<AvatarViewHolder>() {
+
+    private var avatar = mutableListOf<CharacterEntity>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_avatar, parent, false)
 
@@ -22,5 +25,9 @@ class AvatarAdapter(
         val item = avatar[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { listener(item) }
+    }
+
+    fun setList(character: CharacterEntity){
+        avatar.add(character)
     }
 }

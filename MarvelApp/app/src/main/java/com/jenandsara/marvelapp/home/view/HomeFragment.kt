@@ -32,8 +32,6 @@ class HomeFragment : Fragment() {
     private lateinit var _avatarAdapter: AvatarAdapter
     private lateinit var _localViewModel: LocalCharacterViewModel
 
-    var _character = mutableListOf<CharacterModel>()
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -53,18 +51,17 @@ class HomeFragment : Fragment() {
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
-
         setupNavigation()
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
         getList()
-        searchByName(_view, _character)
+        //searchByName(_view, _character)
         getListAvatar()
-        showLoading(true)
-        setScrollView()
-        setScrollViewAvatar()
+        //setScrollView()
+        //setScrollViewAvatar()
+        _localViewModel.obterTodos()
     }
 
 
@@ -105,12 +102,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupNavigationAvatar() {
-        _avatarAdapter = AvatarAdapter(_character) {
+        _avatarAdapter = AvatarAdapter() {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             intent.putExtra("ID", it.id)
-            intent.putExtra("NOME", it.nome)
-            intent.putExtra("DESCRIÇÃO", it.descricao)
-            intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
+            intent.putExtra("NOME", it.name)
+            intent.putExtra("DESCRIÇÃO", it.description)
+            intent.putExtra("IMAGEM", it.imgUrl)
             startActivity(intent)
         }
     }
@@ -124,7 +121,6 @@ class HomeFragment : Fragment() {
                     _characterAdapter.setList(it)
                 }
             }
-            _localViewModel.obterTodos()
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -132,7 +128,12 @@ class HomeFragment : Fragment() {
 
     private fun getListAvatar() {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            _character.addAll(it)
+            for(avatar in it){
+                _localViewModel.adiconarChracter(avatar.nome, avatar.id, avatar.descricao, avatar.thumbnail!!.getImagePath(), avatar.isFavorite)
+                    .observe(viewLifecycleOwner) {
+                        _avatarAdapter.setList(it)
+                    }
+            }
             _avatarAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -162,7 +163,6 @@ class HomeFragment : Fragment() {
                     if (totalItemCount > 0 && lastItem) {
                         showLoading(true)
                         _viewModel.nextPage().observe({ lifecycle }, {
-                            _character.addAll(it)
                             _avatarAdapter.notifyDataSetChanged()
                             showLoading(false)
                         })
@@ -187,7 +187,7 @@ class HomeFragment : Fragment() {
                     if (totalItemCount > 0 && lastItem) {
                         showLoading(true)
                         _viewModel.nextPage().observe({ lifecycle }, {
-                            _character.addAll(it)
+                           // _character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
                             showLoading(false)
                         })
