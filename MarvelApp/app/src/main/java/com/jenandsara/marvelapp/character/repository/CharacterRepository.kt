@@ -14,7 +14,7 @@ class CharacterRepository(private val characterDao: CharacterDao? = null) {
     suspend fun getCharacterByName(name: String?) = client.getCharacterByName(name)
     suspend fun getCharacterByStartsWith (string: String?) = client.getCharacterByStartsWith(string)
 
-    suspend fun adicionarCharacter(character: CharacterEntity) = characterDao?.adicionarCharacter(character)
+    suspend fun adicionarCharacter(character: List<CharacterEntity>) = characterDao?.adicionarCharacter(character)
     suspend fun atualizarIsFavorite(int: Int, id_api: Int) = characterDao?.atualizarIsFavorite(int, id_api)
     suspend fun obterTodos(): List<CharacterEntity>? = characterDao?.obterTodos()
     suspend fun obterFavoritos(): List<CharacterEntity>? = characterDao?.obterFavoritos()

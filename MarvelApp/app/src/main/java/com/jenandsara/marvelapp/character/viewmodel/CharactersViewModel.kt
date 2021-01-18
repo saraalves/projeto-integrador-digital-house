@@ -1,5 +1,8 @@
 package com.jenandsara.marvelapp.character.viewmodel
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
@@ -17,17 +20,31 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
     private var _count: Int = 0
 
 
-    fun getList() = liveData(Dispatchers.IO) {
-        val response = _repository.getCharacter()
-        _count =response.data.count
-        _totalPages = if (response.data.total != 0) {
-            response.data.total / _count
-        } else{
-            0
+    fun getList(context: Context, characterEntity: List<CharacterEntity>) = liveData(Dispatchers.IO) {
+        if(isOnline(context)){
+            val response = _repository.getCharacter()
+            _count =response.data.count
+            _totalPages = if (response.data.total != 0) {
+                response.data.total / _count
+            } else{
+                0
+            }
+            _characterList = response.data.results
+            emit(response.data.results)
+        } else {
+            val response = adiconarCharacter(characterEntity)
+            emit(response)
         }
-        _characterList = response.data.results
-        emit(response.data.results)
+
+
     }
+
+    fun isOnline(context: Context): Boolean {
+        val connMgr = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo? = connMgr.activeNetworkInfo
+        return networkInfo?.isConnected == true
+    }
+
 
     fun searchByName(name: String?) = liveData(Dispatchers.IO) {
         _characterBeforeSearch = _characterList
@@ -59,7 +76,7 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
 //        emit(character)
 //    }
 
-    fun adiconarCharacter(characterEntity: CharacterEntity) = liveData(Dispatchers.IO) {
+    fun adiconarCharacter(characterEntity: List<CharacterEntity>) = liveData(Dispatchers.IO) {
         _repository.adicionarCharacter(characterEntity)
         emit(true)
     }

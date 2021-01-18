@@ -7,7 +7,7 @@ import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun adicionarCharacter(character: CharacterEntity): Long
+    suspend fun adicionarCharacter(character: kotlin.collections.List<com.jenandsara.marvelapp.datalocal.entity.CharacterEntity>): Long
 
     @Transaction
     @Query("UPDATE LocalData SET isFavorite = :int WHERE id_api = :id_api")

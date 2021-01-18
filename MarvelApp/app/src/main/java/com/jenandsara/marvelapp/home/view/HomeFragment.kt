@@ -1,5 +1,6 @@
 package com.jenandsara.marvelapp.home.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 
@@ -27,7 +29,10 @@ class HomeFragment : Fragment() {
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
 
+    private lateinit var _context:  Context
+
     private var _character = mutableListOf<CharacterModel>()
+    private var _characterEntity = listOf<CharacterEntity>()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +59,7 @@ class HomeFragment : Fragment() {
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
-        getList(_character)
+        getList(_character, _characterEntity)
         searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
@@ -110,16 +115,29 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getList(list: List<CharacterModel>) {
-        _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let { _character.addAll(it) }
-            _characterAdapter.notifyDataSetChanged()
-            showLoading(false)
+//    private fun getList(list: List<CharacterModel>) {
+//        _viewModel.getList(_context).observe(viewLifecycleOwner) {
+//            list?.let { _character.addAll(it) }
+//            _characterAdapter.notifyDataSetChanged()
+//            showLoading(false)
+//        }
+//    }
+
+    private fun getList(list: List<CharacterModel>, listOffLine: List<CharacterEntity>) {
+        _viewModel.getList(_context, _characterEntity).observe(viewLifecycleOwner) {
+            if(_viewModel.isOnline(_context)){
+                list?.let { _character.addAll(it) }
+                _characterAdapter.notifyDataSetChanged()
+                showLoading(false)
+            } else{
+
+            }
+
         }
     }
 
     private fun getListAvatar() {
-        _viewModel.getList().observe(viewLifecycleOwner) {
+        _viewModel.getList(_context, _characterEntity).observe(viewLifecycleOwner) {
             _character.addAll(it)
             _avatarAdapter.notifyDataSetChanged()
             showLoading(false)
