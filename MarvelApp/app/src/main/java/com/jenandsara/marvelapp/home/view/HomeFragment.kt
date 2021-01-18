@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
         getList(_character, _characterEntity)
-        searchByName(_view, _character)
+        searchByName(_view)
         getListAvatar()
         showLoading(true)
         setScrollView()
@@ -212,7 +212,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun searchByName(view: View, list: MutableList<CharacterModel>) {
+    private fun searchByName(
+        view: View
+    ) {
 
         val searchView = view.findViewById<SearchView>(R.id.searchView)
 
@@ -220,7 +222,7 @@ class HomeFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
                     _character.clear()
-                    getList(it)
+                    getList()
                 }
                 return false
             }
@@ -232,7 +234,7 @@ class HomeFragment : Fragment() {
                 } else {
                     _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner){
                         _character.clear()
-                        getList(it)
+                        getList()
                     }
                 }
                 return false
