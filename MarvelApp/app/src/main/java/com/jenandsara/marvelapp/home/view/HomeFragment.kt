@@ -1,12 +1,15 @@
 package com.jenandsara.marvelapp.home.view
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,10 +30,14 @@ import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 class HomeFragment : Fragment() {
 
     private lateinit var _view: View
+
     private lateinit var _viewModel: CharactersViewModel
+    private lateinit var _localViewModel: LocalCharacterViewModel
+
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
-    private lateinit var _localViewModel: LocalCharacterViewModel
+
+    private val listCharacter = mutableListOf<CharacterEntity>()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -56,9 +63,9 @@ class HomeFragment : Fragment() {
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
-        getList()
+        if(isConnected(view.context)){getList()}
         //searchByName(_view, _character)
-        getListAvatar()
+        if(isConnected(view.context)){getListAvatar()}
         //setScrollView()
         //setScrollViewAvatar()
         _localViewModel.obterTodos()
@@ -88,8 +95,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        _characterAdapter = CharacterAdapter() {
-
+        _characterAdapter = CharacterAdapter(listCharacter) {
 
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             intent.putExtra("ID", it.id_api)
@@ -103,37 +109,46 @@ class HomeFragment : Fragment() {
 
     private fun setupNavigationAvatar() {
         _avatarAdapter = AvatarAdapter() {
+
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.name)
             intent.putExtra("DESCRIÇÃO", it.description)
             intent.putExtra("IMAGEM", it.imgUrl)
+
             startActivity(intent)
         }
     }
 
     private fun getList() {
+
         localViewModelProvider()
+
         _viewModel.getList().observe(viewLifecycleOwner) {
+
             for(character in it){
                 _localViewModel.adiconarChracter(character.nome, character.id, character.descricao,
                     character.thumbnail!!.getImagePath(), character.isFavorite).observe(viewLifecycleOwner) {
-                    _characterAdapter.setList(it)
+                    listCharacter.add(it)
                 }
             }
+
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
     }
 
     private fun getListAvatar() {
+
         _viewModel.getList().observe(viewLifecycleOwner) {
+
             for(avatar in it){
                 _localViewModel.adiconarChracter(avatar.nome, avatar.id, avatar.descricao, avatar.thumbnail!!.getImagePath(), avatar.isFavorite)
                     .observe(viewLifecycleOwner) {
                         _avatarAdapter.setList(it)
                     }
             }
+
             _avatarAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -237,5 +252,10 @@ class HomeFragment : Fragment() {
             this,
             LocalCharacterViewModel.LocalCharacterViewModelFactory(LocalCharacterRepository(AppDatabase.getDatabase(_view.context).characterDao()))
         ).get(LocalCharacterViewModel::class.java)
+    }
+
+    private fun isConnected(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return true
     }
 }

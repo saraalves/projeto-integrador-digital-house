@@ -8,11 +8,11 @@ import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 
 class CharacterAdapter(
+    private val _localPersonagens : MutableList<CharacterEntity>,
     private val _listener: (CharacterEntity) -> Unit
 ) :
     RecyclerView.Adapter<CharacterViewHolder>() {
 
-   val _localPersonagens = mutableListOf<CharacterEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -43,7 +43,4 @@ class CharacterAdapter(
         }
     }
 
-    fun setList(character: CharacterEntity){
-        _localPersonagens.add(character)
-    }
 }

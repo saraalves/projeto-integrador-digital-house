@@ -21,7 +21,7 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         _count =response.data.count
         _totalPages = if (response.data.total != 0) {
             response.data.total / _count
-        } else{
+        } else {
             0
         }
         _characterList = response.data.results
