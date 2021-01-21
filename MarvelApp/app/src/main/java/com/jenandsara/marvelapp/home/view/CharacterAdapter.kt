@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.offline.entity.CharacterEntity
 
 class CharacterAdapter(
-    private val _personagens: MutableList<CharacterModel>,
-    private val _listener: (CharacterModel) -> Unit
+    private val _personagens: MutableList<CharacterEntity>,
+    private val _listener: (CharacterEntity) -> Unit
 ) :
     RecyclerView.Adapter<CharacterViewHolder>() {
 

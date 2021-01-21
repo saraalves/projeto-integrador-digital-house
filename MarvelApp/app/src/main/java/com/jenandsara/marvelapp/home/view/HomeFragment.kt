@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,15 +20,20 @@ import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.db.AppDatabase
+import com.jenandsara.marvelapp.offline.entity.CharacterEntity
+import com.jenandsara.marvelapp.offline.repository.OfflineRepository
+import com.jenandsara.marvelapp.offline.viewmodel.OfflineViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
+    private lateinit var _offlineViewModel: OfflineViewModel
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
 
-    private var _character = mutableListOf<CharacterModel>()
+    private var _character = mutableListOf<CharacterEntity>()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -48,18 +54,31 @@ class HomeFragment : Fragment() {
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
+        offlineViewModelProvider()
+        viewModelProvider()
+
+        getList()
+
         setupNavigation()
         setupNavigationAvatar()
+
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
-        viewModelProvider()
-        getList(_character)
-        searchByName(_view, _character)
-        getListAvatar()
+        //searchByName(_view, _character)
         showLoading(true)
-        setScrollView()
-        favoritar()
-        setScrollViewAvatar()
+        //setScrollView()
+        //setScrollViewAvatar()
+
+        initialize()
+        _character.size
+    }
+
+    private fun initialize(){
+        _offlineViewModel.getAllCharacters().observe(viewLifecycleOwner) {
+            _character.addAll(it)
+        }
+        _characterAdapter.notifyDataSetChanged()
+        _avatarAdapter.notifyDataSetChanged()
     }
 
 
@@ -88,10 +107,10 @@ class HomeFragment : Fragment() {
     private fun setupNavigation() {
         _characterAdapter = CharacterAdapter(_character) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
-            intent.putExtra("ID", it.id)
+            intent.putExtra("ID", it.idAPI)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
-            intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
+            intent.putExtra("IMAGEM", it.imgPath)
             startActivity(intent)
         }
     }
@@ -99,26 +118,21 @@ class HomeFragment : Fragment() {
     private fun setupNavigationAvatar() {
         _avatarAdapter = AvatarAdapter(_character) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
-            intent.putExtra("ID", it.id)
+            intent.putExtra("ID", it.idAPI)
             intent.putExtra("NOME", it.nome)
             intent.putExtra("DESCRIÇÃO", it.descricao)
-            intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
+            intent.putExtra("IMAGEM", it.imgPath)
             startActivity(intent)
         }
     }
 
-    private fun getList(list: List<CharacterModel>) {
+    private fun getList() {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let { _character.addAll(it) }
-            _characterAdapter.notifyDataSetChanged()
-            showLoading(false)
-        }
-    }
-
-    private fun getListAvatar() {
-        _viewModel.getList().observe(viewLifecycleOwner) {
-            _character.addAll(it)
+            for(character in it){
+                _offlineViewModel.adicionarCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
+            }
             _avatarAdapter.notifyDataSetChanged()
+            _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
     }
@@ -147,7 +161,7 @@ class HomeFragment : Fragment() {
                     if (totalItemCount > 0 && lastItem) {
                         showLoading(true)
                         _viewModel.nextPage().observe({ lifecycle }, {
-                            _character.addAll(it)
+                           // _character.addAll(it)
                             _avatarAdapter.notifyDataSetChanged()
                             showLoading(false)
                         })
@@ -172,7 +186,7 @@ class HomeFragment : Fragment() {
                     if (totalItemCount > 0 && lastItem) {
                         showLoading(true)
                         _viewModel.nextPage().observe({ lifecycle }, {
-                            _character.addAll(it)
+                            //_character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
                             showLoading(false)
                         })
@@ -190,7 +204,7 @@ class HomeFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
                     _character.clear()
-                    getList(it)
+                    //getList(it)
                 }
                 return false
             }
@@ -198,11 +212,11 @@ class HomeFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     _character.clear()
-                    getList(_viewModel.initialList())
+                    //getList(_viewModel.initialList())
                 } else {
                     _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner){
                         _character.clear()
-                        getList(it)
+                        //getList(it)
                     }
                 }
                 return false
@@ -217,14 +231,13 @@ class HomeFragment : Fragment() {
         ).get(CharactersViewModel::class.java)
     }
 
-    private fun favoritar() {
-        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
-        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
-            if(isChecked) {
-                view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_baseline_favorite_24)
-            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_favorit_24)
-        }
+    private fun offlineViewModelProvider() {
+        _offlineViewModel = ViewModelProvider(
+            this,
+            OfflineViewModel.OfflineViewModelFactory(OfflineRepository(AppDatabase.getDatabse(_view.context).characterDAO()))
+        ).get(OfflineViewModel::class.java)
     }
+
 
 
 }
