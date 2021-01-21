@@ -15,10 +15,12 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val imagem = view.findViewById<ImageView>(R.id.cardPersonagem)
     private val nome = view.findViewById<TextView>(R.id.txtNamePersongemCard)
+
     val _toggleFavorita = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
     val _btnFavorita = view.findViewById<MaterialButton>(R.id.btnFavoritar)
 
     fun bind(character: CharacterEntity) {
+
         nome.text = character.name
 
         val imagePath = character.imgUrl

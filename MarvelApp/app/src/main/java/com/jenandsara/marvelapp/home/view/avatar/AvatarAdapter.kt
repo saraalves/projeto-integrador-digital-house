@@ -11,7 +11,14 @@ class AvatarAdapter(
     private val listener: (CharacterEntity) -> Unit
 ) : RecyclerView.Adapter<AvatarViewHolder>() {
 
+
     private var avatar = mutableListOf<CharacterEntity>()
+
+    fun addAll(list: List<CharacterEntity>){
+        avatar.addAll(list)
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_avatar, parent, false)
@@ -25,9 +32,5 @@ class AvatarAdapter(
         val item = avatar[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { listener(item) }
-    }
-
-    fun setList(character: CharacterEntity){
-        avatar.add(character)
     }
 }

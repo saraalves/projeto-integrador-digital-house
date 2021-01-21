@@ -6,7 +6,7 @@ import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 @Dao
 interface CharacterDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun adicionarCharacter(character: CharacterEntity): Long
 
     @Transaction

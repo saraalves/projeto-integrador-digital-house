@@ -10,6 +10,7 @@ import com.jenandsara.marvelapp.datalocal.entity.CharacterEntity
 import com.squareup.picasso.Picasso
 
 class AvatarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
     private val imagem = view.findViewById<ImageView>(R.id.avatarPersonagem)
     private val nome = view.findViewById<TextView>(R.id.txtNameAvatar)
 

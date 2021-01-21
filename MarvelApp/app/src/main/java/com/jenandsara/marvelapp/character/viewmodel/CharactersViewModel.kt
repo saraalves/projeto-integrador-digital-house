@@ -1,5 +1,7 @@
 package com.jenandsara.marvelapp.character.viewmodel
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
@@ -15,30 +17,23 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
     private var _offset: Int = 0
     private var _count: Int = 0
 
-
     fun getList() = liveData(Dispatchers.IO) {
-        val response = _repository.getCharacter()
-        _count =response.data.count
-        _totalPages = if (response.data.total != 0) {
-            response.data.total / _count
-        } else {
-            0
+
+        try {
+            val response = _repository.getCharacter()
+            _count = response.data.count
+            _totalPages = if (response.data.total != 0) {
+                response.data.total / _count
+            } else {
+                0
+            }
+            _characterList = response.data.results
+            emit(_characterList)
+        } catch (e: Exception){
+            print(e)
         }
-        _characterList = response.data.results
-        emit(response.data.results)
     }
 
-    fun searchByName(name: String?) = liveData(Dispatchers.IO) {
-        _characterBeforeSearch = _characterList
-        val response = _repository.getCharacterByName(name)
-        emit(response.data.results)
-    }
-
-    fun searchByStartsWith(string: String?) = liveData(Dispatchers.IO) {
-        _characterBeforeSearch = _characterList
-        val response = _repository.getCharacterByStartsWith(string)
-        emit(response.data.results)
-    }
 
     fun initialList() = _characterBeforeSearch
 

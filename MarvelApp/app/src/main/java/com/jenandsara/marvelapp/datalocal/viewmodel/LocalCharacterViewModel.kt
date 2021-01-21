@@ -12,17 +12,16 @@ class LocalCharacterViewModel(private val characterRepository: LocalCharacterRep
     fun adiconarChracter(name: String, id_api: Int, description: String, imgUrl: String, isFavorite: Int) = liveData(Dispatchers.IO) {
 
         val character = CharacterEntity(0, name, id_api, description, imgUrl, isFavorite)
-
         characterRepository.adicionarCharacter(character)
         emit(character)
     }
 
-    fun obterFavoritos() = liveData(Dispatchers.IO) {
-        emit(characterRepository.obterFavoritos())
-    }
-
     fun obterTodos() = liveData(Dispatchers.IO) {
         emit(characterRepository.obterTodos())
+    }
+
+    fun obterFavoritos() = liveData(Dispatchers.IO) {
+        emit(characterRepository.obterFavoritos())
     }
 
     fun atualizarIsFavorite(int: Int, id_api: Int) = liveData(Dispatchers.IO) {
