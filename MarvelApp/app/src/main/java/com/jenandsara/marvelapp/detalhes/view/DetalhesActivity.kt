@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.comics.model.ComicsModel
@@ -81,7 +82,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
 
-        val toolbarCollapse = findViewById<MaterialToolbar>(R.id.topAppBar)
+        val toolbarCollapse = findViewById<CollapsingToolbarLayout>(R.id.collapseToolbar)
         toolbarCollapse.title = nome
 
         Picasso.get().load(imagem).into(findViewById<ImageView>(R.id.imgPersonagemDetail))

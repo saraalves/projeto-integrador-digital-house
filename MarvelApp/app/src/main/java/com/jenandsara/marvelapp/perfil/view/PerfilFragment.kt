@@ -42,6 +42,7 @@ class PerfilFragment : Fragment() {
         logout.setOnClickListener {
             val intent = Intent(view.context, SplashScreenActivity::class.java)
             startActivity(intent)
+            activity?.finish()
         }
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
