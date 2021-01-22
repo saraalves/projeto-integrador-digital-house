@@ -9,6 +9,7 @@
     android:background="@drawable/background_app"
     tools:context=".detalhes.view.DetalhesActivity">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -23,20 +24,9 @@
             android:layout_width="match_parent"
             app:expandedTitleTextAppearance="@style/TitleCollapseBar"
             android:fitsSystemWindows="true"
+            app:title="@string/nome"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/imgPersonagemDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="70dp"
-                android:contentDescription="@string/character"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_detalhes"
-                app:layout_collapseMode="parallax" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
@@ -49,7 +39,20 @@
                 app:title="NOME"
                 app:navigationIcon="@drawable/ic_back_24"/>
 
+            <ImageView
+                android:id="@+id/imgPersonagemDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="60dp"
+                android:contentDescription="@string/character"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_detalhes"
+                app:layout_collapseMode="parallax" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -143,7 +146,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtStories"
-            tools:listitem="@layout/chip_item" />
+            tools:listitem="@layout/stories_chip_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

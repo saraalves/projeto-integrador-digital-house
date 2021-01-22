@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -27,10 +28,8 @@ class PerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnAlterarSenha = view.findViewById<TextView>(R.id.changePassword)
+        val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
         btnAlterarSenha.setOnClickListener {
-            val intent = Intent(view.context, AlterarSenhaActivity::class.java)
-            startActivity(intent)
         }
 
         val btnSalvar = view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
@@ -42,6 +41,7 @@ class PerfilFragment : Fragment() {
         logout.setOnClickListener {
             val intent = Intent(view.context, SplashScreenActivity::class.java)
             startActivity(intent)
+            activity?.finish()
         }
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)

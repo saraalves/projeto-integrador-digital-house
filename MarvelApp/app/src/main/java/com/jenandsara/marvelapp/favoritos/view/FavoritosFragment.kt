@@ -9,21 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
-import com.jenandsara.marvelapp.home.model.PersonagemModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.character.model.CharacterModel
 
 class FavoritosFragment : Fragment() {
 
     private lateinit var _view: View
     private lateinit var _favoritosAdapter: FavoritosAdapter
 
-    private var _listaFavoritos = mutableListOf<PersonagemModel>(
-        PersonagemModel(20, "CAPITÃ MARVEL", R.drawable.img_card),
-        PersonagemModel(21, "CAPITÃ MARVEL", R.drawable.img_card),
-        PersonagemModel(22, "CAPITÃ MARVEL", R.drawable.img_card)
-    )
+    private var _listaFavoritos = mutableListOf<CharacterModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

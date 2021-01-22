@@ -152,16 +152,18 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+    <Button
         android:id="@+id/changePassword"
         android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dim_12_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:fontFamily="@font/roboto_condensed_bold"
         android:text="@string/alterar_senha"
+        android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/dim_18_sp"
+        android:textSize="@dimen/dim_16_sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtEmailPerfil" />

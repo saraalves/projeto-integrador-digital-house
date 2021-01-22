@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.view.HomeActivity" />
+        <activity android:name=".manageractivity.view.HomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

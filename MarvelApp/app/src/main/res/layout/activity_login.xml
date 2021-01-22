@@ -79,7 +79,7 @@
                 android:layout_marginEnd="@dimen/dim_20_dp"
                 android:text="@string/esqueci_minha_senha"
                 android:textAllCaps="false"
-                android:textSize="@dimen/dim_14_sp"
+                android:textSize="@dimen/dim_16_sp"
                 android:textStyle="bold" />
         </LinearLayout>
 

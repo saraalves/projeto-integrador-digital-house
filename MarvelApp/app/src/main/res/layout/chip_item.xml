@@ -10,7 +10,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgChip"
         android:layout_width="@dimen/dim_40_dp"
-        android:layout_margin="@dimen/dim_5_dp"
+        android:layout_margin="@dimen/dim_4_dp"
         android:src="@drawable/img_avatar"
         android:layout_height="@dimen/dim_40_dp"/>
 
@@ -22,6 +22,6 @@
         android:layout_marginStart="@dimen/dim_5_dp"
         android:textColor="@color/colorText"
         android:layout_marginEnd="@dimen/dim_10_dp"
-        android:textSize="@dimen/dim_20_sp"/>
+        android:textSize="@dimen/dim_16_sp"/>
 
 </LinearLayout>

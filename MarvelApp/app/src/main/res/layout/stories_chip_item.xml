@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/chip_background"
+    android:layout_margin="@dimen/dim_5_dp">
+
+    <TextView
+        android:id="@+id/txtStoriesChip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dim_5_dp"
+        android:layout_marginBottom="@dimen/dim_5_dp"
+        android:layout_marginStart="@dimen/dim_5_dp"
+        android:layout_marginEnd="@dimen/dim_5_dp"
+        android:padding="@dimen/dim_8_dp"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/dim_16_sp"/>
+
+</LinearLayout>
