@@ -29,8 +29,6 @@ class PerfilFragment : Fragment() {
 
         val btnAlterarSenha = view.findViewById<TextView>(R.id.changePassword)
         btnAlterarSenha.setOnClickListener {
-            val intent = Intent(view.context, AlterarSenhaActivity::class.java)
-            startActivity(intent)
         }
 
         val btnSalvar = view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
