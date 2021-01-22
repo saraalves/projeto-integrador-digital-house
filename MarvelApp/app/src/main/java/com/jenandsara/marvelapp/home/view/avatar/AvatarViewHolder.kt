@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.home.view
+package com.jenandsara.marvelapp.home.view.avatar
 
 import android.view.View
 import android.widget.ImageView
@@ -8,17 +8,15 @@ import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.squareup.picasso.Picasso
 
-class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-    private val imagem = view.findViewById<ImageView>(R.id.cardPersonagem)
-    private val nome = view.findViewById<TextView>(R.id.txtNamePersongemCard)
+class AvatarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private val imagem = view.findViewById<ImageView>(R.id.avatarPersonagem)
+    private val nome = view.findViewById<TextView>(R.id.txtNameAvatar)
 
     fun bind(character: CharacterModel) {
         nome.text = character.nome
 
         val imagePath = character.thumbnail?.getImagePath()
-        Picasso.get()
-            .load(imagePath)
-            .into(imagem)
+        Picasso.get().load(imagePath).into(imagem)
     }
+
 }

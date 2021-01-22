@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.home.model.PersonagemModel
 
 class FavoritosAdapter(
-    private var _personagem: MutableList<PersonagemModel>,
-    private val listener: (PersonagemModel) -> Unit
+    private var _personagem: MutableList<CharacterModel>,
+    private val listener: (CharacterModel) -> Unit
 ) : RecyclerView.Adapter<FavoritosViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritosViewHolder {
         val view =

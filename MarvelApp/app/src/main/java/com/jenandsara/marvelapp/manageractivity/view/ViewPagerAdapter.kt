@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.home.view
+package com.jenandsara.marvelapp.manageractivity.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

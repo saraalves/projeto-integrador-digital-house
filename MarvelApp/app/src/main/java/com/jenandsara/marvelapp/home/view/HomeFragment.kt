@@ -19,6 +19,8 @@ import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
+import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 
 class HomeFragment : Fragment() {
 

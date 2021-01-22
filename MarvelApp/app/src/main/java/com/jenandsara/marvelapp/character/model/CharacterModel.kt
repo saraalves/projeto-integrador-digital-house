@@ -1,6 +1,8 @@
 package com.jenandsara.marvelapp.character.model
 
 import com.google.gson.annotations.SerializedName
+import com.jenandsara.marvelapp.character.model.image.ImagemModel
+import com.jenandsara.marvelapp.character.model.image.ThumbnailModel
 
 data class CharacterModel(
     val id: Int,

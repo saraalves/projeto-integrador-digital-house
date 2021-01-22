@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.home.view
+package com.jenandsara.marvelapp.home.view.character
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

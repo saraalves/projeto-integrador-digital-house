@@ -1,6 +1,6 @@
 package com.jenandsara.marvelapp.comics.model
 
-import com.jenandsara.marvelapp.character.model.ThumbnailModel
+import com.jenandsara.marvelapp.character.model.image.ThumbnailModel
 
 data class ComicsModel(
     val id: Int,

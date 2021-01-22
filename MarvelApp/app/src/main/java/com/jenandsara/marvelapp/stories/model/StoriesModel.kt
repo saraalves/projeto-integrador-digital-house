@@ -1,6 +1,6 @@
 package com.jenandsara.marvelapp.stories.model
 
-import com.jenandsara.marvelapp.character.model.ThumbnailModel
+import com.jenandsara.marvelapp.character.model.image.ThumbnailModel
 
 data class StoriesModel (
     val id: Int,
