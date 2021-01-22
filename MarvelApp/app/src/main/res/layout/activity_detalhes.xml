@@ -31,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:layout_marginTop="70dp"
                 android:contentDescription="@string/character"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
@@ -50,6 +49,7 @@
                 app:navigationIcon="@drawable/ic_back_24"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -143,7 +143,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtStories"
-            tools:listitem="@layout/chip_item" />
+            tools:listitem="@layout/stories_chip_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

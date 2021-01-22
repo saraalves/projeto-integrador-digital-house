@@ -10,15 +10,10 @@ import com.squareup.picasso.Picasso
 
 class StoriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private var _chipNome = view.findViewById<TextView>(R.id.txtChip)
-    private var _chipImagem = view.findViewById<ImageView>(R.id.imgChip)
+    private var _chipNome = view.findViewById<TextView>(R.id.txtStoriesChip)
 
     fun bind(storiesModel: StoriesModel) {
-
         _chipNome.text = storiesModel.title
-
-        val imagePath = storiesModel.thumbnail?.getImagePath()
-        Picasso.get().load(imagePath).into(_chipImagem)
     }
 
 }
