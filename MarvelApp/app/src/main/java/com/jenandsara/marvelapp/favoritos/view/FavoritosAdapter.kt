@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
-import com.jenandsara.marvelapp.home.model.PersonagemModel
 
 class FavoritosAdapter(
     private var _personagem: MutableList<CharacterModel>,
