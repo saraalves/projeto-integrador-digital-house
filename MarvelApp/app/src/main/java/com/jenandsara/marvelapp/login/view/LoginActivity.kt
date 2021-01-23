@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Window.FEATURE_NO_TITLE
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +28,7 @@ import com.jenandsara.marvelapp.login.AppUtil
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+
     private lateinit var auth: FirebaseAuth
 
     private val imageFacebook: ImageView by lazy { findViewById<ImageView>(R.id.imgLoginFacebook) }
@@ -54,13 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
         imageGoogle.setOnClickListener { signIn() }
 
-        val buttonLogin = findViewById<TextView>(R.id.btnLogin)
-        buttonLogin.setOnClickListener {
-            Toast.makeText(this, "Campos vazios", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        validaCampos()
 
         val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
         textAlterarSenha.setOnClickListener {
@@ -175,6 +171,46 @@ class LoginActivity : AppCompatActivity() {
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "signInWithCredential:failure", task.exception)
                     // ...
+                }
+            }
+    }
+
+    private fun validaCampos(){
+        val buttonLogin = findViewById<TextView>(R.id.btnLogin)
+        buttonLogin.setOnClickListener {
+
+            val email = findViewById<EditText>(R.id.etEmailLogin).text.toString()
+            val senha = findViewById<EditText>(R.id.etSenhaLogin).text.toString()
+
+            if(checarCamposVazios(email, senha)) {
+                firebaseLoginSenha(email, senha)
+            }
+        }
+    }
+
+
+    private fun checarCamposVazios(email: String, senha: String): Boolean {
+
+        if(email.trim().isEmpty()){
+            findViewById<EditText>(R.id.etEmailLogin).error = CadastroActivity.ERRO_VAZIO
+            return false
+        } else if(senha.trim().isEmpty()){
+            findViewById<EditText>(R.id.etSenhaLogin).error = CadastroActivity.ERRO_VAZIO
+            return false
+        }
+        return true
+    }
+
+    private fun firebaseLoginSenha(email: String, senha: String){
+        auth.signInWithEmailAndPassword(email, senha)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
