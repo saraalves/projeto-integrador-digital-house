@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "315775888550",
+    "project_id": "marvelapp-dfdb1",
+    "storage_bucket": "marvelapp-dfdb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315775888550:android:143ba825440128c394d867",
+        "android_client_info": {
+          "package_name": "com.jenandsara.marvelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315775888550-7ib2oeuh4u03mit9ivceejkuj2lkvcsp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jenandsara.marvelapp",
+            "certificate_hash": "deb42aff25d4b2c97bd6e0f8fb9f0225bffd71a1"
+          }
+        },
+        {
+          "client_id": "315775888550-8ip861sako9prh3df5usitdbqmq71ith.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jenandsara.marvelapp",
+            "certificate_hash": "f8124eb5fb4356662f2b6b31d0be870cd8c55d86"
+          }
+        },
+        {
+          "client_id": "315775888550-vjultq0m3a4ksrhpmuqipl80lp0afadp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXaRp_3-LBKw9VOXfHWIxU7ej60SoOkgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315775888550-bcprvvs1rfu16v272v1uc8583l2pli06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

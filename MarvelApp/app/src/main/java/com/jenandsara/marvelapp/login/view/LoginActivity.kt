@@ -27,6 +27,7 @@ import com.jenandsara.marvelapp.login.AppUtil
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+
     private lateinit var auth: FirebaseAuth
 
     private val imageFacebook: ImageView by lazy { findViewById<ImageView>(R.id.imgLoginFacebook) }
