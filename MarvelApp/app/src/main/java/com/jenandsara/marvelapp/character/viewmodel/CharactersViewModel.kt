@@ -1,10 +1,13 @@
 package com.jenandsara.marvelapp.character.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
+import com.jenandsara.marvelapp.local.characterdatabase.CharacterEntity
+import com.jenandsara.marvelapp.local.datamanager.DataManager
 import kotlinx.coroutines.Dispatchers
 
 class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
@@ -14,6 +17,8 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
     private var _totalPages: Int = 0
     private var _offset: Int = 0
     private var _count: Int = 0
+
+    private lateinit var characterDataManager: DataManager
 
 
     fun getList() = liveData(Dispatchers.IO) {
@@ -47,6 +52,15 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
             _offset = _offset.plus(_count)
             val response = _repository.getCharacter(_offset)
             emit(response.data.results)
+        }
+    }
+
+
+    suspend fun createDatabase(characterList: List<CharacterEntity>) {
+
+        characterList.forEach {
+            characterDataManager.saveCharacter(it)
+            Log.d("DATA_BASE", "Insert item: $it")
         }
     }
 
