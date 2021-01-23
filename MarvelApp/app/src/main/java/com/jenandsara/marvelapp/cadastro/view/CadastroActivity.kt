@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +16,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.manageractivity.view.HomeActivity
 import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
 
 class CadastroActivity : AppCompatActivity() {
@@ -34,6 +37,9 @@ class CadastroActivity : AppCompatActivity() {
         }
 
         val btnCadastro = findViewById<MaterialButton>(R.id.btnCadastro)
+
+        enableButton(btnCadastro)
+
         btnCadastro.setOnClickListener {
             val nome = findViewById<EditText>(R.id.etNomeCadastro).text.toString()
             val email = findViewById<EditText>(R.id.etEmailCadastro).text.toString()
@@ -43,7 +49,10 @@ class CadastroActivity : AppCompatActivity() {
             if(checarCampos(nome, email,senha, senhaConferir)){
                 if(checarQtdDigitosSenha(8, senha)){
                     if(senhasIguais(senha, senhaConferir)){
-                        Toast.makeText(this, "DEU BOM", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@CadastroActivity, "DEU BOM", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@CadastroActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
             }
@@ -91,20 +100,28 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun checarCampos(nome:String, email: String, senha: String, senhaRepeat: String): Boolean {
 
-        if(nome.trim().isNullOrEmpty()){
+        if(nome.trim().isEmpty()){
             findViewById<EditText>(R.id.etNomeCadastro).error = ERRO_VAZIO
             return false
-        }else if(email.trim().isNullOrEmpty()){
+        }else if(email.trim().isEmpty()){
             findViewById<EditText>(R.id.etEmailCadastro).error = ERRO_VAZIO
             return false
-        }else if(senha.trim().isNullOrEmpty()){
+        }else if(senha.trim().isEmpty()){
             findViewById<EditText>(R.id.edtSenhaCadastro).error = ERRO_VAZIO
             return false
-        }else if(senhaRepeat.trim().isNullOrEmpty()){
+        }else if(senhaRepeat.trim().isEmpty()){
             findViewById<EditText>(R.id.edtRepeatSenhaCadastro).error = ERRO_VAZIO
             return false
         }
         return true
+    }
+
+    private fun enableButton(button: Button){
+        val checkbox = findViewById<CheckBox>(R.id.checkboxCadastro)
+
+        checkbox.setOnCheckedChangeListener { _, isChecked ->
+            button.isEnabled = isChecked
+        }
     }
 
     private fun checarQtdDigitosSenha(qtdDigitos:Int, senha: String): Boolean {

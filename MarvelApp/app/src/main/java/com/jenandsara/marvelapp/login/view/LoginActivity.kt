@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Window.FEATURE_NO_TITLE
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -57,10 +58,15 @@ class LoginActivity : AppCompatActivity() {
 
         val buttonLogin = findViewById<TextView>(R.id.btnLogin)
         buttonLogin.setOnClickListener {
-            Toast.makeText(this, "Campos vazios", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
+
+            val email = findViewById<EditText>(R.id.etEmailLogin).text.toString()
+            val senha = findViewById<EditText>(R.id.etSenhaLogin).text.toString()
+
+            if(checarCampos(email, senha)) {
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
@@ -178,6 +184,19 @@ class LoginActivity : AppCompatActivity() {
                     // ...
                 }
             }
+    }
+
+
+    private fun checarCampos(email: String, senha: String): Boolean {
+
+        if(email.trim().isEmpty()){
+            findViewById<EditText>(R.id.etEmailLogin).error = CadastroActivity.ERRO_VAZIO
+            return false
+        } else if(senha.trim().isEmpty()){
+            findViewById<EditText>(R.id.etSenhaLogin).error = CadastroActivity.ERRO_VAZIO
+            return false
+        }
+        return true
     }
 
     companion object {
