@@ -40,16 +40,6 @@ class PerfilFragment : Fragment() {
             Toast.makeText(view.context, "Dados salvos com sucesso", Toast.LENGTH_SHORT).show()
         }
 
-        val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
-        toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
-                view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = isChecked
-        }
-
-        val toggleEmail = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleEmail)
-        toggleEmail.addOnButtonCheckedListener { _, _, isChecked ->
-                view.findViewById<TextInputLayout>(R.id.txtEmailPerfil).isEnabled = isChecked
-        }
-
         getInfo(view)
         logOut(view)
 
@@ -79,7 +69,7 @@ class PerfilFragment : Fragment() {
         }
     }
 
-    fun logOut(view: View) {
+    private fun logOut(view: View) {
 
         val logout = view?.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
         logout.setOnClickListener {
@@ -88,6 +78,19 @@ class PerfilFragment : Fragment() {
             startActivity(intent)
             activity?.finish()
         }
+    }
+
+    private fun updateName(view: View){
+
+        val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
+        toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
+            view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = isChecked
+        }
+
+    }
+
+    private fun updateImage(view: View) {
+
     }
 
 
