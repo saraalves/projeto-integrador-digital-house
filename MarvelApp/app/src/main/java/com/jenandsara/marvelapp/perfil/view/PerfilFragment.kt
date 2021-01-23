@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PerfilFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +36,7 @@ class PerfilFragment : Fragment() {
 
         val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
         btnAlterarSenha.setOnClickListener {
+            alterarSenha(view)
         }
 
         getInfo(view)
@@ -44,7 +46,7 @@ class PerfilFragment : Fragment() {
 
     }
 
-    private fun getInfo(view: View){
+    private fun getInfo(view: View) {
 
         var nomePerfil = view.findViewById<TextInputEditText>(R.id.etNomeAtual)
         var emailPerfil = view.findViewById<TextInputEditText>(R.id.etEmailAtual)
@@ -62,7 +64,7 @@ class PerfilFragment : Fragment() {
             nomePerfil.setText(name)
             emailPerfil.setText(email)
 
-            if(photoUrl != null) {
+            if (photoUrl != null) {
                 Picasso.get().load(photoUrl).into(imgPerfil)
             }
         }
@@ -81,7 +83,7 @@ class PerfilFragment : Fragment() {
 
 
     private fun loginType(view: View) {
-        if(LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE"){
+        if (LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE") {
             view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome).visibility = View.GONE
             view.findViewById<ImageButton>(R.id.imageButtonCamera).visibility = View.GONE
             view.findViewById<MaterialButton>(R.id.btnSalvarPerfil).visibility = View.GONE
@@ -95,7 +97,7 @@ class PerfilFragment : Fragment() {
 
     }
 
-    private fun updateName(view: View){
+    private fun updateName(view: View) {
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
         toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
@@ -124,5 +126,17 @@ class PerfilFragment : Fragment() {
 
     }
 
+    private fun alterarSenha(view: View) {
 
+        Firebase.auth.sendPasswordResetEmail(Firebase.auth.currentUser!!.email!!)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(view.context, "Verifique seu email", Toast.LENGTH_SHORT).show()
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(view?.context, SplashScreenActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }
+            }
+    }
 }
