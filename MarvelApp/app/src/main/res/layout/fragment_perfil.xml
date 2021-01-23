@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".perfil.view.PerfilFragment">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPhotoPerfil"
         android:layout_width="@dimen/dim_150_dp"
         android:layout_height="@dimen/dim_150_dp"
@@ -143,7 +143,7 @@
         app:layout_constraintTop_toBottomOf="@id/txtNomePerfil">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEmailSocial"
+            android:id="@+id/etEmailPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
