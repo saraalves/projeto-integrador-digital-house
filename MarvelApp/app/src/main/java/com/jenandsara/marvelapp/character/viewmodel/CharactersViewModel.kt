@@ -55,15 +55,15 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         }
     }
 
-//    fun getCharacters() = liveData(Dispatchers.IO) {
-//        val response =
-//            _repository.getCharacter()
-//
-//        response.data.results.forEach {
-//            it.isFavorite = characterLocalRepository.checkIfIsFavorite()
-//        }
-//        emit(response.data.results)
-//    }
+    fun getCharacters() = liveData(Dispatchers.IO) {
+        val response =
+            _repository.getCharacter()
+
+        response.data.results.forEach {
+            it.isFavorite = characterLocalRepository.checkIfIsFavorite(it.id)
+        }
+        emit(response.data.results)
+    }
 
     fun getFavoriteCharacter() = liveData(Dispatchers.IO) {
         val favorites = characterLocalRepository.getAllCharacters()
