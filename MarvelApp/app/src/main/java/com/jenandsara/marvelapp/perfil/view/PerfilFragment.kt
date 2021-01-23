@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.login.view.LOGIN_TYPE
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -42,6 +43,7 @@ class PerfilFragment : Fragment() {
 
         getInfo(view)
         logOut(view)
+        loginType(view)
 
     }
 
@@ -88,6 +90,14 @@ class PerfilFragment : Fragment() {
         }
 
     }
+
+    private fun loginType(view: View){
+        if(LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE"){
+            view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome).visibility = View.GONE
+            view.findViewById<ImageButton>(R.id.imageButtonCamera).visibility = View.GONE
+        }
+    }
+
 
     private fun updateImage(view: View) {
 

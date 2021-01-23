@@ -25,6 +25,8 @@ import com.jenandsara.marvelapp.manageractivity.view.HomeActivity
 import com.jenandsara.marvelapp.login.AppUtil
 
 
+var LOGIN_TYPE = ""
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -71,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-     // começa as configs pro login social com o facebook
+    // começa as configs pro login social com o facebook
 
     private fun irParaHome(uiid: String) {
         AppUtil.salvarIdUsuario(application.applicationContext, uiid)
@@ -90,6 +92,8 @@ class LoginActivity : AppCompatActivity() {
                     FacebookAuthProvider.getCredential(loginResult.accessToken.token)
                 FirebaseAuth.getInstance().signInWithCredential(credential)
                     .addOnCompleteListener { irParaHome(loginResult.accessToken.userId) }
+
+                LOGIN_TYPE = "FACEBOOK"
             }
 
             override fun onCancel() {
@@ -122,14 +126,13 @@ class LoginActivity : AppCompatActivity() {
                     val account = task.getResult(ApiException::class.java)!!
                     Log.d("MainActivity", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
+                    LOGIN_TYPE = "GOOGLE"
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
                     Log.w("MainActivity", "Google sign in failed", e)
-                    // ...
                 }
             } else {
                 Log.w("MainActivity", exception.toString())
-
             }
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data)
@@ -138,9 +141,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        updateUI(currentUser)
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
@@ -154,7 +155,6 @@ class LoginActivity : AppCompatActivity() {
                 auth.signOut()
             }
         }
-
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -162,27 +162,24 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "signInWithCredential:success")
                     val user = auth.currentUser
                     updateUI(user)
-
                 } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("TAG", "signInWithCredential:failure", task.exception)
-                    // ...
+                    Toast.makeText(this, "Erro ao logar", Toast.LENGTH_LONG).show()
                 }
             }
     }
 
-    private fun validaCampos(){
+    // configuração login com email e senha
+
+    private fun validaCampos() {
         val buttonLogin = findViewById<TextView>(R.id.btnLogin)
         buttonLogin.setOnClickListener {
 
             val email = findViewById<EditText>(R.id.etEmailLogin).text.toString()
             val senha = findViewById<EditText>(R.id.etSenhaLogin).text.toString()
 
-            if(checarCamposVazios(email, senha)) {
+            if (checarCamposVazios(email, senha)) {
                 firebaseLoginSenha(email, senha)
             }
         }
@@ -191,28 +188,30 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checarCamposVazios(email: String, senha: String): Boolean {
 
-        if(email.trim().isEmpty()){
+        if (email.trim().isEmpty()) {
             findViewById<EditText>(R.id.etEmailLogin).error = CadastroActivity.ERRO_VAZIO
             return false
-        } else if(senha.trim().isEmpty()){
+        } else if (senha.trim().isEmpty()) {
             findViewById<EditText>(R.id.etSenhaLogin).error = CadastroActivity.ERRO_VAZIO
             return false
         }
         return true
     }
 
-    private fun firebaseLoginSenha(email: String, senha: String){
+    private fun firebaseLoginSenha(email: String, senha: String) {
         auth.signInWithEmailAndPassword(email, senha)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    if(user!!.isEmailVerified) {
+                    if (user!!.isEmailVerified) {
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
-                    } else Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        LOGIN_TYPE = "SENHA"
+                    } else Toast.makeText(baseContext, "Falha de autenticação", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Falha de autenticação", Toast.LENGTH_SHORT).show()
                 }
             }
     }
