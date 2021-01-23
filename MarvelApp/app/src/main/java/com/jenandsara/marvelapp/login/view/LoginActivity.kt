@@ -3,11 +3,14 @@ package com.jenandsara.marvelapp.login.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.Window.FEATURE_NO_TITLE
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -19,11 +22,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.cadastro.view.CadastroActivity
 import com.jenandsara.marvelapp.manageractivity.view.HomeActivity
 import com.jenandsara.marvelapp.login.AppUtil
-
+import com.jenandsara.marvelapp.splashscreen.view.SplashScreenActivity
+import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
+import kotlinx.android.synthetic.main.dialog_digitar_email.view.*
 
 var LOGIN_TYPE = ""
 
@@ -32,6 +39,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private lateinit var auth: FirebaseAuth
+
+    private var alertDialog: AlertDialog? = null
 
     private val imageFacebook: ImageView by lazy { findViewById<ImageView>(R.id.imgLoginFacebook) }
     private lateinit var callbackManager: CallbackManager
@@ -62,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
 
         val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
         textAlterarSenha.setOnClickListener {
-            Toast.makeText(this, "Alterar senha", Toast.LENGTH_SHORT).show()
+            showDialog()
         }
 
         val textIrProCadastro = findViewById<TextView>(R.id.btnNaoTenhoCadastro)
@@ -214,6 +223,45 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "Falha de autenticação", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun showDialog() {
+
+        val dialogBuilder = AlertDialog.Builder(this@LoginActivity)
+        val dialogView =
+            LayoutInflater.from(this).inflate(R.layout.dialog_digitar_email, null, false)
+        dialogBuilder.setView(dialogView)
+
+        dialogView.btnCancelaAdress.setOnClickListener { alertDialog?.dismiss() }
+
+        dialogView.btnConfirmAdress.setOnClickListener {
+            val email = dialogView.adress.text.toString()
+            esqueciSenha(email, alertDialog)
+        }
+
+        alertDialog = dialogBuilder.create()
+        alertDialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialog?.show()
+    }
+
+    private fun esqueciSenha(email: String, alertDialog: AlertDialog?) {
+
+        if (email.isNotEmpty()) {
+            Firebase.auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Verifique seu email", Toast.LENGTH_SHORT)
+                            .show()
+                        alertDialog?.dismiss()
+                    } else {
+                        Toast.makeText(this, "Erro de envio", Toast.LENGTH_SHORT).show()
+                        alertDialog?.dismiss()
+                    }
+                }
+        } else {
+            Toast.makeText(this, "Campo vazio", Toast.LENGTH_SHORT).show()
+            alertDialog?.dismiss()
+        }
     }
 
     companion object {

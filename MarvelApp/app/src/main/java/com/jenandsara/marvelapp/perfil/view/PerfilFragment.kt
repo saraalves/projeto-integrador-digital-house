@@ -48,8 +48,8 @@ class PerfilFragment : Fragment() {
 
     private fun getInfo(view: View) {
 
-        var nomePerfil = view.findViewById<TextInputEditText>(R.id.etNomeAtual)
-        var emailPerfil = view.findViewById<TextInputEditText>(R.id.etEmailAtual)
+        val nomePerfil = view.findViewById<TextInputEditText>(R.id.etNomeAtual)
+        val emailPerfil = view.findViewById<TextInputEditText>(R.id.etEmailAtual)
         val imgPerfil = view.findViewById<CircleImageView>(R.id.imgPhotoPerfil)
 
         val user = Firebase.auth.currentUser
