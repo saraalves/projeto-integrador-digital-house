@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.login.view.LOGIN_TYPE
@@ -36,14 +37,10 @@ class PerfilFragment : Fragment() {
         btnAlterarSenha.setOnClickListener {
         }
 
-        val btnSalvar = view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
-        btnSalvar.setOnClickListener {
-            Toast.makeText(view.context, "Dados salvos com sucesso", Toast.LENGTH_SHORT).show()
-        }
-
         getInfo(view)
         logOut(view)
         loginType(view)
+        updateName(view)
 
     }
 
@@ -82,6 +79,22 @@ class PerfilFragment : Fragment() {
         }
     }
 
+
+    private fun loginType(view: View) {
+        if(LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE"){
+            view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome).visibility = View.GONE
+            view.findViewById<ImageButton>(R.id.imageButtonCamera).visibility = View.GONE
+            view.findViewById<MaterialButton>(R.id.btnSalvarPerfil).visibility = View.GONE
+            view.findViewById<Button>(R.id.changePassword).visibility = View.GONE
+        }
+    }
+
+
+    private fun updateImage(view: View) {
+
+
+    }
+
     private fun updateName(view: View){
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
@@ -89,17 +102,25 @@ class PerfilFragment : Fragment() {
             view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = isChecked
         }
 
-    }
+        val user = Firebase.auth.currentUser
 
-    private fun loginType(view: View){
-        if(LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE"){
-            view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome).visibility = View.GONE
-            view.findViewById<ImageButton>(R.id.imageButtonCamera).visibility = View.GONE
+        val btnSalvar = view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
+        btnSalvar.setOnClickListener {
+
+            val newName = view.findViewById<TextInputEditText>(R.id.etNomeAtual).text.toString()
+
+            val profileUpdates = userProfileChangeRequest {
+                displayName = newName
+            }
+
+            user!!.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(view.context, "Dados salvos com sucesso", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
         }
-    }
-
-
-    private fun updateImage(view: View) {
 
     }
 
