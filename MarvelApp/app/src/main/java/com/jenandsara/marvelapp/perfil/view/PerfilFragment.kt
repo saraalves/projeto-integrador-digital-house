@@ -13,6 +13,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
@@ -39,13 +40,6 @@ class PerfilFragment : Fragment() {
             Toast.makeText(view.context, "Dados salvos com sucesso", Toast.LENGTH_SHORT).show()
         }
 
-        val logout = view.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
-        logout.setOnClickListener {
-            val intent = Intent(view.context, SplashScreenActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
-
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
         toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
                 view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = isChecked
@@ -57,6 +51,7 @@ class PerfilFragment : Fragment() {
         }
 
         getInfo(view)
+        logOut(view)
 
     }
 
@@ -72,14 +67,26 @@ class PerfilFragment : Fragment() {
             val name = user.displayName
             val email = user.email
             val photoUrl = user.photoUrl
+
             val uid = user.uid
 
             nomePerfil.setText(name)
             emailPerfil.setText(email)
 
-            if(photoUrl != null){
+            if(photoUrl != null) {
                 Picasso.get().load(photoUrl).into(imgPerfil)
             }
+        }
+    }
+
+    fun logOut(view: View) {
+
+        val logout = view?.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(view?.context, SplashScreenActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
     }
 
