@@ -21,9 +21,9 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
-import com.jenandsara.marvelapp.local.datamanager.DataManager
+import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 
-class HomeFragment : Fragment() {
+class HomeFragment: Fragment() {
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
 
     private var _character = mutableListOf<CharacterModel>()
 
-    private lateinit var characterDataManager: DataManager
+    private lateinit var characterDataManager: CharacterLocalRepository
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

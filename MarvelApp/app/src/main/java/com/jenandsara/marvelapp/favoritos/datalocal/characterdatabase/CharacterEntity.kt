@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.local.characterdatabase
+package com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "CharacterData")
 data class CharacterEntity (
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Int,
     @ColumnInfo
     var nome: String,
     @ColumnInfo
@@ -16,4 +16,6 @@ data class CharacterEntity (
     var descricao: String,
     @ColumnInfo
     var imgPath: String
-)
+) {
+    constructor(idAPI: Int): this(0, "", 0, "", "")
+}

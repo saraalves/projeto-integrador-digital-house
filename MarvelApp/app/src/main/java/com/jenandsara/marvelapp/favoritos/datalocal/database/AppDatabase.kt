@@ -1,11 +1,11 @@
-package com.jenandsara.marvelapp.local.database
+package com.jenandsara.marvelapp.favoritos.datalocal.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jenandsara.marvelapp.local.characterdatabase.CharacterDAO
-import com.jenandsara.marvelapp.local.characterdatabase.CharacterEntity
+import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterDAO
+import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 
 @Database(
     entities = [CharacterEntity::class],
