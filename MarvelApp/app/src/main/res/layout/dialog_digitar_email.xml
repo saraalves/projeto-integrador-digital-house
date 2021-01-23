@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialogAdress"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dim_14_dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dim_20_dp"
+        android:textSize="@dimen/dim_18_sp"
+            android:textStyle="bold"
+        android:text="@string/digite_seu_email_no_campo_abaixo"/>
+
+    <EditText
+        android:id="@+id/adress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_20_dp"
+        android:layout_marginEnd="@dimen/dim_20_dp"
+        android:backgroundTint="@color/colorGray"
+        android:textColorHint="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dim_10_dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancelaAdress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorTransparente"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="Cancelar"
+                android:textColor="@color/colorGray"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnConfirmAdress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/colorTransparente"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/confirmar"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dim_16_sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

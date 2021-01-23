@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".perfil.view.PerfilFragment">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPhotoPerfil"
         android:layout_width="@dimen/dim_150_dp"
         android:layout_height="@dimen/dim_150_dp"
@@ -37,7 +37,7 @@
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:layout_weight="1"
         android:enabled="false"
-        android:hint="@string/nome_completo"
+        android:hint="@string/nome"
         android:textColorHint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,52 +106,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginEnd="@dimen/dim_20_dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtEmailPerfil"
-        app:layout_constraintBottom_toBottomOf="@+id/txtEmailPerfil">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnHabilitaEmail"
-            style="@style/ToggleIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorTransparente"
-            app:icon="@drawable/ic_edit_24"
-            app:iconTint="@color/colorPrimary" />
-
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txtEmailPerfilSocial"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dim_20_dp"
-        android:layout_marginTop="@dimen/dim_20_dp"
-        android:layout_marginEnd="@dimen/dim_20_dp"
-        android:hint="@string/e_mail_conta_social"
-        android:textColorHint="@color/colorPrimary"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtNomePerfil">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etEmailSocial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/dim_16_sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
         android:id="@+id/changePassword"
         android:layout_width="wrap_content"
@@ -186,13 +140,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dim_150_dp"
         android:layout_marginBottom="@dimen/dim_40_dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSalvarPerfil">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/txtSairApp"

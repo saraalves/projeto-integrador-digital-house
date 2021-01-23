@@ -147,12 +147,23 @@ class CadastroActivity : AppCompatActivity() {
 
                     user!!.updateProfile(profileUpdates).addOnCompleteListener {
                         Toast.makeText(baseContext, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
+                        sendEmail()
                         val intent = Intent(this@CadastroActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
                 } else {
                     Toast.makeText(baseContext, "Erro ao criar usuário", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun sendEmail(){
+        val user = Firebase.auth.currentUser
+
+        user!!.sendEmailVerification()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                 }
             }
     }
