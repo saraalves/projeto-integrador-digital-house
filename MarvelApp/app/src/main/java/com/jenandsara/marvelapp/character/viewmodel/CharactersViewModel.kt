@@ -55,6 +55,19 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         }
     }
 
+    fun getFavoriteCharacter() = liveData(Dispatchers.IO) {
+        val favorites = characterLocalRepository.getAllCharacters()
+        val characters = mutableListOf<CharacterModel>()
+
+        favorites.forEach {
+            val character = _repository.getCharacter().data.results[0]
+            character.isFavorite = true
+            characters.add(character)
+        }
+
+        emit(characters)
+    }
+
 
     suspend fun createDatabase(characterList: List<CharacterEntity>) {
 
