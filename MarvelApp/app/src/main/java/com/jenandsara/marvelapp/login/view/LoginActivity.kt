@@ -56,18 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
         imageGoogle.setOnClickListener { signIn() }
 
-        val buttonLogin = findViewById<TextView>(R.id.btnLogin)
-        buttonLogin.setOnClickListener {
-
-            val email = findViewById<EditText>(R.id.etEmailLogin).text.toString()
-            val senha = findViewById<EditText>(R.id.etSenhaLogin).text.toString()
-
-            if(checarCampos(email, senha)) {
-                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
+        validaCampos()
 
         val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
         textAlterarSenha.setOnClickListener {
@@ -186,8 +175,21 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    private fun validaCampos(){
+        val buttonLogin = findViewById<TextView>(R.id.btnLogin)
+        buttonLogin.setOnClickListener {
 
-    private fun checarCampos(email: String, senha: String): Boolean {
+            val email = findViewById<EditText>(R.id.etEmailLogin).text.toString()
+            val senha = findViewById<EditText>(R.id.etSenhaLogin).text.toString()
+
+            if(checarCamposVazios(email, senha)) {
+                firebaseLoginSenha(email, senha)
+            }
+        }
+    }
+
+
+    private fun checarCamposVazios(email: String, senha: String): Boolean {
 
         if(email.trim().isEmpty()){
             findViewById<EditText>(R.id.etEmailLogin).error = CadastroActivity.ERRO_VAZIO
@@ -197,6 +199,20 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun firebaseLoginSenha(email: String, senha: String){
+        auth.signInWithEmailAndPassword(email, senha)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     companion object {
