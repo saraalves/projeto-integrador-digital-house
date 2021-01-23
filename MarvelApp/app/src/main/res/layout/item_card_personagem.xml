@@ -12,6 +12,7 @@
     app:cardCornerRadius="@dimen/dim_10_dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlCardPersonagem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite">
