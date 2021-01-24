@@ -10,16 +10,13 @@ import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterE
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import kotlinx.coroutines.Dispatchers
 
-class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
+class CharactersViewModel(private val _repository: CharacterRepository, private val characterLocalRepository: CharacterLocalRepository) : ViewModel() {
 
     private var _characterList: List<CharacterModel> = listOf()
     private var _characterBeforeSearch = listOf<CharacterModel>()
     private var _totalPages: Int = 0
     private var _offset: Int = 0
     private var _count: Int = 0
-
-    private lateinit var characterLocalRepository: CharacterLocalRepository
-
 
     fun getList() = liveData(Dispatchers.IO) {
         val response = _repository.getCharacter()
@@ -56,10 +53,11 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
     }
 
     fun getCharacters() = liveData(Dispatchers.IO) {
-        val response =
-            _repository.getCharacter()
+        val response = _repository.getCharacter()
 
-        response.data.results.forEach {
+        val data = response.data.results
+
+        data.forEach {
             it.isFavorite = characterLocalRepository.checkIfIsFavorite(it.id)
         }
         Log.d("TAG CHARACTER VIEWMODEL", "getCharacters()")
@@ -118,9 +116,9 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         emit(true)
     }
 
-    class CharactersViewModelFactory(private val _repository: CharacterRepository): ViewModelProvider.Factory {
+    class CharactersViewModelFactory(private val _repository: CharacterRepository, private val characterLocalRepository: CharacterLocalRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return CharactersViewModel(_repository) as T
+            return CharactersViewModel(_repository, characterLocalRepository) as T
         }
     }
 }
