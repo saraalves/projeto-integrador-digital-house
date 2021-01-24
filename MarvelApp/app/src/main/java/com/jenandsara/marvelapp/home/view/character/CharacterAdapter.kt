@@ -19,7 +19,7 @@ class CharacterAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_card_personagem, parent, false)
-        return CharacterViewHolder(view)
+        return CharacterViewHolder(view, parent.context)
     }
 
     override fun getItemCount() = _personagens.size
