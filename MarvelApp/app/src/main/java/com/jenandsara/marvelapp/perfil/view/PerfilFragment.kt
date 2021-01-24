@@ -32,6 +32,7 @@ class PerfilFragment : Fragment() {
 
     private var imgURI: Uri? = null
     private lateinit var _view: View
+    private val user = Firebase.auth.currentUser
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +52,6 @@ class PerfilFragment : Fragment() {
         }
 
         val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
-
         btnAlterarFoto.setOnClickListener {
             procurarFoto()
         }
@@ -59,7 +59,7 @@ class PerfilFragment : Fragment() {
         getInfo(view)
         logOut(view)
         loginType(view)
-        updateName(view)
+        updateProfile(view)
 
     }
 
@@ -69,13 +69,11 @@ class PerfilFragment : Fragment() {
         val emailPerfil = view.findViewById<TextInputEditText>(R.id.etEmailAtual)
         val imgPerfil = view.findViewById<CircleImageView>(R.id.imgPhotoPerfil)
 
-        val user = Firebase.auth.currentUser
         user?.let {
-            // Name, email address, and profile photo Url
+
             val name = user.displayName
             val email = user.email
             val photoUrl = user.photoUrl
-
             val uid = user.uid
 
             nomePerfil.setText(name)
@@ -88,7 +86,6 @@ class PerfilFragment : Fragment() {
     }
 
     private fun logOut(view: View) {
-
         val logout = view?.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -97,7 +94,6 @@ class PerfilFragment : Fragment() {
             activity?.finish()
         }
     }
-
 
     private fun loginType(view: View) {
         if (LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE") {
@@ -108,17 +104,17 @@ class PerfilFragment : Fragment() {
         }
     }
 
-    private fun updateName(view: View) {
+    private fun updateProfile(view: View) {
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
         toggleNome.addOnButtonCheckedListener { _, _, isChecked ->
             view.findViewById<TextInputLayout>(R.id.txtNomePerfil).isEnabled = isChecked
         }
 
-        val user = Firebase.auth.currentUser
-
-        val btnSalvar = view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
+        val btnSalvar = _view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
         btnSalvar.setOnClickListener {
+
+            enviarArquivo(user!!.uid)
 
             val newName = view.findViewById<TextInputEditText>(R.id.etNomeAtual).text.toString()
 
@@ -160,20 +156,9 @@ class PerfilFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == CONTENT_REQUEST_CODE && resultCode == RESULT_OK) {
-
-            val user = Firebase.auth.currentUser
-
             imgURI = data?.data
-
             _view.findViewById<CircleImageView>(R.id.imgPhotoPerfil)?.setImageURI(imgURI)
-
-            val btnSalvar = _view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
-
-            btnSalvar.setOnClickListener {
-                enviarArquivo(user!!.uid)
-            }
         }
     }
 
@@ -212,8 +197,6 @@ class PerfilFragment : Fragment() {
     private fun obterArquivo(usId: String, extension: String?) {
 
         val imgPerfil = _view.findViewById<CircleImageView>(R.id.imgPhotoPerfil)
-
-        val user = Firebase.auth.currentUser
 
         val firebaseStorage = FirebaseStorage.getInstance()
         val storageRef = firebaseStorage.getReference("${usId}/profilePicture")
