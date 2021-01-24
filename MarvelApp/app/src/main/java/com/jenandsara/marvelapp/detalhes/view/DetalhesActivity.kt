@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -32,6 +33,8 @@ import com.jenandsara.marvelapp.stories.viewmodel.StoriesViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
 import kotlinx.android.synthetic.main.dialog_image.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlin.properties.Delegates
 
 class DetalhesActivity : AppCompatActivity() {
 
@@ -42,6 +45,7 @@ class DetalhesActivity : AppCompatActivity() {
     private lateinit var _storiesViewModel: StoriesViewModel
 
     private lateinit var _detalhesViewModel: DetalhesViewModel
+    private var characterId by Delegates.notNull<Int>()
 
     private var _comics = mutableListOf<ComicsModel>()
     private var _stories = mutableListOf<StoriesModel>()
@@ -201,6 +205,16 @@ class DetalhesActivity : AppCompatActivity() {
         Picasso.get().load(path).into(dialogView.imgComicExpanded)
         imageDialog?.show()
 
+    }
+
+    private fun getCharacter() {
+        _detalhesViewModel.getCharacter(characterId).observe({lifecycle}, { character ->
+            character.id
+            character.nome
+            character.descricao
+            character.imagem
+            character.isFavorite
+        })
     }
 
     private fun detalhesViewModelProvider() {

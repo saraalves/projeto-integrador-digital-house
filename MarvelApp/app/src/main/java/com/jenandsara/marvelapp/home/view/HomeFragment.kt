@@ -251,9 +251,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     override fun getCharacterClick(position: Int) {
-        val intent = Intent(view?.context, DetalhesActivity::class.java)
-        val bundle = bundleOf("ID" to _character[position].id)
-        startActivity(intent, bundle)
+        Intent(view?.context, DetalhesActivity::class.java).apply {
+            putExtra("ID", _character[position].id)
+            putExtra("NOME", _character[position].nome )
+            putExtra("DESCRIÇÃO", _character[position].descricao)
+            putExtra("IMAGEM", _character[position].thumbnail?.getImagePath())
+            startActivity(this)
+        }
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
