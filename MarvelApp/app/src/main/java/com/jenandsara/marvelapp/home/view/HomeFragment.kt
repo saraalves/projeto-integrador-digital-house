@@ -59,15 +59,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
         _characterAdapter = CharacterAdapter(_character, this)
 
-//        setupNavigation()
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
 
         if (_character.isEmpty()) getCharacters()
+
         updateCharacter()
-//        getList(_character)
         searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
