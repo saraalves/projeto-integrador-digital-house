@@ -2,6 +2,7 @@ package com.jenandsara.marvelapp.home.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -266,22 +267,30 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 if (isFavorite) {
                     _viewModel.deleteCharacter(_character[position].id)
                         .observe(viewLifecycleOwner) {
+                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                             if (it) {
                                 _character[position].isFavorite = false
+                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                                 if (onlyFavorites) {
                                     _character.removeAt(position)
                                     _characterAdapter.notifyDataSetChanged()
+                                    Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - onlyFavorites")
                                 } else {
                                     _characterAdapter.notifyItemChanged(position)
+                                    Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                                 }
                             }
                         }
                 } else {
                     _viewModel.addCharacter(_character[position].id)
                         .observe(viewLifecycleOwner) {
+                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
                             if (it) {
                                 _character[position].isFavorite = true
                                 _characterAdapter.notifyItemChanged(position)
+                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $it")
+                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $position $isFavorite")
+                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $_character")
                             }
                         }
                 }
