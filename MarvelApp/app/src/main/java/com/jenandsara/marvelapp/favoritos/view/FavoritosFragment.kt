@@ -15,6 +15,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.tabs.TabLayout
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.home.view.HomeFragment
 
 class FavoritosFragment : Fragment() {
@@ -23,6 +24,7 @@ class FavoritosFragment : Fragment() {
     private lateinit var _favoritosAdapter: FavoritosAdapter
 
     private var _listaFavoritos = mutableListOf<CharacterModel>()
+    private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +45,7 @@ class FavoritosFragment : Fragment() {
         val favorito = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
         val manager = GridLayoutManager(view.context, 2)
 
-        _listaFavoritos
-        _favoritosAdapter = FavoritosAdapter(_listaFavoritos) {
+        _favoritosAdapter = FavoritosAdapter(_listaFavoritosLocal) {
             val intent = Intent(view.context, DetalhesActivity::class.java)
             startActivity(intent)
         }

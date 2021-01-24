@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,13 +20,12 @@ import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterDAO
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 
-class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
+class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGetCharacterClick {
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
@@ -33,6 +33,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
     private lateinit var _avatarAdapter: AvatarAdapter
 
     private var _character = mutableListOf<CharacterModel>()
+
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -60,8 +61,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
         viewModelProvider()
 
         if (_character.isEmpty()) getCharacters()
+        updateCharacter()
 //        getList(_character)
-
         searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
@@ -69,21 +70,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
         favoritar()
         setScrollViewAvatar()
     }
-
-    private fun getCharacters() {
-        if (onlyFavorites) {
-            _viewModel.getCharacters().observe(viewLifecycleOwner) {
-                _character.addAll(it)
-                _characterAdapter.notifyDataSetChanged()
-            }
-        } else {
-            _viewModel.getCharacters().observe(viewLifecycleOwner) {
-                _character.addAll(it)
-                _characterAdapter.notifyDataSetChanged()
-            }
-        }
-    }
-
 
     private fun setupRecyclerViewCard(
             recyclerView: RecyclerView?,
@@ -232,6 +218,84 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
         })
     }
 
+    private fun getCharacters() {
+        if (onlyFavorites) {
+            _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
+                _character.addAll(it)
+                _characterAdapter.notifyDataSetChanged()
+            }
+        } else {
+            _viewModel.getCharacters().observe(viewLifecycleOwner) {
+                _character.addAll(it)
+                _characterAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    private fun updateCharacter() {
+        if (!onlyFavorites) {
+            _viewModel.updateFavoriteCharacters(_character)
+                .observe(viewLifecycleOwner) {
+                    _characterAdapter.notifyDataSetChanged()
+                }
+        } else {
+            _viewModel.updateFavoriteCharacters(_character)
+                .observe(viewLifecycleOwner) {
+                    _character.removeAll(it)
+                    _characterAdapter.notifyDataSetChanged()
+                }
+        }
+    }
+
+    override fun getCharacterClick (position: Int) {
+        val intent = Intent(view?.context, DetalhesActivity::class.java)
+        val bundle = bundleOf("CHARACTER_ID" to _character[position].id)
+        startActivity(intent, bundle)
+
+    }
+
+    override fun getCharacterFavoriteClick(position: Int) {
+        _viewModel.isFavorite(_character[position].id)
+            .observe(viewLifecycleOwner) { isFavorite ->
+                if (isFavorite) {
+                    _viewModel.deleteCharacter(_character[position].id)
+                        .observe(viewLifecycleOwner) {
+                            if (it) {
+                                _character[position].isFavorite = false
+                                if (onlyFavorites) {
+                                    _character.removeAt(position)
+                                    _characterAdapter.notifyDataSetChanged()
+                                } else {
+                                    _characterAdapter.notifyItemChanged(position)
+                                }
+                            }
+                        }
+                } else {
+                    _viewModel.addCharacter(_character[position].id)
+                        .observe(viewLifecycleOwner) {
+                            if (it) {
+                                _character[position].isFavorite = true
+                                _characterAdapter.notifyItemChanged(position)
+                            }
+                        }
+                }
+
+                _character[position].isFavorite = !_character[position].isFavorite
+            }
+    }
+
+    private fun favoritar() {
+        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
+        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) {
+                view?.findViewById<MaterialButton>(R.id.btnFavoritar)
+                    ?.setIconResource(R.drawable.ic_baseline_favorite_24)
+            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)
+                ?.setIconResource(R.drawable.ic_favorit_24)
+        }
+    }
+
+
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
                 this,
@@ -239,15 +303,4 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
                     CharacterLocalRepository(AppDatabase.getDatabase(_view?.context).characterDAO())
         )).get(CharactersViewModel::class.java)
     }
-
-    private fun favoritar() {
-        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
-        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
-            if(isChecked) {
-                view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_baseline_favorite_24)
-            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)?.setIconResource(R.drawable.ic_favorit_24)
-        }
-    }
-
-
 }
