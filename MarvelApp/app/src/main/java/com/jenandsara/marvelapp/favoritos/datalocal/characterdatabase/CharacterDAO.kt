@@ -14,10 +14,9 @@ interface CharacterDAO {
     @Query("SELECT * FROM CharacterData")
     suspend fun getAllCharacters(): List<CharacterEntity>
 
-    @Query("SELECT * FROM CharacterData WHERE idAPI=:idAPI")
+    @Query("SELECT EXISTS(SELECT 1 FROM CharacterData WHERE idAPI = :idAPI)")
     suspend  fun checkIfIsFavorite(idAPI: Int): Boolean
 
-    @Transaction
-    @Query("DELETE FROM CharacterData WHERE idAPI=:idAPI")
+    @Query("DELETE FROM CharacterData WHERE idAPI = :idAPI")
     suspend  fun deleteFavorite(idAPI: Int)
 }

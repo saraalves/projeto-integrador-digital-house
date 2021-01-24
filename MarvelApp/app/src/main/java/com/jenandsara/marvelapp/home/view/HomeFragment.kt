@@ -23,7 +23,7 @@ import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 
-class HomeFragment: Fragment() {
+class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
@@ -58,13 +58,30 @@ class HomeFragment: Fragment() {
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
         viewModelProvider()
-        getList(_character)
+
+        if (_character.isEmpty()) getCharacters()
+//        getList(_character)
+
         searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
         setScrollView()
         favoritar()
         setScrollViewAvatar()
+    }
+
+    private fun getCharacters() {
+        if (onlyFavorites) {
+            _viewModel.getCharacters().observe(viewLifecycleOwner) {
+                _character.addAll(it)
+                _characterAdapter.notifyDataSetChanged()
+            }
+        } else {
+            _viewModel.getCharacters().observe(viewLifecycleOwner) {
+                _character.addAll(it)
+                _characterAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
 

@@ -62,6 +62,7 @@ class CharactersViewModel(val _repository: CharacterRepository) : ViewModel() {
         response.data.results.forEach {
             it.isFavorite = characterLocalRepository.checkIfIsFavorite(it.id)
         }
+        Log.d("TAG CHARACTER VIEWMODEL", "getCharacters()")
         emit(response.data.results)
     }
 

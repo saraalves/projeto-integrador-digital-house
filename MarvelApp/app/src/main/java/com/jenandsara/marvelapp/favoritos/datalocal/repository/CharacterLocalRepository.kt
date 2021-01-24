@@ -7,6 +7,6 @@ class CharacterLocalRepository(private val characterDAO: CharacterDAO) {
 
     suspend fun saveCharacter(characterEntity: CharacterEntity) = characterDAO.saveCharacter(characterEntity)
     suspend fun getAllCharacters() = characterDAO.getAllCharacters()
-    suspend  fun checkIfIsFavorite(id: Int)= characterDAO.checkIfIsFavorite(id)
+    suspend  fun checkIfIsFavorite(idAPI: Int)= characterDAO.checkIfIsFavorite(idAPI)
     suspend fun deleteCharacter(id: Int)= characterDAO.deleteFavorite(id)
 }
