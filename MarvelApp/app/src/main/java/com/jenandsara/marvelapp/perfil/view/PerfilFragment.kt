@@ -1,14 +1,18 @@
 package com.jenandsara.marvelapp.perfil.view
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.jenandsara.marvelapp.alterarsenha.view.AlterarSenhaActivity
-import com.jenandsara.marvelapp.splashscreen.view.SplashScreenActivity
+import android.webkit.MimeTypeMap
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
@@ -17,12 +21,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.login.view.LOGIN_TYPE
+import com.jenandsara.marvelapp.splashscreen.view.SplashScreenActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PerfilFragment : Fragment() {
+
+    private var imgURI: Uri? = null
+    private lateinit var _view: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +43,17 @@ class PerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        _view = view
+
         val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
         btnAlterarSenha.setOnClickListener {
             alterarSenha(view)
+        }
+
+        val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
+
+        btnAlterarFoto.setOnClickListener {
+            procurarFoto()
         }
 
         getInfo(view)
@@ -91,12 +108,6 @@ class PerfilFragment : Fragment() {
         }
     }
 
-
-    private fun updateImage(view: View) {
-
-
-    }
-
     private fun updateName(view: View) {
 
         val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
@@ -139,4 +150,98 @@ class PerfilFragment : Fragment() {
                 }
             }
     }
+
+    private fun procurarFoto() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, CONTENT_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CONTENT_REQUEST_CODE && resultCode == RESULT_OK) {
+
+            val user = Firebase.auth.currentUser
+
+            imgURI = data?.data
+
+            _view.findViewById<CircleImageView>(R.id.imgPhotoPerfil)?.setImageURI(imgURI)
+
+            val btnSalvar = _view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
+
+            btnSalvar.setOnClickListener {
+                enviarArquivo(user!!.uid)
+            }
+        }
+    }
+
+    private fun enviarArquivo(usId: String) {
+        imgURI.run {
+
+            val extension = MimeTypeMap.getSingleton()
+                .getExtensionFromMimeType(activity?.contentResolver?.getType(imgURI!!))
+
+            val firebaseStorage = FirebaseStorage.getInstance()
+            val storageRef = firebaseStorage.getReference("${usId}/profilePicture")
+
+            val fileReference = storageRef.child("${usId}/profilePicture.${extension}")
+
+            fileReference.putFile(imgURI!!)
+                .addOnSuccessListener {
+                    obterArquivo(usId, extension)
+                }
+                .addOnCanceledListener {
+                    Toast.makeText(
+                        _view.context,
+                        "Upload de imagem cancelado.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        _view.context,
+                        "Upload de imagem falhou.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
+    }
+
+    private fun obterArquivo(usId: String, extension: String?) {
+
+        val imgPerfil = _view.findViewById<CircleImageView>(R.id.imgPhotoPerfil)
+
+        val user = Firebase.auth.currentUser
+
+        val firebaseStorage = FirebaseStorage.getInstance()
+        val storageRef = firebaseStorage.getReference("${usId}/profilePicture")
+
+        storageRef.child("${usId}/profilePicture.${extension}").downloadUrl.addOnSuccessListener { imgURI ->
+
+            Picasso.get().load(imgURI).into(imgPerfil)
+
+            val profileUpdates = userProfileChangeRequest {
+                photoUri = imgURI
+            }
+
+            user!!.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            _view.context,
+                            "Dados salvos com sucesso",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+        }
+    }
+
+    companion object {
+        const val CONTENT_REQUEST_CODE = 3
+    }
+
 }
