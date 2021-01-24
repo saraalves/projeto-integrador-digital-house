@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterDAO
+import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
@@ -33,8 +34,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
 
     private var _character = mutableListOf<CharacterModel>()
 
-    private lateinit var characterDAO: CharacterDAO
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -44,8 +43,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModelProvider()
 
         _view = view
 
@@ -60,6 +57,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
+        viewModelProvider()
 
         if (_character.isEmpty()) getCharacters()
 //        getList(_character)
@@ -237,8 +235,9 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
                 this,
-                CharactersViewModel.CharactersViewModelFactory(CharacterRepository(), CharacterLocalRepository(characterDAO))
-        ).get(CharactersViewModel::class.java)
+                CharactersViewModel.CharactersViewModelFactory(CharacterRepository(),
+                    CharacterLocalRepository(AppDatabase.getDatabase(_view?.context).characterDAO())
+        )).get(CharactersViewModel::class.java)
     }
 
     private fun favoritar() {
