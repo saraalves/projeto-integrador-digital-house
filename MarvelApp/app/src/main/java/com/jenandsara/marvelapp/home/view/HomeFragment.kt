@@ -60,6 +60,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment() {
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
+
         if (_character.isEmpty()) getCharacters()
 //        getList(_character)
 
