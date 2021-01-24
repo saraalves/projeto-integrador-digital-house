@@ -24,20 +24,23 @@ import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
+import kotlin.properties.Delegates
 
-class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGetCharacterClick {
+class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGetCharacterClick {
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
+    private var onPause = false
+    private var position by Delegates.notNull<Int>()
 
     private var _character = mutableListOf<CharacterModel>()
 
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -53,8 +56,9 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
 
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
+        _characterAdapter = CharacterAdapter(_character, this)
 
-        setupNavigation()
+//        setupNavigation()
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
@@ -72,8 +76,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
     }
 
     private fun setupRecyclerViewCard(
-            recyclerView: RecyclerView?,
-            viewGridManager: GridLayoutManager
+        recyclerView: RecyclerView?,
+        viewGridManager: GridLayoutManager
     ) {
         recyclerView?.apply {
             setHasFixedSize(true)
@@ -83,8 +87,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
     }
 
     private fun setupRecyclerViewAvatar(
-            recyclerView: RecyclerView?,
-            viewLayoutManager: LinearLayoutManager
+        recyclerView: RecyclerView?,
+        viewLayoutManager: LinearLayoutManager
     ) {
         recyclerView?.apply {
             setHasFixedSize(true)
@@ -94,13 +98,12 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
     }
 
     private fun setupNavigation() {
-        _characterAdapter = CharacterAdapter(_character) {
-            val intent = Intent(view?.context, DetalhesActivity::class.java)
-            intent.putExtra("ID", it.id)
-            intent.putExtra("NOME", it.nome)
-            intent.putExtra("DESCRIÇÃO", it.descricao)
-            intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
-            startActivity(intent)
+        Intent(view?.context, DetalhesActivity::class.java).apply {
+            bundleOf("ID" to _character[position].id)
+            bundleOf("NOME" to _character[position].nome )
+            bundleOf("DESCRIÇÃO" to _character[position].descricao)
+            bundleOf("IMAGEM" to _character[position].thumbnail?.getImagePath())
+            startActivity(this)
         }
     }
 
@@ -208,7 +211,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
                     _character.clear()
                     getList(_viewModel.initialList())
                 } else {
-                    _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner){
+                    _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner) {
                         _character.clear()
                         getList(it)
                     }
@@ -247,11 +250,11 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
         }
     }
 
-    override fun getCharacterClick (position: Int) {
+    override fun getCharacterClick(position: Int) {
         val intent = Intent(view?.context, DetalhesActivity::class.java)
-        val bundle = bundleOf("CHARACTER_ID" to _character[position].id)
+        val bundle = bundleOf("ID" to _character[position].id)
         startActivity(intent, bundle)
-
+//
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
@@ -298,9 +301,11 @@ class HomeFragment(private val onlyFavorites: Boolean = false): Fragment(), IGet
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
-                this,
-                CharactersViewModel.CharactersViewModelFactory(CharacterRepository(),
-                    CharacterLocalRepository(AppDatabase.getDatabase(_view?.context).characterDAO())
-        )).get(CharactersViewModel::class.java)
+            this,
+            CharactersViewModel.CharactersViewModelFactory(
+                CharacterRepository(),
+                CharacterLocalRepository(AppDatabase.getDatabase(_view?.context).characterDAO())
+            )
+        ).get(CharactersViewModel::class.java)
     }
 }

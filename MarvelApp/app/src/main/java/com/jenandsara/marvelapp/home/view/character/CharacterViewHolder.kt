@@ -41,8 +41,11 @@ class CharacterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             if (isChecked) {
                 btnFavoritar
                     ?.setIconResource(R.drawable.ic_baseline_favorite_24)
-            } else btnFavoritar
-                ?.setIconResource(R.drawable.ic_favorit_24)
+            } else {
+                btnFavoritar
+                    ?.setIconResource(R.drawable.ic_favorit_24)
+            }
+
         }
     }
 }

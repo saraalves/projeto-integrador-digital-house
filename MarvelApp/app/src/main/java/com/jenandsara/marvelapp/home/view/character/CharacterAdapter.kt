@@ -11,7 +11,7 @@ import com.jenandsara.marvelapp.home.view.IGetCharacterClick
 
 class CharacterAdapter(
     private val _personagens: MutableList<CharacterModel>,
-    private val _listener: (CharacterModel) -> Unit,
+//    private val _listener: (CharacterModel) -> Unit,
     private val getCharacterClick: IGetCharacterClick
 ) :
     RecyclerView.Adapter<CharacterViewHolder>() {
@@ -27,7 +27,7 @@ class CharacterAdapter(
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val item = _personagens[position]
         holder.bind(item, getCharacterClick)
-        holder.itemView.setOnClickListener { _listener(item) }
+//        holder.itemView.setOnClickListener { _listener(item) }
     }
 
 }
