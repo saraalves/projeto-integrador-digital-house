@@ -29,5 +29,4 @@ class CharacterAdapter(
         holder.bind(item, getCharacterClick)
 //        holder.itemView.setOnClickListener { _listener(item) }
     }
-
 }

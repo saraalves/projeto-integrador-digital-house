@@ -17,11 +17,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.comics.model.ComicsModel
 import com.jenandsara.marvelapp.comics.repository.ComicRepository
 import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
 import com.jenandsara.marvelapp.detalhes.view.comics.ComicsAdapter
 import com.jenandsara.marvelapp.detalhes.view.stories.StoriesAdapter
+import com.jenandsara.marvelapp.detalhes.viewmodel.DetalhesViewModel
+import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
+import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import com.jenandsara.marvelapp.stories.model.StoriesModel
 import com.jenandsara.marvelapp.stories.repository.StoriesRepository
 import com.jenandsara.marvelapp.stories.viewmodel.StoriesViewModel
@@ -36,6 +40,8 @@ class DetalhesActivity : AppCompatActivity() {
 
     private lateinit var _comicViewModel: ComicViewModel
     private lateinit var _storiesViewModel: StoriesViewModel
+
+    private lateinit var _detalhesViewModel: DetalhesViewModel
 
     private var _comics = mutableListOf<ComicsModel>()
     private var _stories = mutableListOf<StoriesModel>()
@@ -69,6 +75,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         comicViewModelProvider()
         storiesViewModelProvider()
+        detalhesViewModelProvider()
 
         getStoriesList(id)
         getComicList(id)
@@ -194,5 +201,13 @@ class DetalhesActivity : AppCompatActivity() {
         Picasso.get().load(path).into(dialogView.imgComicExpanded)
         imageDialog?.show()
 
+    }
+
+    private fun detalhesViewModelProvider() {
+        _detalhesViewModel = ViewModelProvider(
+            this,
+            DetalhesViewModel.DetalherViewModelFactory(CharacterRepository(), CharacterLocalRepository(
+                AppDatabase.getDatabase(this).characterDAO()))
+        ).get(DetalhesViewModel::class.java)
     }
 }

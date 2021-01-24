@@ -254,7 +254,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         val intent = Intent(view?.context, DetalhesActivity::class.java)
         val bundle = bundleOf("ID" to _character[position].id)
         startActivity(intent, bundle)
-//
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
