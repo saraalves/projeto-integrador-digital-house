@@ -280,7 +280,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                             }
                         }
                 } else {
-                    _viewModel.addCharacter(_character[position].id)
+                    val character = _character[position]
+                    _viewModel.addCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
                         .observe(viewLifecycleOwner) {
                             Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
                             if (it) {

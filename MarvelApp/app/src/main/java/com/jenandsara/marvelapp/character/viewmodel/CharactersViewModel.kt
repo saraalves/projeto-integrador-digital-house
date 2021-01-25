@@ -102,8 +102,8 @@ class CharactersViewModel(private val _repository: CharacterRepository, private 
         }
     }
 
-    fun addCharacter(idAPI: Int) = liveData(Dispatchers.IO) {
-        characterLocalRepository.saveCharacter(CharacterEntity(idAPI))
+    fun addCharacter(nome: String, idAPI: Int, descricao: String, imgPath: String) = liveData(Dispatchers.IO) {
+        characterLocalRepository.saveCharacter(CharacterEntity(0, nome,idAPI,descricao, imgPath))
         Log.d("TAG CHARACTER VIEWMODEL", "addCharacter()")
         emit(true)
     }

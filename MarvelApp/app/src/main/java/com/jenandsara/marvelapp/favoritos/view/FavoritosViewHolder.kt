@@ -24,6 +24,7 @@ class FavoritosViewHolder(view: View, private val context: Context) : RecyclerVi
     private val btnFavoritar = view.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)
 
     fun bind(personagemModel: CharacterEntity, getCharacterClick: IGetCharacterClick) {
+
         _nome.text = personagemModel.nome
 
         Picasso.get()
