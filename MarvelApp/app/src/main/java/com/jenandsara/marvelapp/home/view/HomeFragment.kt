@@ -46,6 +46,20 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        onPause = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (onPause) {
+            updateCharacter()
+            onPause = false
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
