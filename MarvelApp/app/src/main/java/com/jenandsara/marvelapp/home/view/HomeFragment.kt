@@ -71,7 +71,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         getListAvatar()
         showLoading(true)
         setScrollView()
-        favoritar()
         setScrollViewAvatar()
     }
 
@@ -308,7 +307,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 ?.setIconResource(R.drawable.ic_favorit_24)
         }
     }
-
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
