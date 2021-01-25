@@ -132,28 +132,14 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
                             }
                         }
                 } else {
-                    _characterViewModel.addCharacter(_listaFavoritosLocal[position].id)
+                    _characterViewModel.getFavoriteCharacterLocal()
                         .observe(viewLifecycleOwner) {
-                            Log.d(
-                                "TAG CHARACTER FRAGMENT",
-                                "getCharacterFavoriteClick() - addCharacter"
-                            )
-                            if (it) {
-                                _listaFavoritosLocal[position].isFavorite = true
-                                _favoritosAdapter.notifyItemChanged(position)
-                                Log.d(
-                                    "TAG CHARACTER FRAGMENT",
-                                    "getCharacterFavoriteClick() - item: $it"
-                                )
-                                Log.d(
-                                    "TAG CHARACTER FRAGMENT",
-                                    "getCharacterFavoriteClick() - item: $position $isFavorite"
-                                )
-                                Log.d(
-                                    "TAG CHARACTER FRAGMENT",
-                                    "getCharacterFavoriteClick() - item: $_listaFavoritosLocal"
-                                )
-                            }
+                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
+                            _listaFavoritosLocal[position].isFavorite = true
+                            _favoritosAdapter.notifyItemChanged(position)
+                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $it")
+                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $position $isFavorite")
+                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $_listaFavoritosLocal")
                         }
                 }
 
