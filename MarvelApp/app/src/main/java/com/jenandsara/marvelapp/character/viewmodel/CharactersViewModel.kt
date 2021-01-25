@@ -79,6 +79,20 @@ class CharactersViewModel(private val _repository: CharacterRepository, private 
         emit(characters)
     }
 
+    fun getFavoriteCharacterLocal() = liveData(Dispatchers.IO) {
+        val favorites = characterLocalRepository.getAllCharacters()
+        val characters = mutableListOf<CharacterEntity>()
+
+        favorites.forEach {
+            val character = characterLocalRepository.getAllCharacters()[0]
+            character.isFavorite = true
+            characters.add(character)
+            Log.d("TAG CHARACTER VIEWMODEL", "getFavoriteCharacter() - forEach: $character")
+        }
+        Log.d("TAG CHARACTER VIEWMODEL", "getFavoriteCharacter() $characters")
+        emit(characters)
+    }
+
 
     suspend fun createDatabase(characterList: List<CharacterEntity>) {
 
@@ -111,6 +125,19 @@ class CharactersViewModel(private val _repository: CharacterRepository, private 
         Log.d("TAG CHARACTER VIEWMODEL", "updateFavoriteCharacters()")
         emit(charactersToRemove)
     }
+
+    fun updateFavoriteCharactersLocal(character: MutableList<CharacterEntity>)= liveData(Dispatchers.IO) {
+        val charactersToRemove = mutableListOf<CharacterEntity>()
+        character.forEach {
+            val isFavorite = characterLocalRepository.checkIfIsFavorite(it.id)
+            if (!isFavorite) {
+                charactersToRemove.add(it)
+            }
+        }
+        Log.d("TAG CHARACTER VIEWMODEL", "updateFavoriteCharacters()")
+        emit(charactersToRemove)
+    }
+
 
     fun deleteCharacter(idAPI: Int) = liveData(Dispatchers.IO) {
         characterLocalRepository.deleteCharacter(idAPI)
