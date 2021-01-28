@@ -75,10 +75,10 @@ class CharactersViewModel(private val _repository: CharacterRepository, private 
             characters.add(character)
             Log.d("TAG CHARACTER VIEWMODEL", "getFavoriteCharacter() - forEach: $character")
         }
-        Log.d("TAG CHARACTER VIEWMODEL", "getFavoriteCharacter() $characters")
         emit(characters)
     }
 
+    //TODO:
     fun getFavoriteCharacterLocal() = liveData(Dispatchers.IO) {
         val favorites = characterLocalRepository.getAllCharacters()
         val characters = mutableListOf<CharacterEntity>()
@@ -93,15 +93,7 @@ class CharactersViewModel(private val _repository: CharacterRepository, private 
         emit(characters)
     }
 
-
-    suspend fun createDatabase(characterList: List<CharacterEntity>) {
-
-        characterList.forEach {
-            characterLocalRepository.saveCharacter(it)
-            Log.d("TAG CHARACTER VIEWMODEL", "createDatabase() - item: $it")
-        }
-    }
-
+    //TODO:
     fun addCharacter(nome: String, idAPI: Int, descricao: String, imgPath: String) = liveData(Dispatchers.IO) {
         characterLocalRepository.saveCharacter(CharacterEntity(0, nome,idAPI,descricao, imgPath))
         Log.d("TAG CHARACTER VIEWMODEL", "addCharacter()")
@@ -120,6 +112,7 @@ class CharactersViewModel(private val _repository: CharacterRepository, private 
             val isFavorite = characterLocalRepository.checkIfIsFavorite(it.id)
             if (!isFavorite) {
                 charactersToRemove.add(it)
+                Log.d("TAG CHARACTER VIEWMODEL", "updateFavoriteCharacters() - !isFavorite")
             }
         }
         Log.d("TAG CHARACTER VIEWMODEL", "updateFavoriteCharacters()")

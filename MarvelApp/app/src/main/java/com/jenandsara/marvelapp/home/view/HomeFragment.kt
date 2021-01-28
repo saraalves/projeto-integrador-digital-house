@@ -46,19 +46,18 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onPause() {
-        super.onPause()
+//    override fun onPause() {
+//        super.onPause()
+//
+//        onPause = true
+//    }
 
-        onPause = true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (onPause) {
-            updateCharacter()
-            onPause = false
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        if (onPause) {
+//            onPause = false
+//        }
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -254,12 +253,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 .observe(viewLifecycleOwner) {
                     _characterAdapter.notifyDataSetChanged()
                 }
-        } else {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _character.removeAll(it)
-                    _characterAdapter.notifyDataSetChanged()
-                }
         }
     }
 
@@ -279,7 +272,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 if (isFavorite) {
                     _viewModel.deleteCharacter(_character[position].id)
                         .observe(viewLifecycleOwner) {
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                             if (it) {
                                 _character[position].isFavorite = false
                                 Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
@@ -302,25 +294,12 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                                 _character[position].isFavorite = true
                                 _characterAdapter.notifyItemChanged(position)
                                 Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $it")
-                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $position $isFavorite")
-                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $_character")
                             }
                         }
                 }
 
-                _character[position].isFavorite = !_character[position].isFavorite
+//                _character[position].isFavorite = !_character[position].isFavorite
             }
-    }
-
-    private fun favoritar() {
-        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
-        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
-            if (isChecked) {
-                view?.findViewById<MaterialButton>(R.id.btnFavoritar)
-                    ?.setIconResource(R.drawable.ic_baseline_favorite_24)
-            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)
-                ?.setIconResource(R.drawable.ic_favorit_24)
-        }
     }
 
     private fun viewModelProvider() {

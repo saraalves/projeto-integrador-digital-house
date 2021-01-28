@@ -44,19 +44,17 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         return inflater.inflate(R.layout.fragment_favoritos, container, false)
     }
 
-    override fun onPause() {
-        super.onPause()
+//    override fun onPause() {
+//        super.onPause()
+//        onPause = true
+//    }
 
-        onPause = true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (onPause) {
-            updateCharacter()
-            onPause = false
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        if (onPause) {
+//            onPause = false
+//        }
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,7 +69,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         viewModelProvider()
         showLoading(true)
         getCharacters()
-//        updateCharacter()
+        updateCharacter()
 
     }
 
