@@ -80,10 +80,11 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
 
         searchByName(_view, _character)
-        getListAvatar()
+//        getListAvatar()
+        getRecomended()
         showLoading(true)
         setScrollView()
-        setScrollViewAvatar()
+//        setScrollViewAvatar()
 
     }
 
@@ -235,18 +236,27 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         })
     }
 
-
-  /*  private fun getRecomended(){
+    private fun getRecomended(){
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
             _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
                 _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
                     _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
                         _recomendados.addAll(it2)
+                        _avatarAdapter.notifyDataSetChanged()
+                        showLoading(false)
                     }
                 }
             }
         }
-    }*/
+    }
+
+//    private fun getListAvatar() {
+//        _viewModel.getList().observe(viewLifecycleOwner) {
+//            _recomendados.addAll(it)
+//            _avatarAdapter.notifyDataSetChanged()
+//            showLoading(false)
+//        }
+//    }
 
   /*  private fun getCharacters() {
         if (onlyFavorites) {
