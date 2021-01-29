@@ -32,18 +32,11 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
     private lateinit var _view: View
     private lateinit var _favoritosAdapter: FavoritosAdapter
-<<<<<<< HEAD
     private lateinit var _viewModel: CharactersViewModel
 
     private lateinit var _favoritosViewModel: FavoriteViewModel
 
-=======
-    private lateinit var _characterViewModel: CharactersViewModel
-    private var onPause = false
-    private var _listaFavoritos = mutableListOf<CharacterModel>()
->>>>>>> dcb20edd0e0da7b002221d330295979091fdf90a
     private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -178,7 +171,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     private fun localViewModelProvider() {
         _favoritosViewModel = ViewModelProvider(
             this,
-            FavoriteViewModel.FavoritosViewModelFactory(
+            FavoriteViewModel.FavoriteViewModelFactory(
                 CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
             )
         ).get(FavoriteViewModel::class.java)

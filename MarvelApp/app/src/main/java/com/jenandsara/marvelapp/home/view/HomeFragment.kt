@@ -82,16 +82,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         viewModelProvider()
         localViewModelProvider()
 
-        getList(_character)
-        getListAvatar(_recomendados)
-
         _characterAdapter = CharacterAdapter(_character, this)
 
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
-
         searchByName(_view, _character)
+        getListAvatar(_recomendados)
         showLoading(true)
         setScrollView()
         setScrollViewAvatar()
