@@ -6,9 +6,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
+import com.jenandsara.marvelapp.comics.model.ComicsModel
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import java.lang.Thread.sleep
+import kotlin.random.Random
 
 class CharactersViewModel(private val _repository: CharacterRepository) : ViewModel() {
 
@@ -51,6 +55,19 @@ class CharactersViewModel(private val _repository: CharacterRepository) : ViewMo
             val response = _repository.getCharacter(_offset)
             emit(response.data.results)
         }
+    }
+
+    fun getRandomFavorite(list: MutableList<CharacterEntity>) = liveData(Dispatchers.IO){
+        val personagem = list[(0 until list.size).random()]
+        emit (personagem.idAPI)
+    }
+
+    fun getRecomended(list: List<ComicsModel>) = liveData(Dispatchers.IO){
+        sleep(1000)
+        val comic = list[(0 .. list.size).random()]
+        val id = comic.id
+        val response = _repository.getRecomended(id)
+        emit(response.data.results)
     }
 
     /*fun getCharacters() = liveData(Dispatchers.IO) {

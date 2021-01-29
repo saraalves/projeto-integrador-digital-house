@@ -163,4 +163,6 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             )
         ).get(FavoriteViewModel::class.java)
     }
+
+
 }

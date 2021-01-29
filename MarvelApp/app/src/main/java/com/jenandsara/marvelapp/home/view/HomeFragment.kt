@@ -21,6 +21,9 @@ import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.comics.repository.ComicRepository
+import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
+import com.jenandsara.marvelapp.detalhes.viewmodel.DetalhesViewModel
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
@@ -33,12 +36,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
     private lateinit var _favoritosViewModel: FavoriteViewModel
+    private lateinit var _comicViewModel: ComicViewModel
 
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
     private var position by Delegates.notNull<Int>()
 
     private var _character = mutableListOf<CharacterModel>()
+    private var _recomendados = mutableListOf<CharacterModel>()
 
 
     override fun onCreateView(
@@ -60,24 +65,24 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
+        comicViewModelProvider()
         viewModelProvider()
         localViewModelProvider()
+
         getList(_character)
+        getListAvatar(_recomendados)
+
         _characterAdapter = CharacterAdapter(_character, this)
 
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
 
-        /*if (_character.isEmpty()) getCharacters()
-
-        updateCharacter()*/
-
         searchByName(_view, _character)
-        getListAvatar()
         showLoading(true)
         setScrollView()
         setScrollViewAvatar()
+
     }
 
     private fun setupRecyclerViewCard(
@@ -113,7 +118,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     private fun setupNavigationAvatar() {
-        _avatarAdapter = AvatarAdapter(_character) {
+        _avatarAdapter = AvatarAdapter(_recomendados) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             intent.putExtra("ID", it.id)
             intent.putExtra("NOME", it.nome)
@@ -133,10 +138,10 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-
-    private fun getListAvatar() {
+    private fun getListAvatar(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            _character.addAll(it)
+            list?.let { _recomendados.addAll(it)
+            }
             _avatarAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -229,6 +234,19 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         })
     }
 
+
+  /*  private fun getRecomended(){
+        _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
+            _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
+                _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
+                    _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
+                        _recomendados.addAll(it2)
+                    }
+                }
+            }
+        }
+    }*/
+
   /*  private fun getCharacters() {
         if (onlyFavorites) {
             _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
@@ -271,45 +289,38 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     override fun getCharacterFavoriteClick(position: Int) {
         _favoritosViewModel.isFavorite(_character[position].id)
             .observe(viewLifecycleOwner) { isFavorite ->
-                if (isFavorite) {
-                    _favoritosViewModel.deleteCharacter(_character[position].id)
-                        .observe(viewLifecycleOwner) {
-                            if (it) {
-                                _character[position].isFavorite = false
-                                if (onlyFavorites) {
-                                    _character.removeAt(position)
-                                    _characterAdapter.notifyDataSetChanged()
-                                } else {
-                                    _characterAdapter.notifyItemChanged(position)
-                                }
-                            }
-                        }
-                } else {
-                    val character = _character[position]
-                   _favoritosViewModel.addCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
-                        .observe(viewLifecycleOwner) {
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
-                            if (it) {
-                                _character[position].isFavorite = true
-                                _characterAdapter.notifyItemChanged(position)
-                            }
-                        }
-                }
-
+                removerAdicionar(isFavorite)
                 _character[position].isFavorite = !_character[position].isFavorite
             }
     }
 
-   /* private fun favoritar() {
-        val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
-        toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
-            if (isChecked) {
-                view?.findViewById<MaterialButton>(R.id.btnFavoritar)
-                    ?.setIconResource(R.drawable.ic_baseline_favorite_24)
-            } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)
-                ?.setIconResource(R.drawable.ic_favorit_24)
+    private fun removerAdicionar(boolean: Boolean) {
+        if (boolean) {
+            _favoritosViewModel.deleteCharacter(_character[position].id)
+                .observe(viewLifecycleOwner) {
+                    if (it) {
+                        _character[position].isFavorite = false
+                        if (onlyFavorites) {
+                            _character.removeAt(position)
+                            _characterAdapter.notifyDataSetChanged()
+                        } else {
+                            _characterAdapter.notifyItemChanged(position)
+                        }
+                    }
+                }
+        } else {
+            val character = _character[position]
+            _favoritosViewModel.addCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
+                .observe(viewLifecycleOwner) {
+                    Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
+                    if (it) {
+                        _character[position].isFavorite = true
+                        _characterAdapter.notifyItemChanged(position)
+                    }
+                }
         }
-    }*/
+    }
+
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
@@ -327,5 +338,12 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
             )
         ).get(FavoriteViewModel::class.java)
+    }
+
+    private fun comicViewModelProvider() {
+        _comicViewModel = ViewModelProvider(
+            this,
+            ComicViewModel.ComicsViewModelFactory(ComicRepository())
+        ).get(ComicViewModel::class.java)
     }
 }
