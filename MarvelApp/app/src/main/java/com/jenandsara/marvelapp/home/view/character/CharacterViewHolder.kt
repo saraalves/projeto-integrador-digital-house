@@ -1,6 +1,8 @@
 package com.jenandsara.marvelapp.home.view.character
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -57,15 +59,18 @@ class CharacterViewHolder(view: View, private val context: Context) : RecyclerVi
         }
     }
 
+    @SuppressLint("LongLogTag")
     private fun favoritar() {
         val toggleFavoritar = toggleFavoritar
         toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
                 btnFavoritar
                     ?.setIconResource(R.drawable.ic_baseline_favorite_24)
+                Log.d("TAG CHARACTER VIEW HOLDER", "favoritou - isChecked")
             } else {
                 btnFavoritar
                     ?.setIconResource(R.drawable.ic_favorit_24)
+                Log.d("TAG CHARACTER VIEW HOLDER", "favoritou")
             }
 
         }

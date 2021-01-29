@@ -32,10 +32,16 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
     private lateinit var _view: View
     private lateinit var _favoritosAdapter: FavoritosAdapter
+<<<<<<< HEAD
     private lateinit var _viewModel: CharactersViewModel
 
     private lateinit var _favoritosViewModel: FavoriteViewModel
 
+=======
+    private lateinit var _characterViewModel: CharactersViewModel
+    private var onPause = false
+    private var _listaFavoritos = mutableListOf<CharacterModel>()
+>>>>>>> dcb20edd0e0da7b002221d330295979091fdf90a
     private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
 
 
@@ -45,6 +51,18 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     ): View? {
         return inflater.inflate(R.layout.fragment_favoritos, container, false)
     }
+
+//    override fun onPause() {
+//        super.onPause()
+//        onPause = true
+//    }
+
+//    override fun onResume() {
+//        super.onResume()
+//        if (onPause) {
+//            onPause = false
+//        }
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -136,7 +154,9 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
                 .observe(viewLifecycleOwner) {
                     _favoritosAdapter.notifyDataSetChanged()
+                    showLoading(false)
                 }
+
         } else {
             _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
                 .observe(viewLifecycleOwner) {

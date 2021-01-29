@@ -1,6 +1,5 @@
 package com.jenandsara.marvelapp.favoritos.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
@@ -48,17 +47,12 @@ class FavoriteViewModel (private val repository: CharacterLocalRepository): View
 
     fun deleteCharacter(idAPI: Int) = liveData(Dispatchers.IO) {
         repository.deleteCharacter(idAPI)
-        Log.d("TAG CHARACTER VIEWMODEL", "deleteCharacter()")
         emit(true)
     }
 
-
-    class FavoritosViewModelFactory(private val characterLocalRepository: CharacterLocalRepository): ViewModelProvider.Factory {
+    class FavoriteViewModelFactory(private val favoriteRepository: CharacterLocalRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return FavoriteViewModel(characterLocalRepository) as T
+            return FavoriteViewModel(favoriteRepository) as T
         }
     }
-
-
-
 }

@@ -53,6 +53,19 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+//    override fun onPause() {
+//        super.onPause()
+//
+//        onPause = true
+//    }
+
+//    override fun onResume() {
+//        super.onResume()
+//        if (onPause) {
+//            onPause = false
+//        }
+//    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -267,12 +280,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 .observe(viewLifecycleOwner) {
                     _characterAdapter.notifyDataSetChanged()
                 }
-        } else {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _character.removeAll(it)
-                    _characterAdapter.notifyDataSetChanged()
-                }
         }
     }*/
 
@@ -321,7 +328,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
             this,
@@ -334,7 +340,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun localViewModelProvider() {
         _favoritosViewModel = ViewModelProvider(
             this,
-            FavoriteViewModel.FavoritosViewModelFactory(
+            FavoriteViewModel.FavoriteViewModelFactory(
                 CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
             )
         ).get(FavoriteViewModel::class.java)

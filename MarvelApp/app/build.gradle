@@ -98,5 +98,4 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
-
 }
