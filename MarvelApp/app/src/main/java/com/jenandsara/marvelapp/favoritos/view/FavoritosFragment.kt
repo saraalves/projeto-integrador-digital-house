@@ -23,6 +23,7 @@ import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
+import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
 import com.jenandsara.marvelapp.home.view.HomeFragment
 import com.jenandsara.marvelapp.home.view.IGetCharacterClick
 
@@ -31,9 +32,10 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
     private lateinit var _view: View
     private lateinit var _favoritosAdapter: FavoritosAdapter
-    private lateinit var _characterViewModel: CharactersViewModel
+    private lateinit var _viewModel: CharactersViewModel
 
-    private var _listaFavoritos = mutableListOf<CharacterModel>()
+    private lateinit var _favoritosViewModel: FavoriteViewModel
+
     private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
 
 
@@ -53,11 +55,12 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         val viewGridManager = GridLayoutManager(view.context, 2)
         _favoritosAdapter = FavoritosAdapter(_listaFavoritosLocal, this)
 
+        localViewModelProvider()
         setupRecyclerViewCard(favoritoRecycler, viewGridManager)
         viewModelProvider()
         showLoading(true)
         getCharacters()
-        updateCharacter()
+        //updateCharacter()
 
     }
 
@@ -82,7 +85,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     }
 
     private fun getCharacters() {
-        _characterViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
+        _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
             _listaFavoritosLocal.addAll(it)
             _favoritosAdapter.notifyDataSetChanged()
         }
@@ -100,46 +103,26 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
-        _characterViewModel.isFavorite(_listaFavoritosLocal[position].id)
+        _favoritosViewModel.isFavorite(_listaFavoritosLocal[position].id)
             .observe(viewLifecycleOwner) { isFavorite ->
                 if (isFavorite) {
-                    _characterViewModel.deleteCharacter(_listaFavoritosLocal[position].id)
+                    _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].id)
                         .observe(viewLifecycleOwner) {
-                            Log.d(
-                                "TAG CHARACTER FRAGMENT",
-                                "getCharacterFavoriteClick() - deleteCharacter"
-                            )
                             if (it) {
                                 _listaFavoritosLocal[position].isFavorite = false
-                                Log.d(
-                                    "TAG CHARACTER FRAGMENT",
-                                    "getCharacterFavoriteClick() - deleteCharacter"
-                                )
                                 if (onlyFavorites) {
                                     _listaFavoritosLocal.removeAt(position)
                                     _favoritosAdapter.notifyDataSetChanged()
-                                    Log.d(
-                                        "TAG CHARACTER FRAGMENT",
-                                        "getCharacterFavoriteClick() - onlyFavorites"
-                                    )
                                 } else {
                                     _favoritosAdapter.notifyItemChanged(position)
-                                    Log.d(
-                                        "TAG CHARACTER FRAGMENT",
-                                        "getCharacterFavoriteClick() - deleteCharacter"
-                                    )
                                 }
                             }
                         }
                 } else {
-                    _characterViewModel.getFavoriteCharacterLocal()
+                    _favoritosViewModel.getFavoriteCharacterLocal()
                         .observe(viewLifecycleOwner) {
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
                             _listaFavoritosLocal[position].isFavorite = true
                             _favoritosAdapter.notifyItemChanged(position)
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $it")
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $position $isFavorite")
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $_listaFavoritosLocal")
                         }
                 }
 
@@ -148,7 +131,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             }
     }
 
-    private fun updateCharacter() {
+   /* private fun updateCharacter() {
         if (!onlyFavorites) {
             _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
                 .observe(viewLifecycleOwner) {
@@ -161,15 +144,23 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
                     _favoritosAdapter.notifyDataSetChanged()
                 }
         }
-    }
+    }*/
 
     private fun viewModelProvider() {
-        _characterViewModel = ViewModelProvider(
+        _viewModel = ViewModelProvider(
             this,
             CharactersViewModel.CharactersViewModelFactory(
-                CharacterRepository(),
-                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+                CharacterRepository()
             )
         ).get(CharactersViewModel::class.java)
+    }
+
+    private fun localViewModelProvider() {
+        _favoritosViewModel = ViewModelProvider(
+            this,
+            FavoriteViewModel.FavoritosViewModelFactory(
+                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+            )
+        ).get(FavoriteViewModel::class.java)
     }
 }

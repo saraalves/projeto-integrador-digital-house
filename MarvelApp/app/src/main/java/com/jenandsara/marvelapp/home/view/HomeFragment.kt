@@ -25,15 +25,17 @@ import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
+import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
 import kotlin.properties.Delegates
 
 class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGetCharacterClick {
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
+    private lateinit var _favoritosViewModel: FavoriteViewModel
+
     private lateinit var _characterAdapter: CharacterAdapter
     private lateinit var _avatarAdapter: AvatarAdapter
-    private var onPause = false
     private var position by Delegates.notNull<Int>()
 
     private var _character = mutableListOf<CharacterModel>()
@@ -57,16 +59,20 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
         val viewGridManager = GridLayoutManager(view.context, 2)
         val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
+
+        viewModelProvider()
+        localViewModelProvider()
+        getList(_character)
         _characterAdapter = CharacterAdapter(_character, this)
 
         setupNavigationAvatar()
         setupRecyclerViewAvatar(avatar, manager)
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
-        viewModelProvider()
 
-        if (_character.isEmpty()) getCharacters()
+        /*if (_character.isEmpty()) getCharacters()
 
-        updateCharacter()
+        updateCharacter()*/
+
         searchByName(_view, _character)
         getListAvatar()
         showLoading(true)
@@ -119,11 +125,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let { _character.addAll(it) }
+            list?.let { _character.addAll(it)
+                _favoritosViewModel.setFavoriteCharacter(it)
+            }
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
     }
+
 
     private fun getListAvatar() {
         _viewModel.getList().observe(viewLifecycleOwner) {
@@ -220,7 +229,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         })
     }
 
-    private fun getCharacters() {
+  /*  private fun getCharacters() {
         if (onlyFavorites) {
             _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
                 _character.addAll(it)
@@ -232,9 +241,9 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 _characterAdapter.notifyDataSetChanged()
             }
         }
-    }
+    }*/
 
-    private fun updateCharacter() {
+    /*private fun updateCharacter() {
         if (!onlyFavorites) {
             _viewModel.updateFavoriteCharacters(_character)
                 .observe(viewLifecycleOwner) {
@@ -247,7 +256,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     _characterAdapter.notifyDataSetChanged()
                 }
         }
-    }
+    }*/
 
     override fun getCharacterClick(position: Int) {
         Intent(view?.context, DetalhesActivity::class.java).apply {
@@ -260,36 +269,29 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
-        _viewModel.isFavorite(_character[position].id)
+        _favoritosViewModel.isFavorite(_character[position].id)
             .observe(viewLifecycleOwner) { isFavorite ->
                 if (isFavorite) {
-                    _viewModel.deleteCharacter(_character[position].id)
+                    _favoritosViewModel.deleteCharacter(_character[position].id)
                         .observe(viewLifecycleOwner) {
-                            Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                             if (it) {
                                 _character[position].isFavorite = false
-                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                                 if (onlyFavorites) {
                                     _character.removeAt(position)
                                     _characterAdapter.notifyDataSetChanged()
-                                    Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - onlyFavorites")
                                 } else {
                                     _characterAdapter.notifyItemChanged(position)
-                                    Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - deleteCharacter")
                                 }
                             }
                         }
                 } else {
                     val character = _character[position]
-                    _viewModel.addCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
+                   _favoritosViewModel.addCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
                         .observe(viewLifecycleOwner) {
                             Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
                             if (it) {
                                 _character[position].isFavorite = true
                                 _characterAdapter.notifyItemChanged(position)
-                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $it")
-                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $position $isFavorite")
-                                Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - item: $_character")
                             }
                         }
                 }
@@ -298,7 +300,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             }
     }
 
-    private fun favoritar() {
+   /* private fun favoritar() {
         val toggleFavoritar = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
         toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
@@ -307,15 +309,23 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             } else view?.findViewById<MaterialButton>(R.id.btnFavoritar)
                 ?.setIconResource(R.drawable.ic_favorit_24)
         }
-    }
+    }*/
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
             this,
             CharactersViewModel.CharactersViewModelFactory(
-                CharacterRepository(),
-                CharacterLocalRepository(AppDatabase.getDatabase(_view?.context).characterDAO())
+                CharacterRepository()
             )
         ).get(CharactersViewModel::class.java)
+    }
+
+    private fun localViewModelProvider() {
+        _favoritosViewModel = ViewModelProvider(
+            this,
+            FavoriteViewModel.FavoritosViewModelFactory(
+                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+            )
+        ).get(FavoriteViewModel::class.java)
     }
 }
