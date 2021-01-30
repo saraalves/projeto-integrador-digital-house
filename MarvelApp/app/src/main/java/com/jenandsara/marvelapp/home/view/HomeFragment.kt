@@ -1,6 +1,9 @@
 package com.jenandsara.marvelapp.home.view
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -56,36 +60,42 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _view = view
+        if(checkConectividade()){
 
-        val manager = LinearLayoutManager(view.context)
-        manager.orientation = LinearLayoutManager.HORIZONTAL
-        val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
+            _view = view
 
-        val viewGridManager = GridLayoutManager(view.context, 2)
-        val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
+            val manager = LinearLayoutManager(view.context)
+            manager.orientation = LinearLayoutManager.HORIZONTAL
+            val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
+
+            val viewGridManager = GridLayoutManager(view.context, 2)
+            val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
 
 
-        comicViewModelProvider()
-        viewModelProvider()
-        localViewModelProvider()
+            comicViewModelProvider()
+            viewModelProvider()
+            localViewModelProvider()
 
-        getList(_character)
-        _characterAdapter = CharacterAdapter(_character, this)
+            getList(_character)
+            _characterAdapter = CharacterAdapter(_character, this)
 
-        setupNavigationAvatar()
+            setupNavigationAvatar()
 
-        setupRecyclerViewAvatar(avatar, manager)
-        setupRecyclerViewCard(recyclerViewCard, viewGridManager)
+            setupRecyclerViewAvatar(avatar, manager)
+            setupRecyclerViewCard(recyclerViewCard, viewGridManager)
 
-        searchByName(_view, _character)
+            searchByName(_view, _character)
 
 //        getListAvatar()
-        getRecomended()
-        showLoading(true)
-        setScrollView()
+            getRecomended()
+            showLoading(true)
+            setScrollView()
 //        setScrollViewAvatar()
+
+        } else {
+            view.findViewById<ConstraintLayout>(R.id.ctlTeste).visibility = View.VISIBLE
+        }
     }
 
     private fun setupRecyclerViewCard(
@@ -334,6 +344,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                         }
                     }
             }
+        }
+
+        private fun checkConectividade(): Boolean {
+            val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+            val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+            return isConnected
         }
 
 
