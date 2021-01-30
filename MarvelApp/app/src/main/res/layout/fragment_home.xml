@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/img_background"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/titleDisconcted"
@@ -36,7 +36,7 @@
             android:layout_marginEnd="@dimen/dim_20_dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:gravity="center"
-            android:text="Please check your internet connection and try again"
+            android:text="Please check your internet connection\nand try again"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/dim_20_sp"
             app:layout_constraintEnd_toEndOf="parent"
