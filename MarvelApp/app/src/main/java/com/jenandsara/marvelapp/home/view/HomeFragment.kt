@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
@@ -60,7 +61,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(checkConectividade()){
+        if (checkConectividade()) {
 
             _view = view
 
@@ -87,15 +88,18 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
             searchByName(_view, _character)
 
-//        getListAvatar()
             getRecomended()
             showLoading(true)
             setScrollView()
-//        setScrollViewAvatar()
 
         } else {
             view.findViewById<ConstraintLayout>(R.id.ctlTeste).visibility = View.VISIBLE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getRecomended()
     }
 
     private fun setupRecyclerViewCard(
@@ -272,119 +276,143 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-        /*  private fun getCharacters() {
-              if (onlyFavorites) {
-                  _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
-                      _character.addAll(it)
-                      _characterAdapter.notifyDataSetChanged()
-                  }
-              } else {
-                  _viewModel.getCharacters().observe(viewLifecycleOwner) {
-                      _character.addAll(it)
-                      _characterAdapter.notifyDataSetChanged()
-                  }
+    /*  private fun getCharacters() {
+          if (onlyFavorites) {
+              _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
+                  _character.addAll(it)
+                  _characterAdapter.notifyDataSetChanged()
               }
-          }*/
+          } else {
+              _viewModel.getCharacters().observe(viewLifecycleOwner) {
+                  _character.addAll(it)
+                  _characterAdapter.notifyDataSetChanged()
+              }
+          }
+      }*/
 
-        /*private fun updateCharacter() {
-            if (!onlyFavorites) {
-                _viewModel.updateFavoriteCharacters(_character)
-                    .observe(viewLifecycleOwner) {
-                        _characterAdapter.notifyDataSetChanged()
-                    }
-            } else {
-                _viewModel.updateFavoriteCharacters(_character)
-                    .observe(viewLifecycleOwner) {
-                        _character.removeAll(it)
-                        _characterAdapter.notifyDataSetChanged()
-                    }
-            }
-        }*/
-
-        override fun getCharacterClick(position: Int) {
-            Intent(view?.context, DetalhesActivity::class.java).apply {
-                putExtra("ID", _character[position].id)
-                putExtra("NOME", _character[position].nome)
-                putExtra("DESCRIÇÃO", _character[position].descricao)
-                putExtra("IMAGEM", _character[position].thumbnail?.getImagePath())
-                startActivity(this)
-            }
-        }
-
-        override fun getCharacterFavoriteClick(position: Int) {
-            _favoritosViewModel.isFavorite(_character[position].id)
-                .observe(viewLifecycleOwner) { isFavorite ->
-                    removerAdicionar(isFavorite, position)
-                    _character[position].isFavorite = !_character[position].isFavorite
+    /*private fun updateCharacter() {
+        if (!onlyFavorites) {
+            _viewModel.updateFavoriteCharacters(_character)
+                .observe(viewLifecycleOwner) {
+                    _characterAdapter.notifyDataSetChanged()
+                }
+        } else {
+            _viewModel.updateFavoriteCharacters(_character)
+                .observe(viewLifecycleOwner) {
+                    _character.removeAll(it)
+                    _characterAdapter.notifyDataSetChanged()
                 }
         }
+    }*/
 
-        private fun removerAdicionar(boolean: Boolean, position: Int) {
-            if (boolean) {
-                _favoritosViewModel.deleteCharacter(_character[position].id)
-                    .observe(viewLifecycleOwner) {
-                        if (it) {
-                            _character[position].isFavorite = false
-                            if (onlyFavorites) {
-                                _character.removeAt(position)
-                                _characterAdapter.notifyDataSetChanged()
-                            } else {
-                                _characterAdapter.notifyItemChanged(position)
-                            }
-                        }
-                    }
-            } else {
-                val character = _character[position]
-                _favoritosViewModel.addCharacter(
-                    character.nome,
-                    character.id,
-                    character.descricao,
-                    character.thumbnail!!.getImagePath()
-                )
-                    .observe(viewLifecycleOwner) {
-                        Log.d(
-                            "TAG CHARACTER FRAGMENT",
-                            "getCharacterFavoriteClick() - addCharacter"
-                        )
-                        if (it) {
-                            _character[position].isFavorite = true
-                            _characterAdapter.notifyItemChanged(position)
-                        }
-                    }
-            }
-        }
-
-        private fun checkConectividade(): Boolean {
-            val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-            val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
-
-            return isConnected
-        }
-
-
-        private fun viewModelProvider() {
-            _viewModel = ViewModelProvider(
-                this,
-                CharactersViewModel.CharactersViewModelFactory(
-                    CharacterRepository()
-                )
-            ).get(CharactersViewModel::class.java)
-        }
-
-        private fun localViewModelProvider() {
-            _favoritosViewModel = ViewModelProvider(
-                this,
-                FavoriteViewModel.FavoritosViewModelFactory(
-                    CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
-                )
-            ).get(FavoriteViewModel::class.java)
-        }
-
-        private fun comicViewModelProvider() {
-            _comicViewModel = ViewModelProvider(
-                this,
-                ComicViewModel.ComicsViewModelFactory(ComicRepository())
-            ).get(ComicViewModel::class.java)
+    override fun getCharacterClick(position: Int) {
+        Intent(view?.context, DetalhesActivity::class.java).apply {
+            putExtra("ID", _character[position].id)
+            putExtra("NOME", _character[position].nome)
+            putExtra("DESCRIÇÃO", _character[position].descricao)
+            putExtra("IMAGEM", _character[position].thumbnail?.getImagePath())
+            startActivity(this)
         }
     }
+
+    override fun getCharacterFavoriteClick(position: Int) {
+        _favoritosViewModel.isFavorite(_character[position].id)
+            .observe(viewLifecycleOwner) { isFavorite ->
+                adicionarFavoritos(isFavorite, position)
+                _character[position].isFavorite = !_character[position].isFavorite
+            }
+    }
+
+    private fun adicionarFavoritos(isFavorite: Boolean, position: Int) {
+        if (isFavorite) {
+            Toast.makeText(view?.context, "Favorito já adicionado", Toast.LENGTH_SHORT).show()
+        } else {
+            val character = _character[position]
+            _favoritosViewModel.addCharacter(
+                character.nome,
+                character.id,
+                character.descricao,
+                character.thumbnail!!.getImagePath()
+            )
+                .observe(viewLifecycleOwner) {
+                    Log.d(
+                        "TAG CHARACTER FRAGMENT",
+                        "getCharacterFavoriteClick() - addCharacter"
+                    )
+                    if (it) {
+                        _character[position].isFavorite = true
+                        _characterAdapter.notifyItemChanged(position)
+                    }
+                }
+        }
+    }
+
+//    private fun removerAdicionar(isFavorite: Boolean, position: Int) {
+//        if (isFavorite) {
+//            _favoritosViewModel.deleteCharacter(_character[position].id)
+//                .observe(viewLifecycleOwner) {
+//                    if (it) {
+//                        _character[position].isFavorite = false
+//                        if (onlyFavorites) {
+//                            _character.removeAt(position)
+//                            _characterAdapter.notifyDataSetChanged()
+//                        } else {
+//                            _characterAdapter.notifyItemChanged(position)
+//                        }
+//                    }
+//                }
+//        } else {
+//            val character = _character[position]
+//            _favoritosViewModel.addCharacter(
+//                character.nome,
+//                character.id,
+//                character.descricao,
+//                character.thumbnail!!.getImagePath()
+//            )
+//                .observe(viewLifecycleOwner) {
+//                    Log.d(
+//                        "TAG CHARACTER FRAGMENT",
+//                        "getCharacterFavoriteClick() - addCharacter"
+//                    )
+//                    if (it) {
+//                        _character[position].isFavorite = true
+//                        _characterAdapter.notifyItemChanged(position)
+//                    }
+//                }
+//        }
+//    }
+
+    private fun checkConectividade(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        return isConnected
+    }
+
+
+    private fun viewModelProvider() {
+        _viewModel = ViewModelProvider(
+            this,
+            CharactersViewModel.CharactersViewModelFactory(
+                CharacterRepository()
+            )
+        ).get(CharactersViewModel::class.java)
+    }
+
+    private fun localViewModelProvider() {
+        _favoritosViewModel = ViewModelProvider(
+            this,
+            FavoriteViewModel.FavoritosViewModelFactory(
+                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+            )
+        ).get(FavoriteViewModel::class.java)
+    }
+
+    private fun comicViewModelProvider() {
+        _comicViewModel = ViewModelProvider(
+            this,
+            ComicViewModel.ComicsViewModelFactory(ComicRepository())
+        ).get(ComicViewModel::class.java)
+    }
+}
