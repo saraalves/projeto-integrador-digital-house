@@ -4,26 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/img_background"
+    android:orientation="vertical"
     tools:context=".home.view.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ctlTeste"
         android:layout_width="match_parent"
-        android:elevation="4dp"
-        android:visibility="gone"
-        android:background="@color/colorGray"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/img_background"
+        android:visibility="gone">
 
         <TextView
+            android:id="@+id/titleDisconcted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TESTE"
-            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="Ops! Disconected"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_24_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_20_dp"
+            android:layout_marginTop="@dimen/dim_8_dp"
+            android:layout_marginEnd="@dimen/dim_20_dp"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:gravity="center"
+            android:text="Please check your internet connection and try again"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_20_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleDisconcted" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
