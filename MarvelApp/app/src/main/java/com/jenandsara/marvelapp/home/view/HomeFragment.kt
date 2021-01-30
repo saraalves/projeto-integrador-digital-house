@@ -80,12 +80,12 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         setupRecyclerViewCard(recyclerViewCard, viewGridManager)
 
         searchByName(_view, _character)
+
 //        getListAvatar()
         getRecomended()
         showLoading(true)
         setScrollView()
 //        setScrollViewAvatar()
-
     }
 
     private fun setupRecyclerViewCard(
@@ -113,7 +113,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun setupNavigation() {
         Intent(view?.context, DetalhesActivity::class.java).apply {
             bundleOf("ID" to _character[position].id)
-            bundleOf("NOME" to _character[position].nome )
+            bundleOf("NOME" to _character[position].nome)
             bundleOf("DESCRIÇÃO" to _character[position].descricao)
             bundleOf("IMAGEM" to _character[position].thumbnail?.getImagePath())
             startActivity(this)
@@ -134,19 +134,19 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let { _character.addAll(list1) }
-                _favoritosViewModel.setFavoriteCharacter(list1)
-                _characterAdapter.notifyDataSetChanged()
-                showLoading(false)
-            }
+            _favoritosViewModel.setFavoriteCharacter(list1)
+            _characterAdapter.notifyDataSetChanged()
+            showLoading(false)
+        }
     }
 
     private fun getListAvatar() {
         _viewModel.getList().observe(viewLifecycleOwner) {
-                _recomendados.addAll(it)
-                _avatarAdapter.notifyDataSetChanged()
-                showLoading(false)
-            }
+            _recomendados.addAll(it)
+            _avatarAdapter.notifyDataSetChanged()
+            showLoading(false)
         }
+    }
 
 
     private fun showLoading(isLoading: Boolean) {
@@ -236,125 +236,129 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         })
     }
 
-    private fun getRecomended(){
+    private fun getRecomended() {
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
-            _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
-                _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
-                    _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
-                        _recomendados.addAll(it2)
-                        _avatarAdapter.notifyDataSetChanged()
-                        showLoading(false)
-                    }
-                }
-            }
-        }
-    }
-
-//    private fun getListAvatar() {
-//        _viewModel.getList().observe(viewLifecycleOwner) {
-//            _recomendados.addAll(it)
-//            _avatarAdapter.notifyDataSetChanged()
-//            showLoading(false)
-//        }
-//    }
-
-  /*  private fun getCharacters() {
-        if (onlyFavorites) {
-            _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
-                _character.addAll(it)
-                _characterAdapter.notifyDataSetChanged()
-            }
-        } else {
-            _viewModel.getCharacters().observe(viewLifecycleOwner) {
-                _character.addAll(it)
-                _characterAdapter.notifyDataSetChanged()
-            }
-        }
-    }*/
-
-    /*private fun updateCharacter() {
-        if (!onlyFavorites) {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _characterAdapter.notifyDataSetChanged()
-                }
-        } else {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _character.removeAll(it)
-                    _characterAdapter.notifyDataSetChanged()
-                }
-        }
-    }*/
-
-    override fun getCharacterClick(position: Int) {
-        Intent(view?.context, DetalhesActivity::class.java).apply {
-            putExtra("ID", _character[position].id)
-            putExtra("NOME", _character[position].nome )
-            putExtra("DESCRIÇÃO", _character[position].descricao)
-            putExtra("IMAGEM", _character[position].thumbnail?.getImagePath())
-            startActivity(this)
-        }
-    }
-
-    override fun getCharacterFavoriteClick(position: Int) {
-        _favoritosViewModel.isFavorite(_character[position].id)
-            .observe(viewLifecycleOwner) { isFavorite ->
-                removerAdicionar(isFavorite, position)
-                _character[position].isFavorite = !_character[position].isFavorite
-            }
-    }
-
-    private fun removerAdicionar(boolean: Boolean, position: Int) {
-        if (boolean) {
-            _favoritosViewModel.deleteCharacter(_character[position].id)
-                .observe(viewLifecycleOwner) {
-                    if (it) {
-                        _character[position].isFavorite = false
-                        if (onlyFavorites) {
-                            _character.removeAt(position)
-                            _characterAdapter.notifyDataSetChanged()
-                        } else {
-                            _characterAdapter.notifyItemChanged(position)
+            if (!it.isNullOrEmpty()) {
+                _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
+                    _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
+                        _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
+                            _recomendados.addAll(it2)
+                            _avatarAdapter.notifyDataSetChanged()
+                            showLoading(false)
                         }
                     }
                 }
-        } else {
-            val character = _character[position]
-            _favoritosViewModel.addCharacter(character.nome, character.id, character.descricao, character.thumbnail!!.getImagePath())
-                .observe(viewLifecycleOwner) {
-                    Log.d("TAG CHARACTER FRAGMENT", "getCharacterFavoriteClick() - addCharacter")
-                    if (it) {
-                        _character[position].isFavorite = true
-                        _characterAdapter.notifyItemChanged(position)
-                    }
-                }
+            } else {
+                getListAvatar()
+            }
         }
     }
 
+        /*  private fun getCharacters() {
+              if (onlyFavorites) {
+                  _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
+                      _character.addAll(it)
+                      _characterAdapter.notifyDataSetChanged()
+                  }
+              } else {
+                  _viewModel.getCharacters().observe(viewLifecycleOwner) {
+                      _character.addAll(it)
+                      _characterAdapter.notifyDataSetChanged()
+                  }
+              }
+          }*/
 
-    private fun viewModelProvider() {
-        _viewModel = ViewModelProvider(
-            this,
-            CharactersViewModel.CharactersViewModelFactory(
-                CharacterRepository()
-            )
-        ).get(CharactersViewModel::class.java)
-    }
+        /*private fun updateCharacter() {
+            if (!onlyFavorites) {
+                _viewModel.updateFavoriteCharacters(_character)
+                    .observe(viewLifecycleOwner) {
+                        _characterAdapter.notifyDataSetChanged()
+                    }
+            } else {
+                _viewModel.updateFavoriteCharacters(_character)
+                    .observe(viewLifecycleOwner) {
+                        _character.removeAll(it)
+                        _characterAdapter.notifyDataSetChanged()
+                    }
+            }
+        }*/
 
-    private fun localViewModelProvider() {
-        _favoritosViewModel = ViewModelProvider(
-            this,
-            FavoriteViewModel.FavoritosViewModelFactory(
-                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
-            )
-        ).get(FavoriteViewModel::class.java)
-    }
+        override fun getCharacterClick(position: Int) {
+            Intent(view?.context, DetalhesActivity::class.java).apply {
+                putExtra("ID", _character[position].id)
+                putExtra("NOME", _character[position].nome)
+                putExtra("DESCRIÇÃO", _character[position].descricao)
+                putExtra("IMAGEM", _character[position].thumbnail?.getImagePath())
+                startActivity(this)
+            }
+        }
 
-    private fun comicViewModelProvider() {
-        _comicViewModel = ViewModelProvider(
-            this,
-            ComicViewModel.ComicsViewModelFactory(ComicRepository())
-        ).get(ComicViewModel::class.java)
+        override fun getCharacterFavoriteClick(position: Int) {
+            _favoritosViewModel.isFavorite(_character[position].id)
+                .observe(viewLifecycleOwner) { isFavorite ->
+                    removerAdicionar(isFavorite, position)
+                    _character[position].isFavorite = !_character[position].isFavorite
+                }
+        }
+
+        private fun removerAdicionar(boolean: Boolean, position: Int) {
+            if (boolean) {
+                _favoritosViewModel.deleteCharacter(_character[position].id)
+                    .observe(viewLifecycleOwner) {
+                        if (it) {
+                            _character[position].isFavorite = false
+                            if (onlyFavorites) {
+                                _character.removeAt(position)
+                                _characterAdapter.notifyDataSetChanged()
+                            } else {
+                                _characterAdapter.notifyItemChanged(position)
+                            }
+                        }
+                    }
+            } else {
+                val character = _character[position]
+                _favoritosViewModel.addCharacter(
+                    character.nome,
+                    character.id,
+                    character.descricao,
+                    character.thumbnail!!.getImagePath()
+                )
+                    .observe(viewLifecycleOwner) {
+                        Log.d(
+                            "TAG CHARACTER FRAGMENT",
+                            "getCharacterFavoriteClick() - addCharacter"
+                        )
+                        if (it) {
+                            _character[position].isFavorite = true
+                            _characterAdapter.notifyItemChanged(position)
+                        }
+                    }
+            }
+        }
+
+
+        private fun viewModelProvider() {
+            _viewModel = ViewModelProvider(
+                this,
+                CharactersViewModel.CharactersViewModelFactory(
+                    CharacterRepository()
+                )
+            ).get(CharactersViewModel::class.java)
+        }
+
+        private fun localViewModelProvider() {
+            _favoritosViewModel = ViewModelProvider(
+                this,
+                FavoriteViewModel.FavoritosViewModelFactory(
+                    CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+                )
+            ).get(FavoriteViewModel::class.java)
+        }
+
+        private fun comicViewModelProvider() {
+            _comicViewModel = ViewModelProvider(
+                this,
+                ComicViewModel.ComicsViewModelFactory(ComicRepository())
+            ).get(ComicViewModel::class.java)
+        }
     }
-}

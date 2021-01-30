@@ -218,7 +218,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                         LOGIN_TYPE = "SENHA"
-                    } else Toast.makeText(baseContext, "Falha de autenticação", Toast.LENGTH_SHORT)
+                    } else Toast.makeText(baseContext, "Falha de autenticação, verifique o seu e-mail", Toast.LENGTH_SHORT)
                         .show()
                 } else {
                     Toast.makeText(baseContext, "Falha de autenticação", Toast.LENGTH_SHORT).show()
