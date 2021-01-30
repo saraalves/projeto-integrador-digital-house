@@ -248,7 +248,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getRecomended() {
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
+            if (!it.isNullOrEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
                     _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
                         _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->

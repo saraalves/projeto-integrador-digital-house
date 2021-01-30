@@ -24,7 +24,7 @@ class CharactersViewModel(private val _repository: CharacterRepository) : ViewMo
 
     fun getList() = liveData(Dispatchers.IO) {
         val response = _repository.getCharacter()
-        _count =response.data.count
+        _count = response.data.count
         _totalPages = if (response.data.total != 0) {
             response.data.total / _count
         } else{
