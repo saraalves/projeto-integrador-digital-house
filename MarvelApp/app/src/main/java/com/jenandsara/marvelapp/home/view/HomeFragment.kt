@@ -218,6 +218,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
+    private fun getListSearcheByName(list: List<CharacterModel>) {
+        _viewModel.getList().observe(viewLifecycleOwner) {
+            list?.let { _character.addAll(it) }
+            _characterAdapter.notifyDataSetChanged()
+            showLoading(false)
+        }
+    }
+
     private fun searchByName(view: View, list: MutableList<CharacterModel>) {
 
         val searchView = view.findViewById<SearchView>(R.id.searchView)
@@ -226,7 +234,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
                     _character.clear()
-                    getList(it)
+                    getListSearcheByName(it)
                 }
                 return false
             }
@@ -234,11 +242,11 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     _character.clear()
-                    getList(_viewModel.initialList())
+                    getListSearcheByName(_viewModel.initialList())
                 } else {
                     _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner) {
                         _character.clear()
-                        getList(it)
+                        getListSearcheByName(it)
                     }
                 }
                 return false
