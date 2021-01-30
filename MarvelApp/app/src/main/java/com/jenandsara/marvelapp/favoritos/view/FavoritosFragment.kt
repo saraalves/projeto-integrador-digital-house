@@ -59,9 +59,14 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         setupRecyclerViewCard(favoritoRecycler, viewGridManager)
         viewModelProvider()
         showLoading(true)
-        getCharacters()
+//        getCharacters()
         //updateCharacter()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getCharacters()
     }
 
     private fun setupRecyclerViewCard(
@@ -89,6 +94,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             _listaFavoritosLocal.addAll(it)
             _favoritosAdapter.notifyDataSetChanged()
         }
+        _listaFavoritosLocal.clear()
         showLoading(false)
     }
 
