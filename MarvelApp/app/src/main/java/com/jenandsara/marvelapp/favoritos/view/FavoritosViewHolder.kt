@@ -27,7 +27,9 @@ class FavoritosViewHolder(view: View, private val context: Context) : RecyclerVi
 
         _nome.text = personagemModel.nome
 
-        Picasso.get()
+        btnFavoritar.isChecked = personagemModel.isFavorite
+
+            Picasso.get()
             .load(personagemModel.imgPath)
             .into(_imagem)
 
@@ -55,15 +57,16 @@ class FavoritosViewHolder(view: View, private val context: Context) : RecyclerVi
             true
         }
     }
+
     private fun favoritar() {
         val toggleFavoritar = toggleFavoritar
         toggleFavoritar?.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
                 btnFavoritar
-                    ?.setIconResource(R.drawable.ic_baseline_favorite_24)
+                    ?.setIconResource(R.drawable.ic_favorite_gray_24)
             } else {
                 btnFavoritar
-                    ?.setIconResource(R.drawable.ic_favorit_24)
+                    ?.setIconResource(R.drawable.ic_baseline_favorite_24)
             }
 
         }
