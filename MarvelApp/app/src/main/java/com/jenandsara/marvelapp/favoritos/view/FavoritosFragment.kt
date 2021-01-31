@@ -91,10 +91,10 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
     private fun getCharacters() {
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
+            _listaFavoritosLocal.clear()
             _listaFavoritosLocal.addAll(it)
             _favoritosAdapter.notifyDataSetChanged()
         }
-        _listaFavoritosLocal.clear()
         showLoading(false)
     }
 

@@ -27,6 +27,8 @@ class CharacterViewHolder(view: View, private val context: Context) : RecyclerVi
     fun bind(character: CharacterModel, getCharacterClick: IGetCharacterClick) {
         nome.text = character.nome
 
+        btnFavoritar.isChecked = character.isFavorite
+
         val imagePath = character.thumbnail?.getImagePath()
         Picasso.get()
             .load(imagePath)
@@ -65,7 +67,7 @@ class CharacterViewHolder(view: View, private val context: Context) : RecyclerVi
                     ?.setIconResource(R.drawable.ic_baseline_favorite_24)
             } else {
                 btnFavoritar
-                    ?.setIconResource(R.drawable.ic_favorit_24)
+                    ?.setIconResource(R.drawable.ic_favorite_gray_24)
             }
 
         }

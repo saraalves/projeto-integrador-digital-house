@@ -72,13 +72,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             val viewGridManager = GridLayoutManager(view.context, 2)
             val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
-
+            val btnFavoritar = _view.findViewById<MaterialButton>(R.id.btnFavoritar)
 
             comicViewModelProvider()
             viewModelProvider()
             localViewModelProvider()
 
             getList(_character)
+
             _characterAdapter = CharacterAdapter(_character, this)
 
             setupNavigationAvatar()
@@ -86,9 +87,9 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             setupRecyclerViewAvatar(avatar, manager)
             setupRecyclerViewCard(recyclerViewCard, viewGridManager)
 
+
             searchByName(_view, _character)
 
-            getRecomended()
             showLoading(true)
             setScrollView()
 
@@ -100,6 +101,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     override fun onResume() {
         super.onResume()
         getRecomended()
+        update(_character)
     }
 
     private fun setupRecyclerViewCard(
@@ -145,10 +147,21 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
+    private fun update(list: List<CharacterModel>) {
+        list.forEach {
+            _favoritosViewModel.isFavorite(it.id).observe(viewLifecycleOwner) { b: Boolean ->
+                it.isFavorite = b
+            }
+        }
+
+    }
+
     private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
-            list?.let { _character.addAll(list1) }
-            _favoritosViewModel.setFavoriteCharacter(list1)
+            list?.let {
+                _favoritosViewModel.setFavoriteCharacter(list1)
+                _character.addAll(list1)
+            }
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
@@ -260,14 +273,24 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getRecomended() {
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty() && it.size > 1) {
+            if (it.isNotEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
                     _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
-                        _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
-                            _recomendados.addAll(it2)
-                            _avatarAdapter.notifyDataSetChanged()
-                            showLoading(false)
+                        if (list.isNotEmpty() && list.size > 1) {
+                            _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
+                                if (it2.isNotEmpty() && it2.size > 1) {
+                                    _recomendados.addAll(it2)
+                                    _avatarAdapter.notifyDataSetChanged()
+                                    showLoading(false)
+                                } else {
+                                    getListAvatar()
+                                }
+                            }
+
+                        } else {
+                            getListAvatar()
                         }
+
                     }
                 }
             } else {
