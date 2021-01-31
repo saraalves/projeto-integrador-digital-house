@@ -276,35 +276,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-    /*  private fun getCharacters() {
-          if (onlyFavorites) {
-              _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
-                  _character.addAll(it)
-                  _characterAdapter.notifyDataSetChanged()
-              }
-          } else {
-              _viewModel.getCharacters().observe(viewLifecycleOwner) {
-                  _character.addAll(it)
-                  _characterAdapter.notifyDataSetChanged()
-              }
-          }
-      }*/
-
-    /*private fun updateCharacter() {
-        if (!onlyFavorites) {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _characterAdapter.notifyDataSetChanged()
-                }
-        } else {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _character.removeAll(it)
-                    _characterAdapter.notifyDataSetChanged()
-                }
-        }
-    }*/
-
     override fun getCharacterClick(position: Int) {
         Intent(view?.context, DetalhesActivity::class.java).apply {
             putExtra("ID", _character[position].id)
@@ -344,6 +315,25 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                         _characterAdapter.notifyItemChanged(position)
                     }
                 }
+        }
+    }
+
+        private fun removerFavoritos(isFavorite: Boolean, position: Int) {
+        if (isFavorite) {
+            _favoritosViewModel.deleteCharacter(_character[position].id)
+                .observe(viewLifecycleOwner) {
+                    if (it) {
+                        _character[position].isFavorite = false
+                        if (onlyFavorites) {
+                            _character.removeAt(position)
+                            _characterAdapter.notifyDataSetChanged()
+                        } else {
+                            _characterAdapter.notifyItemChanged(position)
+                        }
+                    }
+                }
+        } else {
+            Toast.makeText(view?.context, "Favorito removido", Toast.LENGTH_SHORT).show()
         }
     }
 
