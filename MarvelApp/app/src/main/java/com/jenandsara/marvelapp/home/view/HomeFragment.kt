@@ -147,7 +147,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-    private fun update(list: List<CharacterModel>){
+    private fun update(list: List<CharacterModel>) {
         list.forEach {
             _favoritosViewModel.isFavorite(it.id).observe(viewLifecycleOwner) { b: Boolean ->
                 it.isFavorite = b
@@ -276,11 +276,21 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             if (it.isNotEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
                     _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
-                        _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
-                            _recomendados.addAll(it2)
-                            _avatarAdapter.notifyDataSetChanged()
-                            showLoading(false)
+                        if (list.isNotEmpty() && list.size > 1) {
+                            _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
+                                if (it2.isNotEmpty() && it2.size > 1) {
+                                    _recomendados.addAll(it2)
+                                    _avatarAdapter.notifyDataSetChanged()
+                                    showLoading(false)
+                                } else {
+                                    getListAvatar()
+                                }
+                            }
+
+                        } else {
+                            getListAvatar()
                         }
+
                     }
                 }
             } else {
