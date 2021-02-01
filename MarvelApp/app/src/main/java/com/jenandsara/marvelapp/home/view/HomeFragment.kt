@@ -317,49 +317,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             }
     }
 
-    private fun adicionarFavoritos(isFavorite: Boolean, position: Int) {
-        if (isFavorite) {
-            Toast.makeText(view?.context, "Favorito já adicionado", Toast.LENGTH_SHORT).show()
-        } else {
-            val character = _character[position]
-            _favoritosViewModel.addCharacter(
-                character.nome,
-                character.id,
-                character.descricao,
-                character.thumbnail!!.getImagePath()
-            )
-                .observe(viewLifecycleOwner) {
-                    Log.d(
-                        "TAG CHARACTER FRAGMENT",
-                        "getCharacterFavoriteClick() - addCharacter"
-                    )
-                    if (it) {
-                        _character[position].isFavorite = true
-                        _characterAdapter.notifyItemChanged(position)
-                    }
-                }
-        }
-    }
-
-        private fun removerFavoritos(isFavorite: Boolean, position: Int) {
-        if (isFavorite) {
-            _favoritosViewModel.deleteCharacter(_character[position].id)
-                .observe(viewLifecycleOwner) {
-                    if (it) {
-                        _character[position].isFavorite = false
-                        if (onlyFavorites) {
-                            _character.removeAt(position)
-                            _characterAdapter.notifyDataSetChanged()
-                        } else {
-                            _characterAdapter.notifyItemChanged(position)
-                        }
-                    }
-                }
-        } else {
-            Toast.makeText(view?.context, "Favorito removido", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun removerAdicionar(isFavorite: Boolean, position: Int) {
         if (isFavorite) {
             _favoritosViewModel.deleteCharacter(_character[position].id)

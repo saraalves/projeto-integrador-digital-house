@@ -113,51 +113,30 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
-        _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].id)
+        _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].idAPI)
             .observe(viewLifecycleOwner) {
                 _listaFavoritosLocal.removeAt(position)
                 _favoritosAdapter.notifyDataSetChanged()
-
             }
     }
 
+    private fun viewModelProvider() {
+        _viewModel = ViewModelProvider(
+            this,
+            CharactersViewModel.CharactersViewModelFactory(
+                CharacterRepository()
+            )
+        ).get(CharactersViewModel::class.java)
+    }
 
-private fun removerAdicionar(position: Int) {
-
-}
-
-/* private fun updateCharacter() {
-     if (!onlyFavorites) {
-         _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
-             .observe(viewLifecycleOwner) {
-                 _favoritosAdapter.notifyDataSetChanged()
-             }
-     } else {
-         _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
-             .observe(viewLifecycleOwner) {
-                 _listaFavoritosLocal.removeAll(it)
-                 _favoritosAdapter.notifyDataSetChanged()
-             }
-     }
- }*/
-
-private fun viewModelProvider() {
-    _viewModel = ViewModelProvider(
-        this,
-        CharactersViewModel.CharactersViewModelFactory(
-            CharacterRepository()
-        )
-    ).get(CharactersViewModel::class.java)
-}
-
-private fun localViewModelProvider() {
-    _favoritosViewModel = ViewModelProvider(
-        this,
-        FavoriteViewModel.FavoritosViewModelFactory(
-            CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
-        )
-    ).get(FavoriteViewModel::class.java)
-}
+    private fun localViewModelProvider() {
+        _favoritosViewModel = ViewModelProvider(
+            this,
+            FavoriteViewModel.FavoritosViewModelFactory(
+                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+            )
+        ).get(FavoriteViewModel::class.java)
+    }
 
 
 }
