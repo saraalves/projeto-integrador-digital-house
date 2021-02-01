@@ -12,11 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.appbar.MaterialToolbar
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.comics.model.ComicsModel
@@ -27,13 +26,13 @@ import com.jenandsara.marvelapp.detalhes.view.stories.StoriesAdapter
 import com.jenandsara.marvelapp.detalhes.viewmodel.DetalhesViewModel
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
+import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
 import com.jenandsara.marvelapp.stories.model.StoriesModel
 import com.jenandsara.marvelapp.stories.repository.StoriesRepository
 import com.jenandsara.marvelapp.stories.viewmodel.StoriesViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
 import kotlinx.android.synthetic.main.dialog_image.view.*
-import kotlinx.coroutines.Dispatchers
 import kotlin.properties.Delegates
 
 class DetalhesActivity : AppCompatActivity() {
@@ -45,6 +44,8 @@ class DetalhesActivity : AppCompatActivity() {
     private lateinit var _storiesViewModel: StoriesViewModel
 
     private lateinit var _detalhesViewModel: DetalhesViewModel
+    private lateinit var _favoritosViewModel: FavoriteViewModel
+
     private var characterId by Delegates.notNull<Int>()
 
     private var _comics = mutableListOf<ComicsModel>()
@@ -68,6 +69,10 @@ class DetalhesActivity : AppCompatActivity() {
 
         val comicsList = findViewById<RecyclerView>(R.id.recyclerComics)
         val storiesList = findViewById<RecyclerView>(R.id.recyclerStrories)
+
+        localViewModelProvider()
+
+        favoritar(nome!!, id, descricao!!, imagem!!)
 
         setData(descricao, nome, imagem)
 
@@ -112,21 +117,34 @@ class DetalhesActivity : AppCompatActivity() {
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
         }
+    }
+
+
+    private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String) {
 
         val iconFavorite = findViewById<View>(R.id.favorite)
         val iconFavorit = findViewById<View>(R.id.favorit)
-        iconFavorit.isVisible = false
+
+        _favoritosViewModel.isFavorite(id).observe(this) {
+            iconFavorit.isVisible = it
+            iconFavorite.isVisible = !it
+        }
 
         iconFavorite.setOnClickListener {
             iconFavorite.isVisible = false
             iconFavorit.isVisible = true
-            Toast.makeText(this, "Favorito adicionado", Toast.LENGTH_SHORT).show()
+
+            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
+                if (it) Toast.makeText(this, "Favorito adicionado", Toast.LENGTH_SHORT).show()
+            }
         }
 
         iconFavorit.setOnClickListener {
             iconFavorite.isVisible = true
             iconFavorit.isVisible = false
-            Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+            _favoritosViewModel.deleteCharacter(id).observe(this) {
+                if (it) Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -223,5 +241,14 @@ class DetalhesActivity : AppCompatActivity() {
             DetalhesViewModel.DetalherViewModelFactory(CharacterRepository(), CharacterLocalRepository(
                 AppDatabase.getDatabase(this).characterDAO()))
         ).get(DetalhesViewModel::class.java)
+    }
+
+    private fun localViewModelProvider() {
+        _favoritosViewModel = ViewModelProvider(
+            this,
+            FavoriteViewModel.FavoritosViewModelFactory(
+                CharacterLocalRepository(AppDatabase.getDatabase(this).characterDAO())
+            )
+        ).get(FavoriteViewModel::class.java)
     }
 }
