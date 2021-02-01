@@ -1,7 +1,10 @@
 package com.jenandsara.marvelapp.perfil.view
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,20 +49,35 @@ class PerfilFragment : Fragment() {
 
         _view = view
 
-        val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
-        btnAlterarSenha.setOnClickListener {
-            alterarSenha(view)
-        }
+        if(checkConectividade()){
 
-        val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
-        btnAlterarFoto.setOnClickListener {
-            procurarFoto()
+            val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
+            btnAlterarSenha.setOnClickListener {
+                alterarSenha(view)
+            }
+
+            val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
+            btnAlterarFoto.setOnClickListener {
+                procurarFoto()
+            }
+
+            updateProfile(view)
+
+        }  else {
+            val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
+            btnAlterarFoto.isEnabled = false
+
+            val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
+            btnAlterarSenha.isEnabled = false
+
+            val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
+            toggleNome.isEnabled = false
+
         }
 
         getInfo(view)
         logOut(view)
         loginType(view)
-        updateProfile(view)
 
     }
 
@@ -221,6 +239,14 @@ class PerfilFragment : Fragment() {
                     }
                 }
         }
+    }
+
+    private fun checkConectividade(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        return isConnected
     }
 
     companion object {

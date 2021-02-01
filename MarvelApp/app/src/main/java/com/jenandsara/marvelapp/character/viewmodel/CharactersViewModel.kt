@@ -58,15 +58,19 @@ class CharactersViewModel(private val _repository: CharacterRepository) : ViewMo
     }
 
     fun getRandomFavorite(list: MutableList<CharacterEntity>) = liveData(Dispatchers.IO){
-        val personagem = list[(list.indices).random()]
-        emit (personagem.idAPI)
+        if(list.isNotEmpty()){
+            val personagem = list[Random.nextInt(list.size - 1)]
+            emit (personagem.idAPI)
+        }
     }
 
     fun getRecomended(list: List<ComicsModel>) = liveData(Dispatchers.IO){
-        val comic = list[(list.indices).random()]
-        val id = comic.id
-        val response = _repository.getRecomended(id)
-        emit(response.data.results)
+        if(list.isNotEmpty()){
+            val comic = list[Random.nextInt(list.size - 1)]
+            val id = comic.id
+            val response = _repository.getRecomended(id)
+            emit(response.data.results)
+        }
     }
 
     /*fun getCharacters() = liveData(Dispatchers.IO) {

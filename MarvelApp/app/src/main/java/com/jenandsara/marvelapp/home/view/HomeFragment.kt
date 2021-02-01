@@ -92,6 +92,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
             showLoading(true)
             setScrollView()
+            getRecomended()
 
         } else {
             view.findViewById<ConstraintLayout>(R.id.ctlTeste).visibility = View.VISIBLE
@@ -100,7 +101,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     override fun onResume() {
         super.onResume()
-        getRecomended()
         update(_character)
     }
 

@@ -104,7 +104,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
     override fun getCharacterClick(position: Int) {
         Intent(view?.context, DetalhesActivity::class.java).apply {
-            putExtra("ID", _listaFavoritosLocal[position].id)
+            putExtra("ID", _listaFavoritosLocal[position].idAPI)
             putExtra("NOME", _listaFavoritosLocal[position].nome)
             putExtra("DESCRIÇÃO", _listaFavoritosLocal[position].descricao)
             putExtra("IMAGEM", _listaFavoritosLocal[position].imgPath)
