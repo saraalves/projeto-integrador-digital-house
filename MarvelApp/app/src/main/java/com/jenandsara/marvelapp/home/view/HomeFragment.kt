@@ -147,7 +147,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-    private fun update(list: List<CharacterModel>){
+    private fun update(list: List<CharacterModel>) {
         list.forEach {
             _favoritosViewModel.isFavorite(it.id).observe(viewLifecycleOwner) { b: Boolean ->
                 it.isFavorite = b
@@ -276,11 +276,21 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             if (it.isNotEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
                     _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
-                        _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
-                            _recomendados.addAll(it2)
-                            _avatarAdapter.notifyDataSetChanged()
-                            showLoading(false)
+                        if (list.isNotEmpty() && list.size > 1) {
+                            _viewModel.getRecomended(list).observe(viewLifecycleOwner) { it2 ->
+                                if (it2.isNotEmpty() && it2.size > 1) {
+                                    _recomendados.addAll(it2)
+                                    _avatarAdapter.notifyDataSetChanged()
+                                    showLoading(false)
+                                } else {
+                                    getListAvatar()
+                                }
+                            }
+
+                        } else {
+                            getListAvatar()
                         }
+
                     }
                 }
             } else {
@@ -288,35 +298,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             }
         }
     }
-
-    /*  private fun getCharacters() {
-          if (onlyFavorites) {
-              _viewModel.getFavoriteCharacter().observe(viewLifecycleOwner) {
-                  _character.addAll(it)
-                  _characterAdapter.notifyDataSetChanged()
-              }
-          } else {
-              _viewModel.getCharacters().observe(viewLifecycleOwner) {
-                  _character.addAll(it)
-                  _characterAdapter.notifyDataSetChanged()
-              }
-          }
-      }*/
-
-    /*private fun updateCharacter() {
-        if (!onlyFavorites) {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _characterAdapter.notifyDataSetChanged()
-                }
-        } else {
-            _viewModel.updateFavoriteCharacters(_character)
-                .observe(viewLifecycleOwner) {
-                    _character.removeAll(it)
-                    _characterAdapter.notifyDataSetChanged()
-                }
-        }
-    }*/
 
     override fun getCharacterClick(position: Int) {
         Intent(view?.context, DetalhesActivity::class.java).apply {
@@ -357,6 +338,25 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                         _characterAdapter.notifyItemChanged(position)
                     }
                 }
+        }
+    }
+
+        private fun removerFavoritos(isFavorite: Boolean, position: Int) {
+        if (isFavorite) {
+            _favoritosViewModel.deleteCharacter(_character[position].id)
+                .observe(viewLifecycleOwner) {
+                    if (it) {
+                        _character[position].isFavorite = false
+                        if (onlyFavorites) {
+                            _character.removeAt(position)
+                            _characterAdapter.notifyDataSetChanged()
+                        } else {
+                            _characterAdapter.notifyItemChanged(position)
+                        }
+                    }
+                }
+        } else {
+            Toast.makeText(view?.context, "Favorito removido", Toast.LENGTH_SHORT).show()
         }
     }
 
