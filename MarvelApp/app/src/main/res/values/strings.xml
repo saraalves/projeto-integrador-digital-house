@@ -48,5 +48,6 @@
     <string name="digite_seu_email_no_campo_abaixo">Digite seu email no campo abaixo.</string>
     <string name="please_check_your_internet_connection_nand_try_again">Please check your internet connection\nand try again</string>
     <string name="ops_disconected">Ops! Disconected</string>
+    <string name="your_list_is_empty_go_find_your_favorite_ones">Your list is empty. Go find your favorite ones</string>
 
 </resources>

@@ -9,7 +9,6 @@
     android:background="@drawable/background_app"
     tools:context=".detalhes.view.DetalhesActivity">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
