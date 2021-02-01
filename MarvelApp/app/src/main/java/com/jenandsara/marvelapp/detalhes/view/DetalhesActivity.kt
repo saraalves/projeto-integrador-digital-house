@@ -1,7 +1,10 @@
 package com.jenandsara.marvelapp.detalhes.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -86,9 +90,16 @@ class DetalhesActivity : AppCompatActivity() {
         storiesViewModelProvider()
         detalhesViewModelProvider()
 
-        getStoriesList(id)
-        getComicList(id)
-
+        if(checkConectividade()) {
+            getStoriesList(id)
+            getComicList(id)
+        } else {
+            findViewById<TextView>(R.id.txtComics).visibility = View.GONE
+            findViewById<TextView>(R.id.txtStories).visibility = View.GONE
+            findViewById<RecyclerView>(R.id.recyclerComics).visibility = View.GONE
+            findViewById<RecyclerView>(R.id.recyclerStrories).visibility = View.GONE
+            findViewById<ConstraintLayout>(R.id.ctlNoconection).visibility = View.VISIBLE
+        }
     }
 
     private fun setData(descricao: String?, nome: String?, imagem: String?){
@@ -250,5 +261,13 @@ class DetalhesActivity : AppCompatActivity() {
                 CharacterLocalRepository(AppDatabase.getDatabase(this).characterDAO())
             )
         ).get(FavoriteViewModel::class.java)
+    }
+
+    private fun checkConectividade(): Boolean {
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        return isConnected
     }
 }
