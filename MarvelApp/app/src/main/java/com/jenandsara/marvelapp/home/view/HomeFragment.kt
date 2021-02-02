@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
@@ -96,7 +98,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
         } else {
             view.findViewById<ConstraintLayout>(R.id.ctlTeste).visibility = View.VISIBLE
+            view.findViewById<ConstraintLayout>(R.id.ctlConection).visibility = View.GONE
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        update(_character)
     }
 
     override fun onResume() {
@@ -250,8 +258,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
-                    _character.clear()
-                    getListSearcheByName(it)
+                    if(it.isEmpty()){
+                        view.findViewById<RecyclerView>(R.id.recyclerCard).visibility = View.GONE
+                        view.findViewById<TextView>(R.id.tvNoResult).visibility = View.VISIBLE
+                    } else {
+                        _character.clear()
+                        getListSearcheByName(it)
+                    }
                 }
                 return false
             }
@@ -260,6 +273,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 if (newText.isNullOrEmpty()) {
                     _character.clear()
                     getListSearcheByName(_viewModel.initialList())
+                    view.findViewById<RecyclerView>(R.id.recyclerCard).visibility = View.VISIBLE
+                    view.findViewById<TextView>(R.id.tvNoResult).visibility = View.GONE
                 } else {
                     _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner) {
                         _character.clear()

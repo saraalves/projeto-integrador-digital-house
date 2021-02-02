@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +12,12 @@
         android:id="@+id/ctlTeste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/img_background"
+        android:elevation="@dimen/dim_5_dp"
         android:visibility="gone">
 
         <TextView
@@ -20,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_condensed_bold"
-            android:text="Ops! Disconected"
+            android:text="@string/ops_disconected"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/dim_24_sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,19 +39,23 @@
             android:layout_marginStart="@dimen/dim_20_dp"
             android:layout_marginTop="@dimen/dim_8_dp"
             android:layout_marginEnd="@dimen/dim_20_dp"
-            android:fontFamily="@font/roboto_condensed_regular"
             android:gravity="center"
-            android:text="Please check your internet connection\nand try again"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/dim_20_sp"
+            android:fontFamily="@font/roboto_condensed_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleDisconcted" />
+            app:layout_constraintTop_toBottomOf="@id/titleDisconcted"
+            android:text="@string/please_check_your_internet"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_20_sp"
+             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlConection"
         android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content">
 
         <SearchView
@@ -101,6 +110,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerAvatar" />
 
+        <TextView
+            android:id="@+id/tvNoResult"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTodosHome"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="@string/no_result_was_found_try_again"
+            android:visibility="gone"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_20_sp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCard"
             android:layout_width="match_parent"
@@ -127,4 +150,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

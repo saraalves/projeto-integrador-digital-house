@@ -64,6 +64,9 @@ class PerfilFragment : Fragment() {
             updateProfile(view)
 
         }  else {
+
+            Toast.makeText(_view.context, "Alterações de perfil só são possiveis com conexão de rede", Toast.LENGTH_LONG).show()
+
             val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
             btnAlterarFoto.isEnabled = false
 
