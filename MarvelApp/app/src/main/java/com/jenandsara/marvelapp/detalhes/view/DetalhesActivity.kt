@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -178,7 +180,7 @@ class DetalhesActivity : AppCompatActivity() {
                         }
                         .setActionTextColor(Color.parseColor("#FFFFFF"))
                         .setTextColor(Color.parseColor("#FFFFFF"))
-                        .setBackgroundTint(Color.parseColor("#F06569"))
+                        .setBackgroundTint(Color.parseColor("#666666"))
                         .show()
                 }
             }
