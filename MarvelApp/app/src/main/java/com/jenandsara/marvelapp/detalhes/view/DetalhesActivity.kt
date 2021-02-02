@@ -156,20 +156,23 @@ class DetalhesActivity : AppCompatActivity() {
         iconFavorit.setOnClickListener {
             iconFavorite.isVisible = true
             iconFavorit.isVisible = false
-            _favoritosViewModel.deleteCharacter(id).observe(this) {
+            _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
+                if (it) {
                     val snackbarDetalhes = Snackbar.make(findViewById<View>(R.id.snackbarDetalhes), "Favorito removido", Snackbar.LENGTH_LONG)
                     snackbarDetalhes.setAction("DESFAZER") {
-                        override fun onClick(v: View){
-                            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
-                                if (it) Toast.makeText(this, "Favorito adicionado novamente", Toast.LENGTH_SHORT).show()
-                            }
+                        _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
+                            if (it) iconFavorite.isVisible = true
                         }
+                        snackbarDetalhes.setActionTextColor(R.color.colorWhite)
+                        snackbarDetalhes.setBackgroundTint(R.drawable.bg_snackbar)
                     }.show()
+                }
             }
         }
     }
 
-    private fun setupRecyclerViewComics(
+
+private fun setupRecyclerViewComics(
         recyclerView: RecyclerView?,
         viewLayoutManager: LinearLayoutManager
     ) {
