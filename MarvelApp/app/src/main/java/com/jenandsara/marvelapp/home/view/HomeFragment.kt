@@ -102,11 +102,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        update(_character)
-    }
-
     override fun onResume() {
         super.onResume()
         update(_character)
@@ -167,11 +162,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let {
-                _favoritosViewModel.setFavoriteCharacter(list1)
-                _character.addAll(list1)
+                update(list1)
+                _favoritosViewModel.setFavoriteCharacter(list1).observe(viewLifecycleOwner) {
+                    _character.addAll(list1)
+                    _characterAdapter.notifyDataSetChanged()
+                    showLoading(false)
+                }
             }
-            _characterAdapter.notifyDataSetChanged()
-            showLoading(false)
         }
     }
 
@@ -233,6 +230,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     if (totalItemCount > 0 && lastItem) {
                         showLoading(true)
                         _viewModel.nextPage().observe({ lifecycle }, {
+                            update(it)
                             _character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
                             showLoading(false)
