@@ -10,10 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.SearchView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
@@ -26,11 +24,9 @@ import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.comics.repository.ComicRepository
 import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
-import com.jenandsara.marvelapp.detalhes.viewmodel.DetalhesViewModel
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
@@ -74,8 +70,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             val viewGridManager = GridLayoutManager(view.context, 2)
             val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
 
-            val btnFavoritar = _view.findViewById<MaterialButton>(R.id.btnFavoritar)
-
             comicViewModelProvider()
             viewModelProvider()
             localViewModelProvider()
@@ -90,7 +84,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             setupRecyclerViewCard(recyclerViewCard, viewGridManager)
 
 
-            searchByName(_view, _character)
+            searchByName(_view)
 
             showLoading(true)
             setScrollView()
@@ -243,13 +237,16 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getListSearcheByName(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let { _character.addAll(it) }
+            list?.let {
+                update(it)
+                _character.addAll(it)
+            }
             _characterAdapter.notifyDataSetChanged()
             showLoading(false)
         }
     }
 
-    private fun searchByName(view: View, list: MutableList<CharacterModel>) {
+    private fun searchByName(view: View) {
 
         val searchView = view.findViewById<SearchView>(R.id.searchView)
 
@@ -368,9 +365,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun checkConectividade(): Boolean {
         val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
-        return isConnected
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 
 
