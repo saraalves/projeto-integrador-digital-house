@@ -14,12 +14,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.snackbar.Snackbar
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
@@ -161,7 +163,10 @@ class DetalhesActivity : AppCompatActivity() {
                     val snackbarDetalhes = Snackbar.make(findViewById<View>(R.id.snackbarDetalhes), "Favorito removido", Snackbar.LENGTH_LONG)
                     snackbarDetalhes.setAction("DESFAZER") {
                         _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
-                            if (it) iconFavorite.isVisible = true
+                            if (it) {
+                                iconFavorite.isVisible = false
+                                iconFavorit.isVisible = true
+                            }
                         }
                         snackbarDetalhes.setActionTextColor(R.color.colorWhite)
                         snackbarDetalhes.setBackgroundTint(R.drawable.bg_snackbar)
