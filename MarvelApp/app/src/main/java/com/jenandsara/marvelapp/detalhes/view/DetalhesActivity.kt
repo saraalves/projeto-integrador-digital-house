@@ -3,6 +3,9 @@ package com.jenandsara.marvelapp.detalhes.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +17,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.internal.ContextUtils.getActivity
+import com.google.android.material.snackbar.Snackbar
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.comics.model.ComicsModel
@@ -64,6 +70,7 @@ class DetalhesActivity : AppCompatActivity() {
         val nome = intent.getStringExtra("NOME")
         val descricao = intent.getStringExtra("DESCRIÇÃO")
         val imagem = intent.getStringExtra("IMAGEM")
+        var favorite = intent.getBooleanExtra("FAVORITO", true)
 
         val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.HORIZONTAL
@@ -76,7 +83,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         localViewModelProvider()
 
-        favoritar(nome!!, id, descricao!!, imagem!!)
+        favoritar(nome!!, id, descricao!!, imagem!!, favorite)
 
         setData(descricao, nome, imagem)
 
@@ -90,7 +97,7 @@ class DetalhesActivity : AppCompatActivity() {
         storiesViewModelProvider()
         detalhesViewModelProvider()
 
-        if(checkConectividade()) {
+        if (checkConectividade()) {
             getStoriesList(id)
             getComicList(id)
         } else {
@@ -102,9 +109,9 @@ class DetalhesActivity : AppCompatActivity() {
         }
     }
 
-    private fun setData(descricao: String?, nome: String?, imagem: String?){
+    private fun setData(descricao: String?, nome: String?, imagem: String?) {
 
-        if(descricao.isNullOrEmpty()){
+        if (descricao.isNullOrEmpty()) {
             findViewById<TextView>(R.id.txtDescricao).text = "Hi, I'm ${nome} !"
 
         } else findViewById<TextView>(R.id.txtDescricao).text = descricao
@@ -120,7 +127,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         val iconShare = findViewById<View>(R.id.share)
         iconShare.setOnClickListener {
-            val sendIntent: Intent = Intent().apply{
+            val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, "Compartilhando personagens favoritos.")
                 type = "text/plain"
@@ -131,7 +138,8 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
 
-    private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String) {
+    @SuppressLint("ResourceAsColor")
+    private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String, fav: Boolean) {
 
         val iconFavorite = findViewById<View>(R.id.favorite)
         val iconFavorit = findViewById<View>(R.id.favorit)
@@ -153,11 +161,32 @@ class DetalhesActivity : AppCompatActivity() {
         iconFavorit.setOnClickListener {
             iconFavorite.isVisible = true
             iconFavorit.isVisible = false
-            _favoritosViewModel.deleteCharacter(id).observe(this) {
-                if (it) Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+            _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
+                if (it) {
+                    val snackbarDetalhes = Snackbar.make(
+                        findViewById<View>(R.id.snackbarDetalhes),
+                        "Favorito removido",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction("DESFAZER") {
+                            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
+                                .observe(this) {
+                                    if (it) {
+                                        iconFavorite.isVisible = false
+                                        iconFavorit.isVisible = true
+                                    }
+                                }
+
+                        }
+                        .setActionTextColor(Color.parseColor("#FFFFFF"))
+                        .setTextColor(Color.parseColor("#FFFFFF"))
+                        .setBackgroundTint(Color.parseColor("#666666"))
+                        .show()
+                }
             }
         }
     }
+
 
     private fun setupRecyclerViewComics(
         recyclerView: RecyclerView?,
@@ -171,7 +200,7 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun getComicList(id: Int) {
-        _comicViewModel.getComicList(id).observe({lifecycle}) {
+        _comicViewModel.getComicList(id).observe({ lifecycle }) {
             _comics.addAll(it)
             _comicsAdapter.notifyDataSetChanged()
         }
@@ -185,13 +214,13 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun setupNavigationStories() {
-        _storiesAdapter = StoriesAdapter(_stories){
+        _storiesAdapter = StoriesAdapter(_stories) {
             Toast.makeText(this@DetalhesActivity, "Nothing to show", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setupNavigationComic() {
-        _comicsAdapter = ComicsAdapter(_comics){
+        _comicsAdapter = ComicsAdapter(_comics) {
             showFullComicImage(it.thumbnail?.getImagePath())
         }
     }
@@ -208,7 +237,7 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun getStoriesList(id: Int) {
-        _storiesViewModel.getStoriesList(id).observe({lifecycle}, {
+        _storiesViewModel.getStoriesList(id).observe({ lifecycle }, {
             _stories.addAll(it)
             _storiesAdapter.notifyDataSetChanged()
         })
@@ -237,7 +266,7 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun getCharacter() {
-        _detalhesViewModel.getCharacter(characterId).observe({lifecycle}, { character ->
+        _detalhesViewModel.getCharacter(characterId).observe({ lifecycle }, { character ->
             character.id
             character.nome
             character.descricao
@@ -249,8 +278,11 @@ class DetalhesActivity : AppCompatActivity() {
     private fun detalhesViewModelProvider() {
         _detalhesViewModel = ViewModelProvider(
             this,
-            DetalhesViewModel.DetalherViewModelFactory(CharacterRepository(), CharacterLocalRepository(
-                AppDatabase.getDatabase(this).characterDAO()))
+            DetalhesViewModel.DetalherViewModelFactory(
+                CharacterRepository(), CharacterLocalRepository(
+                    AppDatabase.getDatabase(this).characterDAO()
+                )
+            )
         ).get(DetalhesViewModel::class.java)
     }
 

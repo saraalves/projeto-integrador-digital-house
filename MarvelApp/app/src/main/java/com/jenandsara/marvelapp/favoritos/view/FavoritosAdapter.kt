@@ -10,7 +10,6 @@ import com.jenandsara.marvelapp.home.view.IGetCharacterClick
 
 class FavoritosAdapter(
     private var _personagem: MutableList<CharacterEntity>,
-//    private val listener: (CharacterEntity) -> Unit
     private val getCharacterClick: IGetCharacterClick
 ) : RecyclerView.Adapter<FavoritosViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritosViewHolder {
@@ -25,6 +24,5 @@ class FavoritosAdapter(
     override fun onBindViewHolder(holder: FavoritosViewHolder, position: Int) {
         val item = _personagem[position]
         holder.bind(item, getCharacterClick)
-//        holder.itemView.setOnClickListener { listener(item) }
     }
 }

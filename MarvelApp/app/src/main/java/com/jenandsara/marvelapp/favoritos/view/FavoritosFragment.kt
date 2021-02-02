@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,7 @@ import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRep
 import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
 import com.jenandsara.marvelapp.home.view.HomeFragment
 import com.jenandsara.marvelapp.home.view.IGetCharacterClick
+import kotlin.properties.Delegates
 
 class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment(),
     IGetCharacterClick {
@@ -38,6 +40,8 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     private lateinit var _favoritosViewModel: FavoriteViewModel
 
     private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
+    private var position by Delegates.notNull<Int>()
+    private var isFavorite = true
 
 
     override fun onCreateView(
@@ -105,53 +109,18 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             putExtra("NOME", _listaFavoritosLocal[position].nome)
             putExtra("DESCRIÇÃO", _listaFavoritosLocal[position].descricao)
             putExtra("IMAGEM", _listaFavoritosLocal[position].imgPath)
+            putExtra("FAVORITO", _listaFavoritosLocal[position].isFavorite)
             startActivity(this)
         }
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
-        _favoritosViewModel.isFavorite(_listaFavoritosLocal[position].id)
-            .observe(viewLifecycleOwner) { isFavorite ->
-                if (isFavorite) {
-                    _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].id)
-                        .observe(viewLifecycleOwner) {
-                            if (it) {
-                                _listaFavoritosLocal[position].isFavorite = false
-                                if (onlyFavorites) {
-                                    _listaFavoritosLocal.removeAt(position)
-                                    _favoritosAdapter.notifyDataSetChanged()
-                                } else {
-                                    _favoritosAdapter.notifyItemChanged(position)
-                                }
-                            }
-                        }
-                } else {
-                    _favoritosViewModel.getFavoriteCharacterLocal()
-                        .observe(viewLifecycleOwner) {
-                            _listaFavoritosLocal[position].isFavorite = true
-                            _favoritosAdapter.notifyItemChanged(position)
-                        }
-                }
-
-                _listaFavoritosLocal[position].isFavorite =
-                    !_listaFavoritosLocal[position].isFavorite
+        _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].idAPI)
+            .observe(viewLifecycleOwner) {
+                _listaFavoritosLocal.removeAt(position)
+                _favoritosAdapter.notifyDataSetChanged()
             }
     }
-
-   /* private fun updateCharacter() {
-        if (!onlyFavorites) {
-            _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
-                .observe(viewLifecycleOwner) {
-                    _favoritosAdapter.notifyDataSetChanged()
-                }
-        } else {
-            _characterViewModel.updateFavoriteCharactersLocal(_listaFavoritosLocal)
-                .observe(viewLifecycleOwner) {
-                    _listaFavoritosLocal.removeAll(it)
-                    _favoritosAdapter.notifyDataSetChanged()
-                }
-        }
-    }*/
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(
@@ -170,6 +139,4 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             )
         ).get(FavoriteViewModel::class.java)
     }
-
-
 }
