@@ -98,7 +98,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     override fun onResume() {
         super.onResume()
-        update(_character)
+        getList(_character)
     }
 
     private fun setupRecyclerViewCard(
@@ -158,6 +158,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             list?.let {
                 update(list1)
                 _favoritosViewModel.setFavoriteCharacter(list1).observe(viewLifecycleOwner) {
+                    _character.clear()
                     _character.addAll(list1)
                     _characterAdapter.notifyDataSetChanged()
                     showLoading(false)
