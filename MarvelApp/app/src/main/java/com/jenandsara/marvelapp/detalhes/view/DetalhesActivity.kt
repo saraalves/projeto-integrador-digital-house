@@ -20,6 +20,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.comics.model.ComicsModel
@@ -64,6 +65,7 @@ class DetalhesActivity : AppCompatActivity() {
         val nome = intent.getStringExtra("NOME")
         val descricao = intent.getStringExtra("DESCRIÇÃO")
         val imagem = intent.getStringExtra("IMAGEM")
+        var favorite = intent.getBooleanExtra("FAVORITO", true)
 
         val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.HORIZONTAL
@@ -76,7 +78,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         localViewModelProvider()
 
-        favoritar(nome!!, id, descricao!!, imagem!!)
+        favoritar(nome!!, id, descricao!!, imagem!!, favorite)
 
         setData(descricao, nome, imagem)
 
@@ -131,7 +133,8 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
 
-    private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String) {
+    @SuppressLint("ResourceAsColor")
+    private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String, fav: Boolean) {
 
         val iconFavorite = findViewById<View>(R.id.favorite)
         val iconFavorit = findViewById<View>(R.id.favorit)
@@ -154,7 +157,14 @@ class DetalhesActivity : AppCompatActivity() {
             iconFavorite.isVisible = true
             iconFavorit.isVisible = false
             _favoritosViewModel.deleteCharacter(id).observe(this) {
-                if (it) Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+                    val snackbarDetalhes = Snackbar.make(findViewById<View>(R.id.snackbarDetalhes), "Favorito removido", Snackbar.LENGTH_LONG)
+                    snackbarDetalhes.setAction("DESFAZER") {
+                        override fun onClick(v: View){
+                            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
+                                if (it) Toast.makeText(this, "Favorito adicionado novamente", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }.show()
             }
         }
     }

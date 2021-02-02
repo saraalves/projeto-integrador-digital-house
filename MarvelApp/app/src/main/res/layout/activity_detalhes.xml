@@ -152,10 +152,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dim_15_dp"
-            android:layout_marginEnd="@dimen/dim_15_dp"
             android:layout_marginTop="@dimen/dim_10_dp"
+            android:layout_marginEnd="@dimen/dim_15_dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtComics"
             tools:listitem="@layout/chip_item" />
@@ -186,6 +187,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtStories"
             tools:listitem="@layout/stories_chip_item" />
+
+        <View
+            android:id="@+id/snackbarDetalhes"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginStart="@dimen/dim_20_dp"
+            android:layout_marginEnd="@dimen/dim_20_dp"
+            android:layout_marginBottom="432dp"
+            android:background="@drawable/bg_snackbar"
+            android:elevation="1dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

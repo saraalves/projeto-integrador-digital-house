@@ -108,6 +108,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             putExtra("NOME", _listaFavoritosLocal[position].nome)
             putExtra("DESCRIÇÃO", _listaFavoritosLocal[position].descricao)
             putExtra("IMAGEM", _listaFavoritosLocal[position].imgPath)
+            putExtra("FAVORITO", _listaFavoritosLocal[position].isFavorite)
             startActivity(this)
         }
     }
@@ -137,6 +138,4 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
             )
         ).get(FavoriteViewModel::class.java)
     }
-
-
 }
