@@ -134,9 +134,9 @@ class DetalhesActivity : AppCompatActivity() {
         iconShare.setOnClickListener {
             val sendIntent = Intent.createChooser(Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_STREAM, uri)
                 type = "text/plan"
                 flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                putExtra(Intent.EXTRA_STREAM, uri)
             }, "Compartilhando via")
             startActivity(sendIntent)
         }
