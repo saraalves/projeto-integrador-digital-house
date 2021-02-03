@@ -129,7 +129,7 @@ class DetalhesActivity : AppCompatActivity() {
         iconShare.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Compartilhando personagens favoritos.")
+                putExtra(Intent.EXTRA_TEXT, "Check this out! ${nome} at MarvelApp. Image link: ${imagem}")
                 type = "text/plain"
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
