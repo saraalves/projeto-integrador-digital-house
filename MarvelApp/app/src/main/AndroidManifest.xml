@@ -13,7 +13,13 @@
         android:theme="@style/MarvelAppTheme">
         <activity android:name=".alterarsenha.view.AlterarSenhaActivity" />
         <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".detalhes.view.DetalhesActivity" />
+        <activity android:name=".detalhes.view.DetalhesActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity android:name=".cadastro.view.CadastroActivity" />
 
         <activity android:name=".splashscreen.view.SplashScreenActivity">

@@ -96,6 +96,7 @@ class DetalhesActivity : AppCompatActivity() {
         comicViewModelProvider()
         storiesViewModelProvider()
         detalhesViewModelProvider()
+        shareUrlCharacter()
 
         if (checkConectividade()) {
             getStoriesList(id)
@@ -125,23 +126,22 @@ class DetalhesActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+    }
+
+    private fun shareUrlCharacter() {
         val iconShare = findViewById<View>(R.id.share)
+        var uri = " https://www.w3schools.com/images/w3schools_green.jpg"
         iconShare.setOnClickListener {
-            sharePersonagens()
+            val sendIntent = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = "text/plan"
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            }, "Compartilhando via")
+            startActivity(sendIntent)
         }
     }
 
-    private fun sharePersonagens() {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, "https://www.w3schools.com/images/w3schools_green.jpg")
-            type = "image/*"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, "Compartilhando via:")
-        startActivity(shareIntent)
-    }
-
-    ;
 
     @SuppressLint("ResourceAsColor")
     private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String, fav: Boolean) {
