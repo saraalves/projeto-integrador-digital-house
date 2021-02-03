@@ -126,19 +126,15 @@ class DetalhesActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-    }
-
-    private fun shareUrlCharacter() {
         val iconShare = findViewById<View>(R.id.share)
-        var uri = "https://www.w3schools.com/images/w3schools_green.jpg"
         iconShare.setOnClickListener {
-            val sendIntent = Intent.createChooser(Intent().apply {
+            val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                type = "text/plan"
-                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                putExtra(Intent.EXTRA_STREAM, uri)
-            }, "Compartilhando via")
-            startActivity(sendIntent)
+                putExtra(Intent.EXTRA_TEXT, "Check this out! ${nome} at MarvelApp. Image link: ${imagem}")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
         }
     }
 
