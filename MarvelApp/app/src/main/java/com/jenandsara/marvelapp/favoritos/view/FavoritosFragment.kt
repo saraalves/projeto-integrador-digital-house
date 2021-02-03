@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -43,6 +44,8 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     private var position by Delegates.notNull<Int>()
     private var isFavorite = true
 
+    private lateinit var noFavorites: ConstraintLayout
+    private lateinit var favoritoRecycler: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +59,8 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
         _view = view
 
-        val favoritoRecycler = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
+        noFavorites = view.findViewById<ConstraintLayout>(R.id.ctlNofavorites)
+        favoritoRecycler = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
         val viewGridManager = GridLayoutManager(view.context, 2)
         _favoritosAdapter = FavoritosAdapter(_listaFavoritosLocal, this)
 
@@ -64,14 +68,27 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         setupRecyclerViewCard(favoritoRecycler, viewGridManager)
         viewModelProvider()
         showLoading(true)
-//        getCharacters()
-        //updateCharacter()
 
+        if(_listaFavoritosLocal.isNullOrEmpty()) {
+            noFavorites.visibility = View.VISIBLE
+            favoritoRecycler.visibility = View.INVISIBLE
+        } else {
+            noFavorites.visibility = View.GONE
+            favoritoRecycler.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {
         super.onResume()
         getCharacters()
+
+        if(_listaFavoritosLocal.isNullOrEmpty()) {
+            noFavorites.visibility = View.VISIBLE
+            favoritoRecycler.visibility = View.INVISIBLE
+        } else {
+            noFavorites.visibility = View.GONE
+            favoritoRecycler.visibility = View.VISIBLE
+        }
     }
 
     private fun setupRecyclerViewCard(
