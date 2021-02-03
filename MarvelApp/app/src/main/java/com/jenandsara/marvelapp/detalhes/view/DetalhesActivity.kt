@@ -130,7 +130,7 @@ class DetalhesActivity : AppCompatActivity() {
 
     private fun shareUrlCharacter() {
         val iconShare = findViewById<View>(R.id.share)
-        var uri = " https://www.w3schools.com/images/w3schools_green.jpg"
+        var uri = "https://www.w3schools.com/images/w3schools_green.jpg"
         iconShare.setOnClickListener {
             val sendIntent = Intent.createChooser(Intent().apply {
                 action = Intent.ACTION_SEND
