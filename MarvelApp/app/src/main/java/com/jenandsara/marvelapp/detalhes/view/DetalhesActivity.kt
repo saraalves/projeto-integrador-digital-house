@@ -127,16 +127,21 @@ class DetalhesActivity : AppCompatActivity() {
 
         val iconShare = findViewById<View>(R.id.share)
         iconShare.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Compartilhando personagens favoritos.")
-                type = "text/plain"
-            }
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+            sharePersonagens()
         }
     }
 
+    private fun sharePersonagens() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, "https://www.w3schools.com/images/w3schools_green.jpg")
+            type = "image/*"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, "Compartilhando via:")
+        startActivity(shareIntent)
+    }
+
+    ;
 
     @SuppressLint("ResourceAsColor")
     private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String, fav: Boolean) {
@@ -159,30 +164,52 @@ class DetalhesActivity : AppCompatActivity() {
         }
 
         iconFavorit.setOnClickListener {
-            iconFavorite.isVisible = true
-            iconFavorit.isVisible = false
-            _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
-                if (it) {
-                    val snackbarDetalhes = Snackbar.make(
-                        findViewById<View>(R.id.snackbarDetalhes),
-                        "Favorito removido",
-                        Snackbar.LENGTH_LONG
-                    )
-                        .setAction("DESFAZER") {
-                            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
-                                .observe(this) {
-                                    if (it) {
-                                        iconFavorite.isVisible = false
-                                        iconFavorit.isVisible = true
-                                    }
-                                }
+            isFavoritOrNot(iconFavorite, iconFavorit, id, nome, descricao, imgPath)
+        }
+    }
 
-                        }
-                        .setActionTextColor(Color.parseColor("#FFFFFF"))
-                        .setTextColor(Color.parseColor("#FFFFFF"))
-                        .setBackgroundTint(Color.parseColor("#666666"))
-                        .show()
-                }
+    private fun isFavoritOrNot(
+        iconFavorite: View,
+        iconFavorit: View,
+        id: Int,
+        nome: String,
+        descricao: String,
+        imgPath: String
+    ) {
+        iconFavorite.isVisible = true
+        iconFavorit.isVisible = false
+        addOrRemoveCharacter(id, nome, descricao, imgPath, iconFavorite, iconFavorit)
+    }
+
+    private fun addOrRemoveCharacter(
+        id: Int,
+        nome: String,
+        descricao: String,
+        imgPath: String,
+        iconFavorite: View,
+        iconFavorit: View
+    ) {
+        _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
+            if (it) {
+                Snackbar.make(
+                    findViewById<View>(R.id.snackbarDetalhes),
+                    "Favorito removido",
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("DESFAZER") {
+                        _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
+                            .observe(this) {
+                                if (it) {
+                                    iconFavorite.isVisible = false
+                                    iconFavorit.isVisible = true
+                                }
+                            }
+
+                    }
+                    .setActionTextColor(Color.parseColor("#FFFFFF"))
+                    .setTextColor(Color.parseColor("#FFFFFF"))
+                    .setBackgroundTint(Color.parseColor("#666666"))
+                    .show()
             }
         }
     }
