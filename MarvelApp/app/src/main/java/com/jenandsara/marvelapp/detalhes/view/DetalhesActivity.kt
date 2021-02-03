@@ -96,7 +96,6 @@ class DetalhesActivity : AppCompatActivity() {
         comicViewModelProvider()
         storiesViewModelProvider()
         detalhesViewModelProvider()
-        shareUrlCharacter()
 
         if (checkConectividade()) {
             getStoriesList(id)

@@ -86,7 +86,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
             searchByName(_view)
 
-            showLoading(true)
             setScrollView()
             getRecomended()
 
@@ -98,6 +97,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     override fun onResume() {
         super.onResume()
+        showLoading()
         getList(_character)
     }
 
@@ -154,6 +154,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     private fun getList(list: List<CharacterModel>) {
+        showLoading()
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let {
                 update(list1)
@@ -161,54 +162,45 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     _character.clear()
                     _character.addAll(list1)
                     _characterAdapter.notifyDataSetChanged()
-                    showLoading(false)
+                    showLoading()
                 }
             }
+            showLoading()
         }
     }
 
     private fun getListAvatar() {
+        showLoading()
         _viewModel.getList().observe(viewLifecycleOwner) {
             _recomendados.addAll(it)
             _avatarAdapter.notifyDataSetChanged()
-            showLoading(false)
         }
+        showLoading()
     }
 
 
-    private fun showLoading(isLoading: Boolean) {
-        val viewLoading = view?.findViewById<View>(R.id.loading)
-        if (isLoading) {
-            viewLoading?.visibility = View.VISIBLE
-        } else {
-            viewLoading?.visibility = View.GONE
+    private fun showLoading() {
+        val viewLoading = view?.findViewById<View>(R.id.loadingCard)
+        val txtTodosCard = view?.findViewById<View>(R.id.txtTodosHome)
+        val txtRecomendadosHome = view?.findViewById<View>(R.id.txtRecomendadosHome)
+        when {
+            _recomendados.isNullOrEmpty() -> {
+                txtRecomendadosHome?.visibility = View.INVISIBLE
+                txtTodosCard?.visibility = View.INVISIBLE
+                viewLoading?.visibility = View.VISIBLE
+            }
+            _character.isNullOrEmpty() -> {
+                txtTodosCard?.visibility = View.INVISIBLE
+                viewLoading?.visibility = View.VISIBLE
+            }
+            else -> {
+                txtRecomendadosHome?.visibility = View.VISIBLE
+                txtTodosCard?.visibility = View.VISIBLE
+                viewLoading?.visibility = View.INVISIBLE
+            }
         }
     }
 
-    private fun setScrollViewAvatar() {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerAvatar)
-        recyclerView?.run {
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val target = recyclerView.layoutManager as LinearLayoutManager?
-                    val totalItemCount = target!!.itemCount
-                    val lastVisible = target.findLastVisibleItemPosition()
-                    val lastItem = lastVisible + 6 >= totalItemCount
-
-                    if (totalItemCount > 0 && lastItem) {
-                        showLoading(true)
-                        _viewModel.nextPage().observe({ lifecycle }, {
-                            _character.addAll(it)
-                            _avatarAdapter.notifyDataSetChanged()
-                            showLoading(false)
-                        })
-                    }
-                }
-            })
-        }
-    }
 
     private fun setScrollView() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerCard)
@@ -223,12 +215,12 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     val lastItem = lastVisible + 6 >= totalItemCount
 
                     if (totalItemCount > 0 && lastItem) {
-                        showLoading(true)
+                        showLoading()
                         _viewModel.nextPage().observe({ lifecycle }, {
                             update(it)
                             _character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
-                            showLoading(false)
+                            showLoading()
                         })
                     }
                 }
@@ -243,7 +235,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 _character.addAll(it)
             }
             _characterAdapter.notifyDataSetChanged()
-            showLoading(false)
         }
     }
 
@@ -254,7 +245,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
-                    if(it.isEmpty()){
+                    if (it.isEmpty()) {
                         view.findViewById<RecyclerView>(R.id.recyclerCard).visibility = View.GONE
                         view.findViewById<TextView>(R.id.tvNoResult).visibility = View.VISIBLE
                     } else {
@@ -292,7 +283,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                                 if (it2.isNotEmpty() && it2.size > 1) {
                                     _recomendados.addAll(it2)
                                     _avatarAdapter.notifyDataSetChanged()
-                                    showLoading(false)
                                 } else {
                                     getListAvatar()
                                 }
