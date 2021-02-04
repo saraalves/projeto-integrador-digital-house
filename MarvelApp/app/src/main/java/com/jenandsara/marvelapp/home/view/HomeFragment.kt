@@ -32,6 +32,7 @@ import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlin.properties.Delegates
 
 class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGetCharacterClick {
@@ -97,7 +98,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     override fun onResume() {
         super.onResume()
-        showLoading()
         getList(_character)
     }
 
@@ -154,7 +154,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     private fun getList(list: List<CharacterModel>) {
-        showLoading()
+        showLoading(true)
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let {
                 update(list1)
@@ -162,42 +162,39 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     _character.clear()
                     _character.addAll(list1)
                     _characterAdapter.notifyDataSetChanged()
-                    showLoading()
+
                 }
+                showLoading(false)
             }
-            showLoading()
         }
+
     }
 
     private fun getListAvatar() {
-        showLoading()
         _viewModel.getList().observe(viewLifecycleOwner) {
             _recomendados.addAll(it)
             _avatarAdapter.notifyDataSetChanged()
         }
-        showLoading()
     }
 
 
-    private fun showLoading() {
+    private fun showLoading(isLoading: Boolean) {
         val viewLoading = view?.findViewById<View>(R.id.loadingCard)
         val txtTodosCard = view?.findViewById<View>(R.id.txtTodosHome)
         val txtRecomendadosHome = view?.findViewById<View>(R.id.txtRecomendadosHome)
-        when {
-            _recomendados.isNullOrEmpty() -> {
-                txtRecomendadosHome?.visibility = View.INVISIBLE
-                txtTodosCard?.visibility = View.INVISIBLE
-                viewLoading?.visibility = View.VISIBLE
-            }
-            _character.isNullOrEmpty() -> {
-                txtTodosCard?.visibility = View.INVISIBLE
-                viewLoading?.visibility = View.VISIBLE
-            }
-            else -> {
-                txtRecomendadosHome?.visibility = View.VISIBLE
-                txtTodosCard?.visibility = View.VISIBLE
-                viewLoading?.visibility = View.INVISIBLE
-            }
+
+        if (isLoading) {
+            viewLoading?.visibility = View.VISIBLE
+            recyclerCard?.visibility = View.INVISIBLE
+            recyclerAvatar?.visibility = View.INVISIBLE
+            txtTodosCard?.visibility = View.INVISIBLE
+            txtRecomendadosHome?.visibility = View.INVISIBLE
+        } else {
+            viewLoading?.visibility = View.GONE
+            recyclerCard?.visibility = View.VISIBLE
+            recyclerAvatar?.visibility = View.VISIBLE
+            txtTodosCard?.visibility = View.VISIBLE
+            txtRecomendadosHome?.visibility = View.VISIBLE
         }
     }
 
@@ -215,12 +212,11 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     val lastItem = lastVisible + 6 >= totalItemCount
 
                     if (totalItemCount > 0 && lastItem) {
-                        showLoading()
                         _viewModel.nextPage().observe({ lifecycle }, {
                             update(it)
                             _character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
-                            showLoading()
+//                            showLoading()
                         })
                     }
                 }
