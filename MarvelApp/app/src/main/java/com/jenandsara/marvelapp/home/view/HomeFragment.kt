@@ -270,6 +270,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     private fun getRecomended() {
+        showLoading(true)
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
@@ -279,19 +280,23 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                                 if (it2.isNotEmpty() && it2.size > 1) {
                                     _recomendados.addAll(it2)
                                     _avatarAdapter.notifyDataSetChanged()
+                                    showLoading(false)
                                 } else {
                                     getListAvatar()
+                                    showLoading(false)
                                 }
                             }
 
                         } else {
                             getListAvatar()
+                            showLoading(false)
                         }
 
                     }
                 }
             } else {
                 getListAvatar()
+                showLoading(false)
             }
         }
     }
