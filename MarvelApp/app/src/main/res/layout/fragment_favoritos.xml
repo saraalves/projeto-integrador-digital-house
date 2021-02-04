@@ -63,23 +63,4 @@
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/dim_20_dp" />
 
-    <LinearLayout
-        android:id="@+id/lnlEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/img_background"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dim_20_dp"
-            android:fontFamily="@font/roboto_condensed_bold"
-            android:gravity="center"
-            android:text="@string/your_list_is_empty_go"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/dim_24_sp" />
-
-    </LinearLayout>
-
 </FrameLayout>

@@ -53,6 +53,6 @@
     <string name="ops_disconected">Ops! Disconected</string>
     <string name="please_check_your_internet">Please check your internet connection\nand try again</string>
     <string name="ops_nofavorites">Hey! There is nothing here.</string>
-    <string name="favorite_here">Those you select as favorite will be here.</string>
+    <string name="favorite_here">our list is empty. Go find your favorite ones :).</string>
 
 </resources>

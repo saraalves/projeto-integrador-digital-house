@@ -67,23 +67,17 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         localViewModelProvider()
         setupRecyclerViewCard(favoritoRecycler, viewGridManager)
         viewModelProvider()
-//        showLoading(true)
+        getCharacters()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        getCharacters()
     }
 
     override fun onResume() {
         super.onResume()
         getCharacters()
-
-        if(_listaFavoritosLocal.isNullOrEmpty()) {
-            noFavorites.visibility = View.VISIBLE
-            favoritoRecycler.visibility = View.INVISIBLE
-        } else {
-            noFavorites.visibility = View.GONE
-            favoritoRecycler.visibility = View.VISIBLE
-        }
-
-
     }
 
     private fun setupRecyclerViewCard(
@@ -97,22 +91,20 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         }
     }
 
-//    private fun showLoading(isLoading: Boolean) {
-//        val viewLoading = view?.findViewById<View>(R.id.loadingCard)
-//        if (isLoading) {
-//            viewLoading?.visibility = View.VISIBLE
-//        } else {
-//            viewLoading?.visibility = View.GONE
-//        }
-//    }
-
     private fun getCharacters() {
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
             _listaFavoritosLocal.clear()
             _listaFavoritosLocal.addAll(it)
             _favoritosAdapter.notifyDataSetChanged()
+
+            if(_listaFavoritosLocal.isNullOrEmpty()) {
+                noFavorites.visibility = View.VISIBLE
+                favoritoRecycler.visibility = View.INVISIBLE
+            } else {
+                noFavorites.visibility = View.GONE
+                favoritoRecycler.visibility = View.VISIBLE
+            }
         }
-//        showLoading(false)
     }
 
     override fun getCharacterClick(position: Int) {
