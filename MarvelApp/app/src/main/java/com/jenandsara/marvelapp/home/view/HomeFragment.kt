@@ -75,6 +75,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             viewModelProvider()
             localViewModelProvider()
 
+            showLoading(true)
             getList(_character)
 
             _characterAdapter = CharacterAdapter(_character, this)
@@ -98,7 +99,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     override fun onResume() {
         super.onResume()
-        getList(_character)
+        if (!checkConectividade()) {
+            view?.findViewById<ConstraintLayout>(R.id.ctlTeste)?.visibility = View.VISIBLE
+            view?.findViewById<ConstraintLayout>(R.id.ctlConection)?.visibility = View.GONE
+        } else {
+            showLoading(true)
+            getList(_character)
+        }
     }
 
     private fun setupRecyclerViewCard(
@@ -154,9 +161,9 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     private fun getList(list: List<CharacterModel>) {
-        showLoading(true)
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let {
+                showLoading(true)
                 update(list1)
                 _favoritosViewModel.setFavoriteCharacter(list1).observe(viewLifecycleOwner) {
                     _character.clear()
@@ -166,6 +173,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 }
                 showLoading(false)
             }
+
         }
 
     }

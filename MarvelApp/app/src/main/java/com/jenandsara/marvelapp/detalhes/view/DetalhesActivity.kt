@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -227,6 +228,31 @@ class DetalhesActivity : AppCompatActivity() {
             _comicsAdapter.notifyDataSetChanged()
         }
     }
+
+//    private fun setScrollView() {
+//        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerCard)
+//        recyclerView?.run {
+//            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy)
+//
+//                    val target = recyclerView.layoutManager as GridLayoutManager?
+//                    val totalItemCount = target!!.itemCount
+//                    val lastVisible = target.findLastVisibleItemPosition()
+//                    val lastItem = lastVisible + 6 >= totalItemCount
+//
+//                    if (totalItemCount > 0 && lastItem) {
+//                        _viewModel.nextPage().observe({ lifecycle }, {
+//                            update(it)
+//                            _character.addAll(it)
+//                            _characterAdapter.notifyDataSetChanged()
+////                            showLoading()
+//                        })
+//                    }
+//                }
+//            })
+//        }
+//    }
 
     private fun comicViewModelProvider() {
         _comicViewModel = ViewModelProvider(
