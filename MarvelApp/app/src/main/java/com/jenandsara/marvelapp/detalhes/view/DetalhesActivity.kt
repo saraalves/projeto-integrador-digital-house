@@ -144,7 +144,6 @@ class DetalhesActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setScrollViewComics() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerComics)
         recyclerView?.run {
@@ -190,7 +189,6 @@ class DetalhesActivity : AppCompatActivity() {
             })
         }
     }
-
 
     @SuppressLint("ResourceAsColor")
     private fun favoritar(nome: String, id: Int, descricao: String, imgPath: String, fav: Boolean) {

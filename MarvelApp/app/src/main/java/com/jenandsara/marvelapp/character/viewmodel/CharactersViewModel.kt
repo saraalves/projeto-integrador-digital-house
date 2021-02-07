@@ -49,6 +49,7 @@ class CharactersViewModel(private val _repository: CharacterRepository) : ViewMo
     fun initialList() = _characterBeforeSearch
 
     fun nextPage() = liveData(Dispatchers.IO){
+        Log.d("TAG CHARACTER VIEWMODEL", "nextPage()")
         if( _offset.plus(_count) <= _totalPages) {
             _offset = _offset.plus(_count)
             val response = _repository.getCharacter(_offset)

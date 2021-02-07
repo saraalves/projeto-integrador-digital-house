@@ -34,6 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 class PerfilFragment : Fragment() {
 
     private var imgURI: Uri? = null
+    private var imgURL: String = ""
     private lateinit var _view: View
     private val user = Firebase.auth.currentUser
 
