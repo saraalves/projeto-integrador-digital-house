@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
@@ -146,7 +145,9 @@ class PerfilFragment : Fragment() {
         val btnSalvar = _view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
         btnSalvar.setOnClickListener {
 
-            enviarArquivo(user!!.uid)
+            if(imgURI != null){
+                enviarArquivo(user!!.uid)
+            }
 
             val newName = view.findViewById<TextInputEditText>(R.id.etNomeAtual).text.toString()
 

@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dim_20_dp"
                         android:fontFamily="@font/roboto_condensed_bold"
-                        android:text="Jennifer"
+                        android:text="Jenifer"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/dim_16_dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -158,7 +158,7 @@
                         android:layout_marginEnd="@dimen/dim_20_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_20_dp"
-                        android:text="Mobile Developer at Accenture and estudante mobile Android na Digital House"
+                        android:text="Science and Technology student."
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -174,27 +174,13 @@
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_20_dp"
                         android:linksClickable="true"
-                        android:text="https://github.com/saraalves"
+                        android:layout_marginBottom="@dimen/dim_20_dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Repository: \nhttps://github.com/jeniferss"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtInfoJenn" />
-
-                    <TextView
-                        android:id="@+id/txtLinkedinJenn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dim_20_dp"
-                        android:layout_marginTop="@dimen/dim_8_dp"
-                        android:layout_marginBottom="@dimen/dim_16_dp"
-                        android:fontFamily="@font/roboto_condensed_regular"
-                        android:lineHeight="@dimen/dim_20_dp"
-                        android:text="https://www.linkedin.com/in/saraalvs/"
-                        android:textColor="@color/colorDarkGray"
-                        android:textSize="@dimen/dim_14_sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtGithubJenn" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

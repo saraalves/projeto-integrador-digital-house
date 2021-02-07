@@ -10,13 +10,15 @@ import kotlinx.coroutines.Dispatchers
 
 class ComicViewModel (val _repository: ComicRepository) : ViewModel() {
 
-    private var _comicList: List<ComicsModel> = listOf()
     private var _totalPages: Int = 0
     private var _offset: Int = 0
     private var _count: Int = 0
 
+    private var _comicList: List<ComicsModel> = listOf()
+
     fun getComicList(id: Int) = liveData(Dispatchers.IO) {
-        val response = _repository.getComicsById(id, _offset)
+
+        val response = _repository.getComicsById(id)
         _count = response.data.count
         _totalPages = if (response.data.total != 0) {
             response.data.total / _count
@@ -28,7 +30,6 @@ class ComicViewModel (val _repository: ComicRepository) : ViewModel() {
     }
 
     fun nextPage(id: Int) = liveData(Dispatchers.IO){
-        Log.d("TAG CHARACTER VIEWMODEL", "nextPage()")
         if( _offset.plus(_count) <= _totalPages) {
             _offset = _offset.plus(_count)
             val response = _repository.getComicsById(id, _offset)
