@@ -4,13 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract.Helpers.update
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -18,15 +15,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.snackbar.Snackbar
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
@@ -206,11 +200,13 @@ class DetalhesActivity : AppCompatActivity() {
             iconFavorit.isVisible = true
 
             _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
-                if (it) Toast.makeText(this, "Favorito adicionado", Toast.LENGTH_SHORT).show()
+                if (it) Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
             }
         }
 
         iconFavorit.setOnClickListener {
+            iconFavorite.isVisible = true
+            iconFavorit.isVisible = false
             isFavoritOrNot(iconFavorite, iconFavorit, id, nome, descricao, imgPath)
         }
     }
@@ -240,10 +236,10 @@ class DetalhesActivity : AppCompatActivity() {
             if (it) {
                 Snackbar.make(
                     findViewById<View>(R.id.snackbarDetalhes),
-                    "Favorito removido",
+                    "Removed from favorites",
                     Snackbar.LENGTH_LONG
                 )
-                    .setAction("DESFAZER") {
+                    .setAction("UNDO") {
                         _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
                             .observe(this) {
                                 if (it) {
