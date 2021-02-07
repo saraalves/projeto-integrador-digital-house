@@ -32,6 +32,7 @@ import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.home.view.character.CharacterAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlin.properties.Delegates
 
 class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGetCharacterClick {
@@ -74,6 +75,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             viewModelProvider()
             localViewModelProvider()
 
+            showLoading(true)
             getList(_character)
 
             _characterAdapter = CharacterAdapter(_character, this)
@@ -86,7 +88,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
             searchByName(_view)
 
-            showLoading(true)
             setScrollView()
             getRecomended()
 
@@ -98,7 +99,13 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     override fun onResume() {
         super.onResume()
-        update(_character)
+        if (!checkConectividade()) {
+            view?.findViewById<ConstraintLayout>(R.id.ctlTeste)?.visibility = View.VISIBLE
+            view?.findViewById<ConstraintLayout>(R.id.ctlConection)?.visibility = View.GONE
+        } else {
+            showLoading(true)
+            getList(_character)
+        }
     }
 
     private fun setupRecyclerViewCard(
@@ -156,58 +163,49 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun getList(list: List<CharacterModel>) {
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let {
+                showLoading(true)
                 update(list1)
                 _favoritosViewModel.setFavoriteCharacter(list1).observe(viewLifecycleOwner) {
+                    _character.clear()
                     _character.addAll(list1)
                     _characterAdapter.notifyDataSetChanged()
-                    showLoading(false)
+
                 }
+                showLoading(false)
             }
+
         }
+
     }
 
     private fun getListAvatar() {
         _viewModel.getList().observe(viewLifecycleOwner) {
             _recomendados.addAll(it)
             _avatarAdapter.notifyDataSetChanged()
-            showLoading(false)
         }
     }
 
 
     private fun showLoading(isLoading: Boolean) {
-        val viewLoading = view?.findViewById<View>(R.id.loading)
+        val viewLoading = view?.findViewById<View>(R.id.loadingCard)
+        val txtTodosCard = view?.findViewById<View>(R.id.txtTodosHome)
+        val txtRecomendadosHome = view?.findViewById<View>(R.id.txtRecomendadosHome)
+
         if (isLoading) {
             viewLoading?.visibility = View.VISIBLE
+            recyclerCard?.visibility = View.INVISIBLE
+            recyclerAvatar?.visibility = View.INVISIBLE
+            txtTodosCard?.visibility = View.INVISIBLE
+            txtRecomendadosHome?.visibility = View.INVISIBLE
         } else {
             viewLoading?.visibility = View.GONE
+            recyclerCard?.visibility = View.VISIBLE
+            recyclerAvatar?.visibility = View.VISIBLE
+            txtTodosCard?.visibility = View.VISIBLE
+            txtRecomendadosHome?.visibility = View.VISIBLE
         }
     }
 
-    private fun setScrollViewAvatar() {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerAvatar)
-        recyclerView?.run {
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val target = recyclerView.layoutManager as LinearLayoutManager?
-                    val totalItemCount = target!!.itemCount
-                    val lastVisible = target.findLastVisibleItemPosition()
-                    val lastItem = lastVisible + 6 >= totalItemCount
-
-                    if (totalItemCount > 0 && lastItem) {
-                        showLoading(true)
-                        _viewModel.nextPage().observe({ lifecycle }, {
-                            _character.addAll(it)
-                            _avatarAdapter.notifyDataSetChanged()
-                            showLoading(false)
-                        })
-                    }
-                }
-            })
-        }
-    }
 
     private fun setScrollView() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerCard)
@@ -222,12 +220,11 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                     val lastItem = lastVisible + 6 >= totalItemCount
 
                     if (totalItemCount > 0 && lastItem) {
-                        showLoading(true)
                         _viewModel.nextPage().observe({ lifecycle }, {
                             update(it)
                             _character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
-                            showLoading(false)
+//                            showLoading()
                         })
                     }
                 }
@@ -242,7 +239,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 _character.addAll(it)
             }
             _characterAdapter.notifyDataSetChanged()
-            showLoading(false)
         }
     }
 
@@ -253,7 +249,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
-                    if(it.isEmpty()){
+                    if (it.isEmpty()) {
                         view.findViewById<RecyclerView>(R.id.recyclerCard).visibility = View.GONE
                         view.findViewById<TextView>(R.id.tvNoResult).visibility = View.VISIBLE
                     } else {
@@ -282,6 +278,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     private fun getRecomended() {
+        showLoading(true)
         _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
@@ -294,17 +291,20 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                                     showLoading(false)
                                 } else {
                                     getListAvatar()
+                                    showLoading(false)
                                 }
                             }
 
                         } else {
                             getListAvatar()
+                            showLoading(false)
                         }
 
                     }
                 }
             } else {
                 getListAvatar()
+                showLoading(false)
             }
         }
     }

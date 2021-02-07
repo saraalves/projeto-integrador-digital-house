@@ -42,7 +42,7 @@
     <string name="stories">Stories</string>
     <string name="character">Character</string>
 
-<!--    Autenticação com facebook -->
+    <!--    Autenticação com facebook -->
     <string name="facebook_app_id">2498184237143261</string>
     <string name="fb_login_protocol_scheme">fb2498184237143261</string>
     <string name="digite_seu_email_no_campo_abaixo">Digite seu email no campo abaixo.</string>
@@ -52,5 +52,7 @@
     <string name="no_result_was_found_try_again">No result was found. Try again !</string>
     <string name="ops_disconected">Ops! Disconected</string>
     <string name="please_check_your_internet">Please check your internet connection\nand try again</string>
+    <string name="ops_nofavorites">Hey! There is nothing here.</string>
+    <string name="favorite_here">our list is empty. Go find your favorite ones :).</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.update
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -89,6 +90,7 @@ class DetalhesActivity : AppCompatActivity() {
         favoritar(nome!!, _id, descricao!!, imagem!!, favorite)
 
         setData(descricao, nome, imagem)
+
 
         setupNavigationComic()
         setupNavigationStories()
@@ -211,30 +213,52 @@ class DetalhesActivity : AppCompatActivity() {
         }
 
         iconFavorit.setOnClickListener {
-            iconFavorite.isVisible = true
-            iconFavorit.isVisible = false
-            _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
-                if (it) {
-                    val snackbarDetalhes = Snackbar.make(
-                        findViewById<View>(R.id.snackbarDetalhes),
-                        "Favorito removido",
-                        Snackbar.LENGTH_LONG
-                    )
-                        .setAction("DESFAZER") {
-                            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
-                                .observe(this) {
-                                    if (it) {
-                                        iconFavorite.isVisible = false
-                                        iconFavorit.isVisible = true
-                                    }
-                                }
+            isFavoritOrNot(iconFavorite, iconFavorit, id, nome, descricao, imgPath)
+        }
+    }
 
-                        }
-                        .setActionTextColor(Color.parseColor("#FFFFFF"))
-                        .setTextColor(Color.parseColor("#FFFFFF"))
-                        .setBackgroundTint(Color.parseColor("#666666"))
-                        .show()
-                }
+    private fun isFavoritOrNot(
+        iconFavorite: View,
+        iconFavorit: View,
+        id: Int,
+        nome: String,
+        descricao: String,
+        imgPath: String
+    ) {
+        iconFavorite.isVisible = true
+        iconFavorit.isVisible = false
+        addOrRemoveCharacter(id, nome, descricao, imgPath, iconFavorite, iconFavorit)
+    }
+
+    private fun addOrRemoveCharacter(
+        id: Int,
+        nome: String,
+        descricao: String,
+        imgPath: String,
+        iconFavorite: View,
+        iconFavorit: View
+    ) {
+        _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
+            if (it) {
+                Snackbar.make(
+                    findViewById<View>(R.id.snackbarDetalhes),
+                    "Favorito removido",
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("DESFAZER") {
+                        _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
+                            .observe(this) {
+                                if (it) {
+                                    iconFavorite.isVisible = false
+                                    iconFavorit.isVisible = true
+                                }
+                            }
+
+                    }
+                    .setActionTextColor(Color.parseColor("#FFFFFF"))
+                    .setTextColor(Color.parseColor("#FFFFFF"))
+                    .setBackgroundTint(Color.parseColor("#666666"))
+                    .show()
             }
         }
     }
@@ -255,6 +279,28 @@ class DetalhesActivity : AppCompatActivity() {
         _comicViewModel.getComicList(id).observe({ lifecycle }) {
             _comics.addAll(it)
             _comicsAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun setScrollView(id: Int) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerComics)
+        recyclerView?.run {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
+                    val totalItemCount = target!!.itemCount
+                    val lastVisible = target.findLastVisibleItemPosition()
+                    val lastItem = lastVisible + 6 >= totalItemCount
+
+                    if (totalItemCount > 0 && lastItem) {
+                        _comicViewModel.nextPage(id).observe({ lifecycle }, {
+                            _comics.addAll(it)
+                        })
+                    }
+                }
+            })
         }
     }
 

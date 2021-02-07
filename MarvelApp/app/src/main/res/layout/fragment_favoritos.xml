@@ -1,15 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_background"
     tools:context=".favoritos.view.FavoritosFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlNofavorites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_background"
+        android:elevation="@dimen/dim_5_dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleDisconcted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/ops_nofavorites"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_24_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_20_dp"
+            android:layout_marginTop="@dimen/dim_8_dp"
+            android:layout_marginEnd="@dimen/dim_20_dp"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:gravity="center"
+            android:text="@string/favorite_here"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_20_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleDisconcted" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavoritos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         tools:listitem="@layout/item_card_favoritos" />
 
     <View
@@ -18,25 +62,5 @@
         android:layout_height="@dimen/dim_50_dp"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/dim_20_dp" />
-
-    <LinearLayout
-        android:id="@+id/lnlEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@drawable/img_background">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_condensed_bold"
-        android:gravity="center"
-        android:layout_margin="@dimen/dim_20_dp"
-        android:text="@string/your_list_is_empty_go"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/dim_24_sp"
-        />
-
-    </LinearLayout>
 
 </FrameLayout>

@@ -18,7 +18,6 @@ class ComicViewModel (val _repository: ComicRepository) : ViewModel() {
 
     fun getComicList(id: Int) = liveData(Dispatchers.IO) {
         val response = _repository.getComicsById(id)
-
         _count = response.data.count
         _totalPages = if (response.data.total != 0) {
             response.data.total / _count
