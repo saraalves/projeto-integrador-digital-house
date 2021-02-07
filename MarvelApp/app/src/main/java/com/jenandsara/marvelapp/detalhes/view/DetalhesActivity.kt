@@ -109,13 +109,13 @@ class DetalhesActivity : AppCompatActivity() {
         iconFavorite.setOnClickListener {
             iconFavorite.isVisible = false
             iconFavorit.isVisible = true
-            Toast.makeText(this, "Favorito adicionado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
         }
 
         iconFavorit.setOnClickListener {
             iconFavorite.isVisible = true
             iconFavorit.isVisible = false
-            Toast.makeText(this, "Favorito removido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show()
         }
     }
 
