@@ -10,6 +10,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.update
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -88,6 +89,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         setData(descricao, nome, imagem)
 
+
         setupNavigationComic()
         setupNavigationStories()
 
@@ -101,6 +103,7 @@ class DetalhesActivity : AppCompatActivity() {
         if (checkConectividade()) {
             getStoriesList(id)
             getComicList(id)
+//            setScrollView(id)
         } else {
             findViewById<TextView>(R.id.txtComics).visibility = View.GONE
             findViewById<TextView>(R.id.txtStories).visibility = View.GONE
@@ -229,30 +232,27 @@ class DetalhesActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setScrollView() {
-//        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerCard)
-//        recyclerView?.run {
-//            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                    super.onScrolled(recyclerView, dx, dy)
-//
-//                    val target = recyclerView.layoutManager as GridLayoutManager?
-//                    val totalItemCount = target!!.itemCount
-//                    val lastVisible = target.findLastVisibleItemPosition()
-//                    val lastItem = lastVisible + 6 >= totalItemCount
-//
-//                    if (totalItemCount > 0 && lastItem) {
-//                        _viewModel.nextPage().observe({ lifecycle }, {
-//                            update(it)
-//                            _character.addAll(it)
-//                            _characterAdapter.notifyDataSetChanged()
-////                            showLoading()
-//                        })
-//                    }
-//                }
-//            })
-//        }
-//    }
+    private fun setScrollView(id: Int) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerComics)
+        recyclerView?.run {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
+                    val totalItemCount = target!!.itemCount
+                    val lastVisible = target.findLastVisibleItemPosition()
+                    val lastItem = lastVisible + 6 >= totalItemCount
+
+                    if (totalItemCount > 0 && lastItem) {
+                        _comicViewModel.nextPage(id).observe({ lifecycle }, {
+                            _comics.addAll(it)
+                        })
+                    }
+                }
+            })
+        }
+    }
 
     private fun comicViewModelProvider() {
         _comicViewModel = ViewModelProvider(

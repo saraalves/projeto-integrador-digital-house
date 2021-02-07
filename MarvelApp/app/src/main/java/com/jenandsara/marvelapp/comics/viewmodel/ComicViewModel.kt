@@ -16,16 +16,22 @@ class ComicViewModel (val _repository: ComicRepository) : ViewModel() {
     private var _count: Int = 0
 
     fun getComicList(id: Int) = liveData(Dispatchers.IO) {
-        val response = _repository.getComicsById(id)
+        val response = _repository.getComicsById(id, _offset)
+        _count = response.data.count
+        _totalPages = if (response.data.total != 0) {
+            response.data.total / _count
+        } else {
+            0
+        }
         _comicList = response.data.results
         emit(response.data.results)
     }
 
-    fun nextPage() = liveData(Dispatchers.IO){
+    fun nextPage(id: Int) = liveData(Dispatchers.IO){
         Log.d("TAG CHARACTER VIEWMODEL", "nextPage()")
         if( _offset.plus(_count) <= _totalPages) {
             _offset = _offset.plus(_count)
-            val response = _repository.getComicsById(_offset)
+            val response = _repository.getComicsById(id, _offset)
             emit(response.data.results)
         }
     }
