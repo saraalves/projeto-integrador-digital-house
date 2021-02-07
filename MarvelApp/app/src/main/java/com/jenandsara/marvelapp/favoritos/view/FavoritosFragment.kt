@@ -2,24 +2,50 @@ package com.jenandsara.marvelapp.favoritos.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.tabs.TabLayout
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.character.repository.CharacterRepository
+import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
+import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
+import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
+import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
+import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
+import com.jenandsara.marvelapp.home.view.HomeFragment
+import com.jenandsara.marvelapp.home.view.IGetCharacterClick
+import kotlin.properties.Delegates
 
-class FavoritosFragment : Fragment() {
+class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment(),
+    IGetCharacterClick {
 
     private lateinit var _view: View
     private lateinit var _favoritosAdapter: FavoritosAdapter
+    private lateinit var _viewModel: CharactersViewModel
 
-    private var _listaFavoritos = mutableListOf<CharacterModel>()
+    private lateinit var _favoritosViewModel: FavoriteViewModel
+
+    private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
+    private var position by Delegates.notNull<Int>()
+    private var isFavorite = true
+
+    private lateinit var noFavorites: ConstraintLayout
+    private lateinit var favoritoRecycler: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,37 +56,91 @@ class FavoritosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listaFavorito(view)
-        favoritar()
-    }
 
-    private fun listaFavorito(view: View) {
         _view = view
 
-        val favorito = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
-        val manager = GridLayoutManager(view.context, 2)
+        noFavorites = view.findViewById<ConstraintLayout>(R.id.ctlNofavorites)
+        favoritoRecycler = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
+        val viewGridManager = GridLayoutManager(view.context, 2)
+        _favoritosAdapter = FavoritosAdapter(_listaFavoritosLocal, this)
 
-        _listaFavoritos
-        _favoritosAdapter = FavoritosAdapter(_listaFavoritos) {
-            val intent = Intent(view.context, DetalhesActivity::class.java)
-            startActivity(intent)
-        }
+        localViewModelProvider()
+        setupRecyclerViewCard(favoritoRecycler, viewGridManager)
+        viewModelProvider()
+        getCharacters()
+    }
 
-        favorito.apply {
+    override fun onStart() {
+        super.onStart()
+        getCharacters()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getCharacters()
+    }
+
+    private fun setupRecyclerViewCard(
+        recyclerView: RecyclerView?,
+        viewGridManager: GridLayoutManager
+    ) {
+        recyclerView?.apply {
             setHasFixedSize(true)
-            layoutManager = manager
+            layoutManager = viewGridManager
             adapter = _favoritosAdapter
         }
     }
 
-    private fun favoritar() {
-        view?.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)?.setIconResource(R.drawable.ic_baseline_favorite_24)
-        val toggleFavoritarFavoritos = view?.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritarFavoritos)
-        toggleFavoritarFavoritos?.addOnButtonCheckedListener { _, _, isChecked ->
-            if(isChecked) {
-                view?.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)?.setIconResource(R.drawable.ic_favorite_gray_24)
-            } else view?.findViewById<MaterialButton>(R.id.btnFavoritarFavoritos)?.setIconResource(R.drawable.ic_baseline_favorite_24)
+    private fun getCharacters() {
+        _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
+            _listaFavoritosLocal.clear()
+            _listaFavoritosLocal.addAll(it)
+            _favoritosAdapter.notifyDataSetChanged()
+
+            if(_listaFavoritosLocal.isNullOrEmpty()) {
+                noFavorites.visibility = View.VISIBLE
+                favoritoRecycler.visibility = View.INVISIBLE
+            } else {
+                noFavorites.visibility = View.GONE
+                favoritoRecycler.visibility = View.VISIBLE
+            }
         }
     }
 
+    override fun getCharacterClick(position: Int) {
+        Intent(view?.context, DetalhesActivity::class.java).apply {
+            putExtra("ID", _listaFavoritosLocal[position].idAPI)
+            putExtra("NOME", _listaFavoritosLocal[position].nome)
+            putExtra("DESCRIÇÃO", _listaFavoritosLocal[position].descricao)
+            putExtra("IMAGEM", _listaFavoritosLocal[position].imgPath)
+            putExtra("FAVORITO", _listaFavoritosLocal[position].isFavorite)
+            startActivity(this)
+        }
+    }
+
+    override fun getCharacterFavoriteClick(position: Int) {
+        _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].idAPI)
+            .observe(viewLifecycleOwner) {
+                _listaFavoritosLocal.removeAt(position)
+                _favoritosAdapter.notifyDataSetChanged()
+            }
+    }
+
+    private fun viewModelProvider() {
+        _viewModel = ViewModelProvider(
+            this,
+            CharactersViewModel.CharactersViewModelFactory(
+                CharacterRepository()
+            )
+        ).get(CharactersViewModel::class.java)
+    }
+
+    private fun localViewModelProvider() {
+        _favoritosViewModel = ViewModelProvider(
+            this,
+            FavoriteViewModel.FavoritosViewModelFactory(
+                CharacterLocalRepository(AppDatabase.getDatabase(_view.context).characterDAO())
+            )
+        ).get(FavoriteViewModel::class.java)
+    }
 }

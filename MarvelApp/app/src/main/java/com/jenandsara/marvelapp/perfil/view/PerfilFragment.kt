@@ -1,7 +1,10 @@
 package com.jenandsara.marvelapp.perfil.view
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,6 +26,7 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.aboutus.AboutUsActivity
 import com.jenandsara.marvelapp.login.view.LOGIN_TYPE
 import com.jenandsara.marvelapp.splashscreen.view.SplashScreenActivity
 import com.squareup.picasso.Picasso
@@ -31,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 class PerfilFragment : Fragment() {
 
     private var imgURI: Uri? = null
+    private var imgURL: String = ""
     private lateinit var _view: View
     private val user = Firebase.auth.currentUser
 
@@ -46,20 +51,39 @@ class PerfilFragment : Fragment() {
 
         _view = view
 
-        val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
-        btnAlterarSenha.setOnClickListener {
-            alterarSenha(view)
-        }
+        if(checkConectividade()){
 
-        val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
-        btnAlterarFoto.setOnClickListener {
-            procurarFoto()
+            val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
+            btnAlterarSenha.setOnClickListener {
+                alterarSenha(view)
+            }
+
+            val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
+            btnAlterarFoto.setOnClickListener {
+                procurarFoto()
+            }
+
+            updateProfile(view)
+
+        }  else {
+
+            Toast.makeText(_view.context, "Alterações de perfil só são possiveis com conexão de rede", Toast.LENGTH_LONG).show()
+
+            val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
+            btnAlterarFoto.isEnabled = false
+
+            val btnAlterarSenha = view.findViewById<Button>(R.id.changePassword)
+            btnAlterarSenha.isEnabled = false
+
+            val toggleNome = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome)
+            toggleNome.isEnabled = false
+
         }
 
         getInfo(view)
         logOut(view)
         loginType(view)
-        updateProfile(view)
+        goToAboutUs(view)
 
     }
 
@@ -86,7 +110,7 @@ class PerfilFragment : Fragment() {
     }
 
     private fun logOut(view: View) {
-        val logout = view?.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
+        val logout = view?.findViewById<Button>(R.id.txtSairApp)
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(view?.context, SplashScreenActivity::class.java)
@@ -95,8 +119,16 @@ class PerfilFragment : Fragment() {
         }
     }
 
+    private fun goToAboutUs(view: View) {
+        val aboutUs = view?.findViewById<Button>(R.id.btnAboutUs)
+        aboutUs.setOnClickListener {
+            val intent = Intent(view?.context, AboutUsActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     private fun loginType(view: View) {
-        if (LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE") {
+        if (LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE" || user?.email!!.contains("@gmail")) {
             view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome).visibility = View.GONE
             view.findViewById<ImageButton>(R.id.imageButtonCamera).visibility = View.GONE
             view.findViewById<MaterialButton>(R.id.btnSalvarPerfil).visibility = View.GONE
@@ -223,8 +255,17 @@ class PerfilFragment : Fragment() {
         }
     }
 
+    private fun checkConectividade(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        return isConnected
+    }
+
     companion object {
         const val CONTENT_REQUEST_CODE = 3
     }
 
 }
+

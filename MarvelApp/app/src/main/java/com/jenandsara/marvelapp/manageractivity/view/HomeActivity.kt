@@ -20,6 +20,8 @@ class HomeActivity : AppCompatActivity() {
     private val _tabLayout by lazy { findViewById<TabLayout>(R.id.tabLayout) }
 
     private lateinit var _homeFragment: HomeFragment
+    private lateinit var _favoritosFragment: FavoritosFragment
+    private lateinit var _perfilFragment: PerfilFragment
 
     private val _tabIcons = intArrayOf(
         R.drawable.ic_home_24,
@@ -44,11 +46,13 @@ class HomeActivity : AppCompatActivity() {
         _tabLayout.setupWithViewPager(_pager)
 
         _homeFragment = HomeFragment()
+        _favoritosFragment = FavoritosFragment()
+        _perfilFragment = PerfilFragment()
 
        val listaFragmentos = listOf(
                 _homeFragment,
-                FavoritosFragment(),
-                PerfilFragment()
+                _favoritosFragment,
+                _perfilFragment
         )
 
         _pager.adapter = ViewPagerAdapter(listaFragmentos, supportFragmentManager)
