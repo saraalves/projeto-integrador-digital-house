@@ -8,7 +8,7 @@ import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.comics.model.ComicsModel
 import com.squareup.picasso.Picasso
 
-class ComicsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class   ComicsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private var _chipNome = view.findViewById<TextView>(R.id.txtChip)
     private var _chipImagem = view.findViewById<ImageView>(R.id.imgChip)

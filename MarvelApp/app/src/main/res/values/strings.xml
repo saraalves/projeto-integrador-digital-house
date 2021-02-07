@@ -42,7 +42,7 @@
     <string name="stories">Stories</string>
     <string name="character">Character</string>
 
-<!--    Autenticação com facebook -->
+    <!--    Autenticação com facebook -->
     <string name="facebook_app_id">2498184237143261</string>
     <string name="fb_login_protocol_scheme">fb2498184237143261</string>
     <string name="digite_seu_email_no_campo_abaixo">Digite seu email no campo abaixo.</string>

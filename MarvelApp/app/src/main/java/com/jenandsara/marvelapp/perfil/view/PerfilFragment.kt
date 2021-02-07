@@ -26,6 +26,7 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.aboutus.AboutUsActivity
 import com.jenandsara.marvelapp.login.view.LOGIN_TYPE
 import com.jenandsara.marvelapp.splashscreen.view.SplashScreenActivity
 import com.squareup.picasso.Picasso
@@ -82,6 +83,7 @@ class PerfilFragment : Fragment() {
         getInfo(view)
         logOut(view)
         loginType(view)
+        goToAboutUs(view)
 
     }
 
@@ -108,12 +110,20 @@ class PerfilFragment : Fragment() {
     }
 
     private fun logOut(view: View) {
-        val logout = view?.findViewById<LinearLayout>(R.id.lnlLogoutPerfil)
+        val logout = view?.findViewById<Button>(R.id.txtSairApp)
         logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(view?.context, SplashScreenActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+    }
+
+    private fun goToAboutUs(view: View) {
+        val aboutUs = view?.findViewById<Button>(R.id.btnAboutUs)
+        aboutUs.setOnClickListener {
+            val intent = Intent(view?.context, AboutUsActivity::class.java)
+            startActivity(intent)
         }
     }
 
