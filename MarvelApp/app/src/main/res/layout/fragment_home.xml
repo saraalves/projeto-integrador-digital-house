@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_background"
+    android:orientation="vertical"
     tools:context=".home.view.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlTeste"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/img_background"
+        android:elevation="@dimen/dim_5_dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/titleDisconcted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/ops_disconected"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_24_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_20_dp"
+            android:layout_marginTop="@dimen/dim_8_dp"
+            android:layout_marginEnd="@dimen/dim_20_dp"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_condensed_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleDisconcted"
+            android:text="@string/please_check_your_internet"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_20_sp"
+             />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctlConection"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content">
 
         <SearchView
@@ -33,6 +80,7 @@
             android:layout_marginTop="@dimen/dim_15_dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:text="@string/recomendados"
+            android:visibility="visible"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/dim_18_sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,10 +106,25 @@
             android:layout_marginTop="@dimen/dim_15_dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:text="@string/todos"
+            android:visibility="visible"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/dim_18_sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerAvatar" />
+
+        <TextView
+            android:id="@+id/tvNoResult"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTodosHome"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="@string/no_result_was_found_try_again"
+            android:visibility="gone"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/dim_20_sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCard"
@@ -76,17 +139,16 @@
             tools:listitem="@layout/item_card_personagem" />
 
         <ProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/loadingCard"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dim_68_dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.57" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTodosHome" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

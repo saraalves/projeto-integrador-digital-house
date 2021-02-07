@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_app"
+    tools:context=".aboutus.AboutUsActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarAboutUs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_24"
+        app:title="About us"
+        app:titleTextColor="@color/colorPrimary" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarAboutUs">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/txtAboutMarvelApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_20_dp"
+                android:layout_marginTop="@dimen/dim_20_dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="About Marvel App"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dim_20_dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardInfoApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_20_dp"
+                android:layout_marginTop="@dimen/dim_16_dp"
+                android:layout_marginEnd="@dimen/dim_20_dp"
+                android:layout_marginBottom="@dimen/dim_10_dp"
+                android:focusable="true"
+                android:orientation="vertical"
+                app:cardCornerRadius="@dimen/dim_10_dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtAboutMarvelApp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctlAboutApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite">
+
+                    <TextView
+                        android:id="@+id/txtNameApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dim_20_dp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="Marvel App"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/dim_16_dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtInfoApp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dim_20_dp"
+                        android:layout_marginTop="@dimen/dim_16_dp"
+                        android:layout_marginEnd="@dimen/dim_20_dp"
+                        android:layout_marginBottom="@dimen/dim_16_dp"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_24_dp"
+                        android:text="Marvel App is our Integration Project that was developed in the Mobile Android Development from Digital House course. The goal of this project was to enhance our development skills with the concepts taught in this process."
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtNameApp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/txtAboutDevelopers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_20_dp"
+                android:layout_marginTop="@dimen/dim_20_dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="About Developers"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dim_20_dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardInfoApp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardInfoJenn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_20_dp"
+                android:layout_marginTop="@dimen/dim_16_dp"
+                android:layout_marginEnd="@dimen/dim_20_dp"
+                android:focusable="true"
+                android:orientation="vertical"
+                app:cardCornerRadius="@dimen/dim_10_dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtAboutDevelopers">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctlAboutJenn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite">
+
+                    <TextView
+                        android:id="@+id/txtNameJenn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dim_20_dp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="Jenifer"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/dim_16_dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtInfoJenn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dim_20_dp"
+                        android:layout_marginTop="@dimen/dim_16_dp"
+                        android:layout_marginEnd="@dimen/dim_20_dp"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_20_dp"
+                        android:text="Science and Technology student."
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtNameJenn" />
+
+                    <TextView
+                        android:id="@+id/txtGithubJenn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dim_20_dp"
+                        android:layout_marginTop="@dimen/dim_8_dp"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_20_dp"
+                        android:linksClickable="true"
+                        android:layout_marginBottom="@dimen/dim_20_dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Repository: \nhttps://github.com/jeniferss"
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtInfoJenn" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dim_20_dp"
+                android:layout_marginTop="@dimen/dim_20_dp"
+                android:layout_marginEnd="@dimen/dim_20_dp"
+                android:focusable="true"
+                android:orientation="vertical"
+                app:cardCornerRadius="@dimen/dim_10_dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardInfoJenn">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctlAboutUsSara"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite">
+
+                    <TextView
+                        android:id="@+id/txtNameSara"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dim_20_dp"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:text="Sara Alves Rodrigues"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/dim_16_dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtInfoSara"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dim_20_dp"
+                        android:layout_marginTop="@dimen/dim_16_dp"
+                        android:layout_marginEnd="@dimen/dim_20_dp"
+                        android:layout_marginBottom="@dimen/dim_16_dp"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_20_dp"
+                        android:text="Mobile developer at Accenture and student in the Mobile Android Development course at Digital House. Passionate about mobile solutions.\n\nRepository:\nhttps://github.com/saraalves\n\nLinkedin:\nhttps://www.linkedin.com/in/saraalvs/"
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtNameSara" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,24 +11,31 @@
         android:roundIcon="@drawable/img_avatar"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
+        <activity android:name=".aboutus.AboutUsActivity"></activity>
         <activity android:name=".alterarsenha.view.AlterarSenhaActivity" />
         <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".detalhes.view.DetalhesActivity" />
-        <activity android:name=".cadastro.view.CadastroActivity" />
+        <activity android:name=".detalhes.view.DetalhesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".cadastro.view.CadastroActivity" />
         <activity android:name=".splashscreen.view.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".manageractivity.view.HomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -40,7 +47,8 @@
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
-            <intent-filter><action android:name="android.intent.action.VIEW" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -48,10 +56,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>
-
-
