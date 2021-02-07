@@ -6,13 +6,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/img_avatar"
+        android:icon="@drawable/app_logo_oficial"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/img_avatar"
+        android:roundIcon="@drawable/app_logo_oficial"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
         <activity android:name=".aboutus.AboutUsActivity"></activity>
-        <activity android:name=".alterarsenha.view.AlterarSenhaActivity" />
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".detalhes.view.DetalhesActivity">
             <intent-filter>
