@@ -30,6 +30,9 @@ class CadastroActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        findViewById<CheckBox>(R.id.checkboxCadastro).isChecked = false
+        findViewById<MaterialButton>(R.id.btnCadastro).isEnabled = false
+
         val toolbarCadastro = findViewById<MaterialToolbar>(R.id.toolbarCadastro)
         toolbarCadastro.setOnClickListener {
             showDialog()

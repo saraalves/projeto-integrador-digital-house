@@ -135,7 +135,9 @@ class PerfilFragment : Fragment() {
         val btnSalvar = _view.findViewById<MaterialButton>(R.id.btnSalvarPerfil)
         btnSalvar.setOnClickListener {
 
-            enviarArquivo(user!!.uid)
+            if(imgURI != null){
+                enviarArquivo(user!!.uid)
+            }
 
             val newName = view.findViewById<TextInputEditText>(R.id.etNomeAtual).text.toString()
 

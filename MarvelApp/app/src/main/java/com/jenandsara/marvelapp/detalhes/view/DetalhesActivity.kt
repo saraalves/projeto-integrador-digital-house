@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -61,12 +62,14 @@ class DetalhesActivity : AppCompatActivity() {
     private var _comics = mutableListOf<ComicsModel>()
     private var _stories = mutableListOf<StoriesModel>()
 
+    private var _id by Delegates.notNull<Int>()
+
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes)
 
-        val id = intent.getIntExtra("ID", 0)
+        _id = intent.getIntExtra("ID", 0)
         val nome = intent.getStringExtra("NOME")
         val descricao = intent.getStringExtra("DESCRIÇÃO")
         val imagem = intent.getStringExtra("IMAGEM")
@@ -83,7 +86,7 @@ class DetalhesActivity : AppCompatActivity() {
 
         localViewModelProvider()
 
-        favoritar(nome!!, id, descricao!!, imagem!!, favorite)
+        favoritar(nome!!, _id, descricao!!, imagem!!, favorite)
 
         setData(descricao, nome, imagem)
 
@@ -98,8 +101,10 @@ class DetalhesActivity : AppCompatActivity() {
         detalhesViewModelProvider()
 
         if (checkConectividade()) {
-            getStoriesList(id)
-            getComicList(id)
+            getStoriesList(_id)
+            getComicList(_id)
+            setScrollViewComics()
+            setScrollViewStories()
         } else {
             findViewById<TextView>(R.id.txtComics).visibility = View.GONE
             findViewById<TextView>(R.id.txtStories).visibility = View.GONE
@@ -134,6 +139,53 @@ class DetalhesActivity : AppCompatActivity() {
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
+        }
+    }
+
+
+    private fun setScrollViewComics() {
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerComics)
+        recyclerView?.run {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
+                    val totalItemCount = target!!.itemCount
+                    val lastVisible = target.findLastVisibleItemPosition()
+                    val lastItem = lastVisible + 1 >= totalItemCount
+
+                    if (totalItemCount > 0 && lastItem) {
+                        _comicViewModel.nextPage(_id).observe({ lifecycle }, {
+                            _comics.addAll(it)
+                            _comicsAdapter.notifyDataSetChanged()
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    private fun setScrollViewStories() {
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerStrories)
+        recyclerView?.run {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
+                    val totalItemCount = target!!.itemCount
+                    val lastVisible = target.findLastVisibleItemPosition()
+                    val lastItem = lastVisible + 1 >= totalItemCount
+
+                    if (totalItemCount > 0 && lastItem) {
+                        _storiesViewModel.nextPage(_id).observe({ lifecycle }, {
+                           _stories.addAll(it)
+                           _storiesAdapter.notifyDataSetChanged()
+                        })
+                    }
+                }
+            })
         }
     }
 
