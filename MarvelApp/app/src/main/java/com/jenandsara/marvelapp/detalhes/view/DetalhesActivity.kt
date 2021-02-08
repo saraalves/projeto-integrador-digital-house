@@ -22,14 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.comics.model.ComicsModel
 import com.jenandsara.marvelapp.comics.repository.ComicRepository
 import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
 import com.jenandsara.marvelapp.detalhes.view.comics.ComicsAdapter
 import com.jenandsara.marvelapp.detalhes.view.stories.StoriesAdapter
-import com.jenandsara.marvelapp.detalhes.viewmodel.DetalhesViewModel
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
@@ -49,15 +49,14 @@ class DetalhesActivity : AppCompatActivity() {
     private lateinit var _comicViewModel: ComicViewModel
     private lateinit var _storiesViewModel: StoriesViewModel
 
-    private lateinit var _detalhesViewModel: DetalhesViewModel
     private lateinit var _favoritosViewModel: FavoriteViewModel
-
-    private var characterId by Delegates.notNull<Int>()
 
     private var _comics = mutableListOf<ComicsModel>()
     private var _stories = mutableListOf<StoriesModel>()
 
     private var _id by Delegates.notNull<Int>()
+
+    private val userId = Firebase.auth.currentUser?.uid
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +67,7 @@ class DetalhesActivity : AppCompatActivity() {
         val nome = intent.getStringExtra("NOME")
         val descricao = intent.getStringExtra("DESCRIÇÃO")
         val imagem = intent.getStringExtra("IMAGEM")
-        var favorite = intent.getBooleanExtra("FAVORITO", true)
+        val favorite = intent.getBooleanExtra("FAVORITO", true)
 
         val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.HORIZONTAL
@@ -94,7 +93,6 @@ class DetalhesActivity : AppCompatActivity() {
 
         comicViewModelProvider()
         storiesViewModelProvider()
-        detalhesViewModelProvider()
 
         if (checkConectividade()) {
             getStoriesList(_id)
@@ -104,8 +102,8 @@ class DetalhesActivity : AppCompatActivity() {
         } else {
             findViewById<TextView>(R.id.txtComics).visibility = View.GONE
             findViewById<TextView>(R.id.txtStories).visibility = View.GONE
-            findViewById<RecyclerView>(R.id.recyclerComics).visibility = View.GONE
-            findViewById<RecyclerView>(R.id.recyclerStrories).visibility = View.GONE
+            comicsList.visibility = View.GONE
+            storiesList.visibility = View.GONE
             findViewById<ConstraintLayout>(R.id.ctlNoconection).visibility = View.VISIBLE
         }
     }
@@ -130,7 +128,7 @@ class DetalhesActivity : AppCompatActivity() {
         iconShare.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Check this out! ${nome} at MarvelApp. Image link: ${imagem}")
+                putExtra(Intent.EXTRA_TEXT, "Check this out! $nome at MarvelApp. Image link: $imagem")
                 type = "text/plain"
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
@@ -190,7 +188,7 @@ class DetalhesActivity : AppCompatActivity() {
         val iconFavorite = findViewById<View>(R.id.favorite)
         val iconFavorit = findViewById<View>(R.id.favorit)
 
-        _favoritosViewModel.isFavorite(id).observe(this) {
+        _favoritosViewModel.isFavorite(id, userId!!).observe(this) {
             iconFavorit.isVisible = it
             iconFavorite.isVisible = !it
         }
@@ -199,7 +197,7 @@ class DetalhesActivity : AppCompatActivity() {
             iconFavorite.isVisible = false
             iconFavorit.isVisible = true
 
-            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath).observe(this) {
+            _favoritosViewModel.addCharacter(nome, id, descricao, imgPath, userId).observe(this) {
                 if (it) Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
             }
         }
@@ -240,7 +238,7 @@ class DetalhesActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 )
                     .setAction("UNDO") {
-                        _favoritosViewModel.addCharacter(nome, id, descricao, imgPath)
+                        _favoritosViewModel.addCharacter(nome, id, descricao, imgPath, userId!!)
                             .observe(this) {
                                 if (it) {
                                     iconFavorite.isVisible = false
@@ -276,28 +274,6 @@ class DetalhesActivity : AppCompatActivity() {
         }
     }
 
-    private fun setScrollView(id: Int) {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerComics)
-        recyclerView?.run {
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val target = recyclerView.layoutManager as LinearLayoutManager?
-                    val totalItemCount = target!!.itemCount
-                    val lastVisible = target.findLastVisibleItemPosition()
-                    val lastItem = lastVisible + 6 >= totalItemCount
-
-                    if (totalItemCount > 0 && lastItem) {
-                        _comicViewModel.nextPage(id).observe({ lifecycle }, {
-                            _comics.addAll(it)
-                        })
-                    }
-                }
-            })
-        }
-    }
-
     private fun comicViewModelProvider() {
         _comicViewModel = ViewModelProvider(
             this,
@@ -313,7 +289,7 @@ class DetalhesActivity : AppCompatActivity() {
 
     private fun setupNavigationComic() {
         _comicsAdapter = ComicsAdapter(_comics) {
-            showFullComicImage(it.thumbnail?.getImagePath())
+            showFullComicImage(it.thumbnail.getImagePath())
         }
     }
 
@@ -344,38 +320,17 @@ class DetalhesActivity : AppCompatActivity() {
 
     private fun showFullComicImage(path: String) {
 
-        var imageDialog: AlertDialog?
+        val imageDialog: AlertDialog?
 
         val dialogBuilder = AlertDialog.Builder(this@DetalhesActivity)
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_image, null, false)
         dialogBuilder.setView(dialogView)
 
         imageDialog = dialogBuilder.create()
-        imageDialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        imageDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         Picasso.get().load(path).into(dialogView.imgComicExpanded)
-        imageDialog?.show()
+        imageDialog.show()
 
-    }
-
-    private fun getCharacter() {
-        _detalhesViewModel.getCharacter(characterId).observe({ lifecycle }, { character ->
-            character.id
-            character.nome
-            character.descricao
-            character.imagem
-            character.isFavorite
-        })
-    }
-
-    private fun detalhesViewModelProvider() {
-        _detalhesViewModel = ViewModelProvider(
-            this,
-            DetalhesViewModel.DetalherViewModelFactory(
-                CharacterRepository(), CharacterLocalRepository(
-                    AppDatabase.getDatabase(this).characterDAO()
-                )
-            )
-        ).get(DetalhesViewModel::class.java)
     }
 
     private fun localViewModelProvider() {
@@ -390,8 +345,7 @@ class DetalhesActivity : AppCompatActivity() {
     private fun checkConectividade(): Boolean {
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
 
-        return isConnected
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 }

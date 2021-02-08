@@ -24,6 +24,8 @@ import com.jenandsara.marvelapp.character.repository.CharacterRepository
 import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.comics.repository.ComicRepository
 import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
@@ -49,6 +51,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private var _character = mutableListOf<CharacterModel>()
     private var _recomendados = mutableListOf<CharacterModel>()
 
+    private val userId = Firebase.auth.currentUser?.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -153,7 +156,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun update(list: List<CharacterModel>) {
         list.forEach {
-            _favoritosViewModel.isFavorite(it.id).observe(viewLifecycleOwner) { b: Boolean ->
+            _favoritosViewModel.isFavorite(it.id, userId!!).observe(viewLifecycleOwner) { b: Boolean ->
                 it.isFavorite = b
             }
         }
@@ -165,7 +168,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             list?.let {
                 showLoading(true)
                 update(list1)
-                _favoritosViewModel.setFavoriteCharacter(list1).observe(viewLifecycleOwner) {
+                _favoritosViewModel.setFavoriteCharacter(list1, userId!!).observe(viewLifecycleOwner) {
                     _character.clear()
                     _character.addAll(list1)
                     _characterAdapter.notifyDataSetChanged()
@@ -279,7 +282,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getRecomended() {
         showLoading(true)
-        _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
+        _favoritosViewModel.getFavoriteCharacterLocal(userId!!).observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && it.size > 1) {
                 _viewModel.getRandomFavorite(it).observe(viewLifecycleOwner) { it1 ->
                     _comicViewModel.getComicList(it1).observe(viewLifecycleOwner) { list ->
@@ -320,7 +323,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
-        _favoritosViewModel.isFavorite(_character[position].id)
+        _favoritosViewModel.isFavorite(_character[position].id, userId!!)
             .observe(viewLifecycleOwner) { isFavorite ->
                 removerAdicionar(isFavorite, position)
                 _character[position].isFavorite = !_character[position].isFavorite
@@ -347,13 +350,10 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 character.nome,
                 character.id,
                 character.descricao,
-                character.thumbnail!!.getImagePath()
+                character.thumbnail!!.getImagePath(),
+                userId!!
             )
                 .observe(viewLifecycleOwner) {
-                    Log.d(
-                        "TAG CHARACTER FRAGMENT",
-                        "getCharacterFavoriteClick() - addCharacter"
-                    )
                     if (it) {
                         _character[position].isFavorite = true
                         _characterAdapter.notifyItemChanged(position)
@@ -368,7 +368,6 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
         return activeNetwork?.isConnectedOrConnecting == true
     }
-
 
     private fun viewModelProvider() {
         _viewModel = ViewModelProvider(

@@ -17,7 +17,9 @@ data class CharacterEntity (
     @ColumnInfo
     var imgPath: String,
     @ColumnInfo
+    var idUser: String,
+    @ColumnInfo
     var isFavorite: Boolean = true
 ) {
-    constructor(idAPI: Int): this(0, "", 0, "", "", true)
+    constructor(idAPI: Int): this(0, "", 0, "", "", "", true)
 }

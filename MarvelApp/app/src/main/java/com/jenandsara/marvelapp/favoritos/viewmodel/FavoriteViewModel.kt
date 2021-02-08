@@ -11,21 +11,21 @@ import kotlinx.coroutines.Dispatchers
 
 class FavoriteViewModel (private val repository: CharacterLocalRepository): ViewModel() {
 
-    fun setFavoriteCharacter(list: List<CharacterModel>) = liveData(Dispatchers.IO) {
+    fun setFavoriteCharacter(list: List<CharacterModel>, idUser: String) = liveData(Dispatchers.IO) {
 
         list.forEach {
-            val isFavorite = repository.checkIfIsFavorite(it.id)
+            val isFavorite = repository.checkIfIsFavorite(it.id, idUser)
             it.isFavorite = isFavorite
             if(isFavorite) {
-                addCharacter(it.nome, it.id, it.descricao, it.thumbnail!!.getImagePath())
+                addCharacter(it.nome, it.id, it.descricao, it.thumbnail!!.getImagePath(), idUser)
             }
         }
         emit(true)
     }
 
-    fun getFavoriteCharacterLocal() = liveData(Dispatchers.IO) {
+    fun getFavoriteCharacterLocal(idUser: String) = liveData(Dispatchers.IO) {
 
-        val favorites = repository.getAllCharacters()
+        val favorites = repository.getAllCharacters(idUser)
         val characters = mutableListOf<CharacterEntity>()
 
         favorites.forEach {
@@ -35,13 +35,13 @@ class FavoriteViewModel (private val repository: CharacterLocalRepository): View
         emit(characters)
     }
 
-    fun addCharacter(nome: String, idAPI: Int, descricao: String, imgPath: String) = liveData(Dispatchers.IO) {
-        repository.saveCharacter(CharacterEntity(0, nome,idAPI,descricao, imgPath))
+    fun addCharacter(nome: String, idAPI: Int, descricao: String, imgPath: String, idUser: String) = liveData(Dispatchers.IO) {
+        repository.saveCharacter(CharacterEntity(0, nome,idAPI,descricao, imgPath, idUser))
         emit(true)
     }
 
-    fun isFavorite(idAPI: Int) = liveData(Dispatchers.IO) {
-        val result = repository.checkIfIsFavorite(idAPI)
+    fun isFavorite(idAPI: Int, idUser: String) = liveData(Dispatchers.IO) {
+        val result = repository.checkIfIsFavorite(idAPI, idUser)
         emit(result)
     }
 

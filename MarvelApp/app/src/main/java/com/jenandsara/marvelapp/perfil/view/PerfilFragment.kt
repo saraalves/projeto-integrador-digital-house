@@ -34,7 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 class PerfilFragment : Fragment() {
 
     private var imgURI: Uri? = null
-    private var imgURL: String = ""
     private lateinit var _view: View
     private val user = Firebase.auth.currentUser
 
@@ -66,7 +65,7 @@ class PerfilFragment : Fragment() {
 
         }  else {
 
-            Toast.makeText(_view.context, "Alterações de perfil só são possiveis com conexão de rede", Toast.LENGTH_LONG).show()
+            Toast.makeText(_view.context, "Updates only work when when network connection is available", Toast.LENGTH_LONG).show()
 
             val btnAlterarFoto = view.findViewById<ImageButton>(R.id.imageButtonCamera)
             btnAlterarFoto.isEnabled = false
@@ -158,7 +157,7 @@ class PerfilFragment : Fragment() {
             user!!.updateProfile(profileUpdates)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(view.context, "Dados salvos com sucesso", Toast.LENGTH_SHORT)
+                        Toast.makeText(view.context, "Data has been successfully saved", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -171,7 +170,7 @@ class PerfilFragment : Fragment() {
         Firebase.auth.sendPasswordResetEmail(Firebase.auth.currentUser!!.email!!)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(view.context, "Verifique seu email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context, "Check your email box", Toast.LENGTH_SHORT).show()
                     FirebaseAuth.getInstance().signOut()
                     val intent = Intent(view?.context, SplashScreenActivity::class.java)
                     startActivity(intent)
@@ -213,14 +212,14 @@ class PerfilFragment : Fragment() {
                 .addOnCanceledListener {
                     Toast.makeText(
                         _view.context,
-                        "Upload de imagem cancelado.",
+                        "Image upload has been cancelled",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 .addOnFailureListener {
                     Toast.makeText(
                         _view.context,
-                        "Upload de imagem falhou.",
+                        "Image upload has failed",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -247,7 +246,7 @@ class PerfilFragment : Fragment() {
                     if (task.isSuccessful) {
                         Toast.makeText(
                             _view.context,
-                            "Dados salvos com sucesso",
+                            "Data has been successfully saved",
                             Toast.LENGTH_SHORT
                         )
                             .show()

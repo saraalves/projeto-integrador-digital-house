@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onCancel() {
-                Toast.makeText(this@LoginActivity, "Cancelado!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Cancelled!", Toast.LENGTH_SHORT).show()
             }
 
             override fun onError(error: FacebookException) {
@@ -161,7 +161,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "Valide seu email", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Verify your email adress", Toast.LENGTH_LONG).show()
                 auth.signOut()
             }
         }
@@ -175,7 +175,7 @@ class LoginActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
-                    Toast.makeText(this, "Erro ao logar", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Login has failed", Toast.LENGTH_LONG).show()
                 }
             }
     }
@@ -218,10 +218,10 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                         LOGIN_TYPE = "SENHA"
-                    } else Toast.makeText(baseContext, "Falha de autenticação, verifique o seu e-mail", Toast.LENGTH_SHORT)
+                    } else Toast.makeText(baseContext, "Authentication has failed, verify your email adress", Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                    Toast.makeText(baseContext, "Falha de autenticação", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Authentication has failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -251,16 +251,16 @@ class LoginActivity : AppCompatActivity() {
             Firebase.auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Verifique seu email", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, "Check your email box", Toast.LENGTH_SHORT)
                             .show()
                         alertDialog?.dismiss()
                     } else {
-                        Toast.makeText(this, "Erro de envio", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "An error ocurried", Toast.LENGTH_SHORT).show()
                         alertDialog?.dismiss()
                     }
                 }
         } else {
-            Toast.makeText(this, "Campo vazio", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show()
             alertDialog?.dismiss()
         }
     }

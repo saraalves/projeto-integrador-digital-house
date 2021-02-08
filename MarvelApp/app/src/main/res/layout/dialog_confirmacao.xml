@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/dim_40_dp"
             android:layout_marginEnd="@dimen/dim_20_dp"
             android:fontFamily="@font/roboto_condensed_regular"
-            android:text="@string/cancelar"
+            android:text="@string/cancel"
             android:textColor="@color/colorText"
             android:textSize="@dimen/dim_18_sp"
             app:layout_constraintTop_toBottomOf="@+id/textView1" />
