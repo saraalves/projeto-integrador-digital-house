@@ -3,11 +3,15 @@ package com.jenandsara.marvelapp.detalhes.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -39,6 +43,8 @@ import com.jenandsara.marvelapp.stories.viewmodel.StoriesViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
 import kotlinx.android.synthetic.main.dialog_image.view.*
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import kotlin.properties.Delegates
 
 class DetalhesActivity : AppCompatActivity() {
@@ -55,6 +61,8 @@ class DetalhesActivity : AppCompatActivity() {
     private var _stories = mutableListOf<StoriesModel>()
 
     private var _id by Delegates.notNull<Int>()
+
+    private val imageDetail by lazy { findViewById<ImageView>(R.id.imgPersonagemDetail) }
 
     private val userId = Firebase.auth.currentUser?.uid
 
@@ -126,14 +134,44 @@ class DetalhesActivity : AppCompatActivity() {
 
         val iconShare = findViewById<View>(R.id.share)
         iconShare.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Check this out! $nome at MarvelApp. Image link: $imagem")
-                type = "text/plain"
-            }
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+            shareCharacter(nome)
         }
+    }
+
+    private fun shareCharacter(nome: String?) {
+        val bitmap = getBitmapFromView(imageDetail)
+
+        val icon: Bitmap = bitmap!!
+        val share = Intent(Intent.ACTION_SEND)
+        share.type = "image/jpeg"
+
+        val pm = packageManager
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(
+            this.contentResolver,
+            bitmap,
+            "share character",
+            null
+        )
+        val imageUri = Uri.parse(path)
+
+
+        val outstream: OutputStream?
+        outstream = contentResolver.openOutputStream(imageUri!!)
+        icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream)
+        outstream?.close()
+        share.putExtra(Intent.EXTRA_STREAM, imageUri)
+        share.putExtra(Intent.EXTRA_TEXT, "Check this out! $nome at MarvelApp.")
+        startActivity(Intent.createChooser(share, "Share Character"))
+    }
+
+    open fun getBitmapFromView(view: View): Bitmap? {
+        var bitmap =
+            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        var canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
     }
 
     private fun setScrollViewComics() {
