@@ -1,6 +1,7 @@
 package com.jenandsara.marvelapp.favoritos.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -18,7 +20,10 @@ import androidx.viewpager.widget.ViewPager
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.character.repository.CharacterRepository
@@ -41,11 +46,11 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     private lateinit var _favoritosViewModel: FavoriteViewModel
 
     private var _listaFavoritosLocal = mutableListOf<CharacterEntity>()
-    private var position by Delegates.notNull<Int>()
-    private var isFavorite = true
 
     private lateinit var noFavorites: ConstraintLayout
     private lateinit var favoritoRecycler: RecyclerView
+
+    private val userId = Firebase.auth.currentUser?.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,8 +64,8 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
         _view = view
 
-        noFavorites = view.findViewById<ConstraintLayout>(R.id.ctlNofavorites)
-        favoritoRecycler = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
+        noFavorites = view.findViewById(R.id.ctlNofavorites)
+        favoritoRecycler = view.findViewById(R.id.recyclerFavoritos)
         val viewGridManager = GridLayoutManager(view.context, 2)
         _favoritosAdapter = FavoritosAdapter(_listaFavoritosLocal, this)
 
@@ -92,7 +97,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     }
 
     private fun getCharacters() {
-        _favoritosViewModel.getFavoriteCharacterLocal().observe(viewLifecycleOwner) {
+        _favoritosViewModel.getFavoriteCharacterLocal(userId!!).observe(viewLifecycleOwner) {
             _listaFavoritosLocal.clear()
             _listaFavoritosLocal.addAll(it)
             _favoritosAdapter.notifyDataSetChanged()
@@ -119,11 +124,32 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
     }
 
     override fun getCharacterFavoriteClick(position: Int) {
+        val character = _listaFavoritosLocal[position]
+
         _favoritosViewModel.deleteCharacter(_listaFavoritosLocal[position].idAPI)
             .observe(viewLifecycleOwner) {
                 _listaFavoritosLocal.removeAt(position)
                 _favoritosAdapter.notifyDataSetChanged()
+                addOrRemoveCharacter(character)
             }
+    }
+
+    private fun addOrRemoveCharacter(character: CharacterEntity) {
+                Snackbar.make(
+                    _view.findViewById<View>(R.id.viewSnackbar),
+                    "Removed from favorites",
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("UNDO") {
+                        _favoritosViewModel.addCharacter(character.nome, character.idAPI, character.descricao, character.imgPath, userId!!).observe(viewLifecycleOwner) {
+                            _listaFavoritosLocal.add(character)
+                            _favoritosAdapter.notifyDataSetChanged()
+                        }
+                    }
+                    .setActionTextColor(Color.parseColor("#FFFFFF"))
+                    .setTextColor(Color.parseColor("#FFFFFF"))
+                    .setBackgroundTint(Color.parseColor("#666666"))
+                    .show()
     }
 
     private fun viewModelProvider() {

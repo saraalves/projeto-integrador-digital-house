@@ -129,7 +129,7 @@ class CadastroActivity : AppCompatActivity() {
         if(senha == senhaRepeat){
             return true
         } else {
-            Toast.makeText(this@CadastroActivity, "As senhas devem ser iguais", Toast.LENGTH_SHORT)
+            Toast.makeText(this@CadastroActivity, "Passwords must match each other", Toast.LENGTH_SHORT)
                 .show()
             findViewById<EditText>(R.id.edtSenhaCadastro).text.clear()
             findViewById<EditText>(R.id.edtRepeatSenhaCadastro).text.clear()
@@ -149,14 +149,14 @@ class CadastroActivity : AppCompatActivity() {
                     }
 
                     user!!.updateProfile(profileUpdates).addOnCompleteListener {
-                        Toast.makeText(baseContext, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(baseContext, "User has been successfully created", Toast.LENGTH_SHORT).show()
                         sendEmail()
                         val intent = Intent(this@CadastroActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
                 } else {
-                    Toast.makeText(baseContext, "Erro ao criar usuário", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "An error ocurred while creating user's account", Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -172,8 +172,8 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val ERRO_VAZIO = "Campo Vazio"
-        const val ERRO_DIGITOS = "O campo deve ter no mínimo 8 dígitos"
+        const val ERRO_VAZIO = "Empty field"
+        const val ERRO_DIGITOS = "Field must have at least 8 digits"
 
     }
 

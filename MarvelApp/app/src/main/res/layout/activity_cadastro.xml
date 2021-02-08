@@ -104,7 +104,7 @@
         android:layout_marginTop="@dimen/dim_20_dp"
         android:layout_marginEnd="@dimen/dim_20_dp"
         android:background="@android:color/transparent"
-        android:hint="Repetir senha"
+        android:hint="@string/repeat_password"
         android:textColorHint="@color/colorPrimary"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"

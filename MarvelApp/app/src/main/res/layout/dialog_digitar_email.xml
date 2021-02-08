@@ -42,7 +42,7 @@
                 android:layout_weight="1"
                 android:background="@color/colorTransparente"
                 android:fontFamily="@font/roboto_condensed_bold"
-                android:text="Cancelar"
+                android:text="Cancel"
                 android:textColor="@color/colorGray"
                 android:textSize="16sp" />
 
