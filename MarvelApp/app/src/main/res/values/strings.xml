@@ -22,7 +22,6 @@
     <string name="share">share</string>
     <string name="favorit">favorite</string>
     <string name="buscar_personagem">Character search</string>
-    <string name="declaro">I agree to the terms and conditions</string>
     <string name="cadastrar">Register</string>
     <string name="nome">Name</string>
     <string name="nome_do_personagem">Character Name</string>
@@ -52,5 +51,12 @@
     <string name="digite_seu_email_no_campo_abaixo">Type your e-mail in the field below.</string>
     <string name="cancel">By cancelling this action your data won\'t be saved or updated.</string>
     <string name="repeat_password">Repeat Password</string>
+
+<!--    privacy, terms and conditions-->
+
+    <string name="declaro">I agree to the <a href="https://marvelapp.flycricket.io/privacy.html">Privacy,</a></string>
+    <string name="terms_conditions"> <a href="https://marvelapp.flycricket.io/terms.html">Terms and Conditions</a></string>
+
+    <string name="hyperlink">Learn more about Android app development at\n<a href="https://learntodroid.com">LearnToDroid.com</a></string>
 
 </resources>
