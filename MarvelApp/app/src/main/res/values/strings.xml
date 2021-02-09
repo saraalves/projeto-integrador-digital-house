@@ -48,7 +48,7 @@
     <string name="please_check_your_internet">Please check your internet connection\nand try again</string>
     <string name="ops_nofavorites">Hey! There is nothing here.</string>
     <string name="favorite_here">Your list is empty. Go and find your favorite ones :).</string>
-    <string name="digite_seu_email_no_campo_abaixo">Type you e-mail in the field below.</string>
+    <string name="digite_seu_email_no_campo_abaixo">Type your e-mail in the field below.</string>
     <string name="cancel">By cancelling this action your data won\'t be saved or updated.</string>
     <string name="repeat_password">Repeat Password</string>
 
