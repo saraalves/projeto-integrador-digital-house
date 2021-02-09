@@ -89,7 +89,7 @@
                         android:layout_marginBottom="@dimen/dim_16_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_24_dp"
-                        android:text="Marvel App is our Integration Project that was developed in the Mobile Android Development from Digital House course. The goal of this project was to enhance our development skills with the concepts taught in this process."
+                        android:text="@string/about_marvel_app"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -158,12 +158,13 @@
                         android:layout_marginEnd="@dimen/dim_20_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_20_dp"
-                        android:text="Science and Technology student."
+                        android:text="@string/about_jen"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtNameJenn" />
+                        app:layout_constraintTop_toBottomOf="@+id/txtNameJenn"
+                        tools:ignore="UnusedAttribute" />
 
                     <TextView
                         android:id="@+id/txtGithubJenn"
@@ -229,7 +230,7 @@
                         android:layout_marginBottom="@dimen/dim_16_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_20_dp"
-                        android:text="Mobile developer at Accenture and student in the Mobile Android Development course at Digital House. Passionate about mobile solutions."
+                        android:text="@string/about_sara"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintEnd_toEndOf="parent"
