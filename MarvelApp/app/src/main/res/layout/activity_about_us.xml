@@ -176,7 +176,7 @@
                         android:linksClickable="true"
                         android:layout_marginBottom="@dimen/dim_20_dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="Repository: \nhttps://github.com/jeniferss"
+                        android:text="@string/linkGithubJenn"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -229,13 +229,29 @@
                         android:layout_marginBottom="@dimen/dim_16_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_20_dp"
-                        android:text="Mobile developer at Accenture and student in the Mobile Android Development course at Digital House. Passionate about mobile solutions.\n\nRepository:\nhttps://github.com/saraalves\n\nLinkedin:\nhttps://www.linkedin.com/in/saraalvs/"
+                        android:text="Mobile developer at Accenture and student in the Mobile Android Development course at Digital House. Passionate about mobile solutions."
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtNameSara" />
+
+                    <TextView
+                        android:id="@+id/txtGithubSara"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dim_20_dp"
+                        android:layout_marginTop="@dimen/dim_8_dp"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_20_dp"
+                        android:linksClickable="true"
+                        android:layout_marginBottom="@dimen/dim_20_dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/linkGithubSara"
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtInfoSara" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
