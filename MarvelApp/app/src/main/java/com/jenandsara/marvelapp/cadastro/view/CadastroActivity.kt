@@ -3,11 +3,9 @@ package com.jenandsara.marvelapp.cadastro.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.jenandsara.marvelapp.login.view.LoginActivity
 import com.google.android.material.appbar.MaterialToolbar
@@ -39,6 +37,7 @@ class CadastroActivity : AppCompatActivity() {
         }
 
         validaCampos()
+        setupHyperlink()
     }
 
     private fun showDialog() {
@@ -58,6 +57,13 @@ class CadastroActivity : AppCompatActivity() {
         alertDialog = dialogBuilder.create()
         alertDialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         alertDialog?.show()
+    }
+
+    private fun setupHyperlink() {
+        val linkPrivacy = findViewById<TextView>(R.id.txtPrivacy)
+        val linkTermsAndConditions = findViewById<TextView>(R.id.txtTermsAndConditions)
+        linkPrivacy.movementMethod = LinkMovementMethod.getInstance()
+        linkTermsAndConditions.movementMethod = LinkMovementMethod.getInstance()
     }
 
 
