@@ -2,6 +2,8 @@ package com.jenandsara.marvelapp.aboutus
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.widget.TextView
 import com.google.android.material.appbar.MaterialToolbar
 import com.jenandsara.marvelapp.R
 
@@ -12,10 +14,18 @@ class AboutUsActivity : AppCompatActivity() {
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbarAboutUs)
 
-        toolbar.setOnClickListener{
+        toolbar.setOnClickListener {
             onBackPressed()
             finish()
         }
 
+        setupHyperlink()
+    }
+
+    private fun setupHyperlink() {
+        val linkGithubJenn = findViewById<TextView>(R.id.txtGithubJenn)
+        val linkGithubSara = findViewById<TextView>(R.id.txtGithubSara)
+        linkGithubJenn.movementMethod = LinkMovementMethod.getInstance()
+        linkGithubSara.movementMethod = LinkMovementMethod.getInstance()
     }
 }

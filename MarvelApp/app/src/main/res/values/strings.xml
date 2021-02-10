@@ -57,6 +57,11 @@
     <string name="declaro">I agree to the <a href="https://marvelapp.flycricket.io/privacy.html">Privacy,</a></string>
     <string name="terms_conditions"> <a href="https://marvelapp.flycricket.io/terms.html">Terms and Conditions</a></string>
 
-    <string name="hyperlink">Learn more about Android app development at\n<a href="https://learntodroid.com">LearnToDroid.com</a></string>
+    <string name="linkGithubJenn">Repository: \n<a href="https://github.com/jeniferss">https://github.com/jeniferss</a></string>
+    <string name="linkGithubSara">Repository: \n<a href="https://github.com/saraalves">https://github.com/saraalves</a></string>
+    <string name="about_marvel_app">Marvel App is our Integration Project that was developed in the Mobile Android Development from Digital House course. The goal of this project was to enhance our development skills with the concepts taught in this process.</string>
+    <string name="about_jen">Science and Technology student.</string>
+    <string name="about_sara">Mobile developer at Accenture and student in the Mobile Android Development course at Digital House. Passionate about mobile solutions.</string>
+
 
 </resources>

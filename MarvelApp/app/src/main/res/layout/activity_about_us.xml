@@ -9,6 +9,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarAboutUs"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
@@ -89,7 +90,7 @@
                         android:layout_marginBottom="@dimen/dim_16_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_24_dp"
-                        android:text="Marvel App is our Integration Project that was developed in the Mobile Android Development from Digital House course. The goal of this project was to enhance our development skills with the concepts taught in this process."
+                        android:text="@string/about_marvel_app"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -158,12 +159,13 @@
                         android:layout_marginEnd="@dimen/dim_20_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:lineHeight="@dimen/dim_20_dp"
-                        android:text="Science and Technology student."
+                        android:text="@string/about_jen"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtNameJenn" />
+                        app:layout_constraintTop_toBottomOf="@+id/txtNameJenn"
+                        tools:ignore="UnusedAttribute" />
 
                     <TextView
                         android:id="@+id/txtGithubJenn"
@@ -171,14 +173,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dim_20_dp"
                         android:layout_marginTop="@dimen/dim_8_dp"
-                        android:fontFamily="@font/roboto_condensed_regular"
-                        android:lineHeight="@dimen/dim_20_dp"
-                        android:linksClickable="true"
                         android:layout_marginBottom="@dimen/dim_20_dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="Repository: \nhttps://github.com/jeniferss"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_24_dp"
+                        android:linksClickable="true"
+                        android:text="@string/linkGithubJenn"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtInfoJenn" />
 
@@ -228,14 +230,30 @@
                         android:layout_marginEnd="@dimen/dim_20_dp"
                         android:layout_marginBottom="@dimen/dim_16_dp"
                         android:fontFamily="@font/roboto_condensed_regular"
-                        android:lineHeight="@dimen/dim_20_dp"
-                        android:text="Mobile developer at Accenture and student in the Mobile Android Development course at Digital House. Passionate about mobile solutions.\n\nRepository:\nhttps://github.com/saraalves\n\nLinkedin:\nhttps://www.linkedin.com/in/saraalvs/"
+                        android:lineHeight="@dimen/dim_24_dp"
+                        android:text="@string/about_sara"
                         android:textColor="@color/colorDarkGray"
                         android:textSize="@dimen/dim_14_sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtNameSara" />
+
+                    <TextView
+                        android:id="@+id/txtGithubSara"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dim_20_dp"
+                        android:layout_marginTop="@dimen/dim_8_dp"
+                        android:layout_marginBottom="@dimen/dim_20_dp"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:lineHeight="@dimen/dim_24_dp"
+                        android:linksClickable="true"
+                        android:text="@string/linkGithubSara"
+                        android:textColor="@color/colorDarkGray"
+                        android:textSize="@dimen/dim_14_sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtInfoSara" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
