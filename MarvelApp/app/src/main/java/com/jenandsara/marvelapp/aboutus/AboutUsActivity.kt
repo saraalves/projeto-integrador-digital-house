@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import android.widget.Toolbar
 import com.google.android.material.appbar.MaterialToolbar
 import com.jenandsara.marvelapp.R
 
@@ -12,7 +13,7 @@ class AboutUsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_us)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbarAboutUs)
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarAboutUs)
 
         toolbar.setOnClickListener {
             onBackPressed()
