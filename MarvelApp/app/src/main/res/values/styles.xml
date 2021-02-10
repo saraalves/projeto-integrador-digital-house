@@ -6,10 +6,6 @@
         <item name="colorControlNormal">@color/colorAccent</item>
     </style>
 
-    <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
     <style name="ToggleIcon" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="iconEndPadding">@dimen/dim_0_dp</item>
         <item name="android:insetTop">@dimen/dim_0_dp</item>
