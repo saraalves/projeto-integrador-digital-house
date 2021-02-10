@@ -42,7 +42,7 @@
                 android:fontFamily="@font/roboto_condensed_bold"
                 android:text="About Marvel App"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/dim_20_dp"
+                android:textSize="@dimen/dim_20_sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +76,7 @@
                         android:fontFamily="@font/roboto_condensed_bold"
                         android:text="Marvel App"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dim_16_dp"
+                        android:textSize="@dimen/dim_16_sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,7 +113,7 @@
                 android:fontFamily="@font/roboto_condensed_bold"
                 android:text="About Developers"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/dim_20_dp"
+                android:textSize="@dimen/dim_20_sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardInfoApp" />
 
@@ -146,7 +146,7 @@
                         android:fontFamily="@font/roboto_condensed_bold"
                         android:text="Jenifer"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dim_16_dp"
+                        android:textSize="@dimen/dim_16_sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -217,7 +217,7 @@
                         android:fontFamily="@font/roboto_condensed_bold"
                         android:text="Sara Alves Rodrigues"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dim_16_dp"
+                        android:textSize="@dimen/dim_16_sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

@@ -8,7 +8,6 @@
     <color name="colorText">#000000</color>
     <color name="colorTransparente">#00000000</color>
     <color name="colorGray">#666666</color>
-    <color name="colorBlackOpaca">#80000000</color>
     <color name="colorRose">#F06569</color>
     <color name="colorDarkGray">#333333</color>
 </resources>

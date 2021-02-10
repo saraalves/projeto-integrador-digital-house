@@ -3,6 +3,8 @@
     package="com.jenandsara.marvelapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,7 @@
         android:roundIcon="@drawable/app_logo_oficial"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity android:name=".aboutus.AboutUsActivity"></activity>
+        <activity android:name=".aboutus.AboutUsActivity" />
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".detalhes.view.DetalhesActivity">
             <intent-filter>
