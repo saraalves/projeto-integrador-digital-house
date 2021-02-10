@@ -129,8 +129,8 @@ class PerfilFragment : Fragment() {
         if (LOGIN_TYPE == "FACEBOOK" || LOGIN_TYPE == "GOOGLE" || user?.email!!.contains("@gmail")) {
             view.findViewById<MaterialButtonToggleGroup>(R.id.toggleNome).visibility = View.GONE
             view.findViewById<ImageButton>(R.id.imageButtonCamera).visibility = View.GONE
-            view.findViewById<MaterialButton>(R.id.btnSalvarPerfil).visibility = View.GONE
-            view.findViewById<Button>(R.id.changePassword).visibility = View.GONE
+            view.findViewById<MaterialButton>(R.id.btnSalvarPerfil).visibility = View.INVISIBLE
+            view.findViewById<Button>(R.id.changePassword).visibility = View.INVISIBLE
         }
     }
 
