@@ -145,25 +145,29 @@ class DetalhesActivity : AppCompatActivity() {
         val share = Intent(Intent.ACTION_SEND)
         share.type = "image/jpeg"
 
-        val pm = packageManager
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            this.contentResolver,
-            bitmap,
-            "share character",
-            null
-        )
-        val imageUri = Uri.parse(path)
+        try{
+            val pm = packageManager
+            val bytes = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+            val path = MediaStore.Images.Media.insertImage(
+                this.contentResolver,
+                bitmap,
+                "share character",
+                null
+            )
 
+            val imageUri = Uri.parse(path)
+            val outstream: OutputStream?
+            outstream = contentResolver.openOutputStream(imageUri!!)
+            icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream)
+            outstream?.close()
+            share.putExtra(Intent.EXTRA_STREAM, imageUri)
+            share.putExtra(Intent.EXTRA_TEXT, "Check this out! $nome at MarvelApp.")
+            startActivity(Intent.createChooser(share, "Share Character"))
 
-        val outstream: OutputStream?
-        outstream = contentResolver.openOutputStream(imageUri!!)
-        icon.compress(Bitmap.CompressFormat.JPEG, 100, outstream)
-        outstream?.close()
-        share.putExtra(Intent.EXTRA_STREAM, imageUri)
-        share.putExtra(Intent.EXTRA_TEXT, "Check this out! $nome at MarvelApp.")
-        startActivity(Intent.createChooser(share, "Share Character"))
+        } catch (e: Exception) {
+            System.err.println(e.toString())
+        }
     }
 
     open fun getBitmapFromView(view: View): Bitmap? {
