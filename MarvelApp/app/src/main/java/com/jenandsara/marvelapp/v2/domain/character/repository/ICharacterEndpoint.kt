@@ -1,0 +1,29 @@
+package com.jenandsara.marvelapp.v2.domain.character.repository
+
+import com.jenandsara.marvelapp.v2.domain.character.model.CharacterModel
+import com.jenandsara.marvelapp.v2.data.model.ResponseModel
+import com.jenandsara.marvelapp.v2.domain.network.NetworkUtils
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+interface ICharacterEndpoint {
+    @GET("v1/public/characters")
+    suspend fun getCharacter(@Query("offset") offset: Int? = 0): ResponseModel<CharacterModel>
+
+    @GET("v1/public/characters")
+    suspend fun getCharacterByName(@Query("name") name: String?): ResponseModel<CharacterModel>
+
+    @GET("v1/public/characters")
+    suspend fun getCharacterByStartsWith(@Query("nameStartsWith") nameStartsWith: String?): ResponseModel<CharacterModel>
+
+    @GET("v1/public/comics/{comicId}/characters")
+    suspend fun getRecomended(@Path("comicId") comicId: Int?): ResponseModel<CharacterModel>
+
+    companion object {
+
+        val Endpoint: ICharacterEndpoint by lazy {
+            NetworkUtils.getRetrofitInstance().create(ICharacterEndpoint::class.java)
+        }
+    }
+}

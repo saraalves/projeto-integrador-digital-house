@@ -13,9 +13,9 @@
         android:roundIcon="@drawable/app_logo_oficial"
         android:supportsRtl="true"
         android:theme="@style/MarvelAppTheme">
-        <activity android:name=".aboutus.AboutUsActivity" />
-        <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".detalhes.view.DetalhesActivity">
+        <activity android:name=".v2.presentation.activities.AboutUsActivity" />
+        <activity android:name="com.jenandsara.marvelapp.v2.presentation.activities.LoginActivity" />
+        <activity android:name=".v2.presentation.activities.DetalhesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -24,15 +24,15 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".cadastro.view.CadastroActivity" />
-        <activity android:name=".splashscreen.view.SplashScreenActivity">
+        <activity android:name=".v2.presentation.activities.CadastroActivity" />
+        <activity android:name=".v2.presentation.activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".manageractivity.view.HomeActivity" />
+        <activity android:name=".v2.presentation.activities.HomeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
