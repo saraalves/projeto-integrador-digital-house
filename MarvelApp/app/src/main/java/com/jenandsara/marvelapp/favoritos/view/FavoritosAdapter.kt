@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.home.view.IGetCharacterClick
 

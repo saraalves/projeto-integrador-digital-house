@@ -29,16 +29,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.comics.model.ComicsModel
-import com.jenandsara.marvelapp.comics.repository.ComicRepository
+import com.jenandsara.marvelapp.data.model.comics.ComicsResponse
+import com.jenandsara.marvelapp.domain.repository.ComicRepository
 import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
 import com.jenandsara.marvelapp.detalhes.view.comics.ComicsAdapter
 import com.jenandsara.marvelapp.detalhes.view.stories.StoriesAdapter
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import com.jenandsara.marvelapp.favoritos.viewmodel.FavoriteViewModel
-import com.jenandsara.marvelapp.stories.model.StoriesModel
-import com.jenandsara.marvelapp.stories.repository.StoriesRepository
+import com.jenandsara.marvelapp.data.model.stories.StoriesResponse
+import com.jenandsara.marvelapp.domain.repository.StoriesRepository
 import com.jenandsara.marvelapp.stories.viewmodel.StoriesViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detalhes.*
@@ -57,8 +57,8 @@ class DetalhesActivity : AppCompatActivity() {
 
     private lateinit var _favoritosViewModel: FavoriteViewModel
 
-    private var _comics = mutableListOf<ComicsModel>()
-    private var _stories = mutableListOf<StoriesModel>()
+    private var _comics = mutableListOf<ComicsResponse>()
+    private var _stories = mutableListOf<StoriesResponse>()
 
     private var _id by Delegates.notNull<Int>()
 

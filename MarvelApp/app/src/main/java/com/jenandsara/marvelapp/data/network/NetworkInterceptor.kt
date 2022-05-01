@@ -1,4 +1,4 @@
-package com.jenandsara.marvelapp.network
+package com.jenandsara.marvelapp.data.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -4,20 +4,17 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import com.jenandsara.marvelapp.character.model.CharacterModel
-import com.jenandsara.marvelapp.character.repository.CharacterRepository
-import com.jenandsara.marvelapp.comics.model.ComicsModel
+import com.jenandsara.marvelapp.data.model.character.CharacterResponse
+import com.jenandsara.marvelapp.domain.repository.CharacterRepository
+import com.jenandsara.marvelapp.data.model.comics.ComicsResponse
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
-import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import java.lang.Thread.sleep
 import kotlin.random.Random
 
 class CharactersViewModel(private val _repository: CharacterRepository) : ViewModel() {
 
-    private var _characterList: List<CharacterModel> = listOf()
-    private var _characterBeforeSearch = listOf<CharacterModel>()
+    private var _characterList: List<CharacterResponse> = listOf()
+    private var _characterBeforeSearch = listOf<CharacterResponse>()
     private var _totalPages: Int = 0
     private var _offset: Int = 0
     private var _count: Int = 0
@@ -64,7 +61,7 @@ class CharactersViewModel(private val _repository: CharacterRepository) : ViewMo
         }
     }
 
-    fun getRecomended(list: List<ComicsModel>) = liveData(Dispatchers.IO){
+    fun getRecomended(list: List<ComicsResponse>) = liveData(Dispatchers.IO){
         if(list.isNotEmpty()){
             val comic = list[Random.nextInt(list.size - 1)]
             val id = comic.id

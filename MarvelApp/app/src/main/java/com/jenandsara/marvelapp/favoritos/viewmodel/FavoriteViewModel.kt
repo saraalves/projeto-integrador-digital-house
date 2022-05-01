@@ -4,20 +4,20 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.data.model.character.CharacterResponse
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.favoritos.datalocal.repository.CharacterLocalRepository
 import kotlinx.coroutines.Dispatchers
 
 class FavoriteViewModel (private val repository: CharacterLocalRepository): ViewModel() {
 
-    fun setFavoriteCharacter(list: List<CharacterModel>, idUser: String) = liveData(Dispatchers.IO) {
+    fun setFavoriteCharacter(list: List<CharacterResponse>, idUser: String) = liveData(Dispatchers.IO) {
 
         list.forEach {
             val isFavorite = repository.checkIfIsFavorite(it.id, idUser)
             it.isFavorite = isFavorite
             if(isFavorite) {
-                addCharacter(it.nome, it.id, it.descricao, it.thumbnail!!.getImagePath(), idUser)
+                addCharacter(it.name, it.id, it.description, it.thumbnail!!.getImagePath(), idUser)
             }
         }
         emit(true)

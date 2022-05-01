@@ -3,8 +3,8 @@ package com.jenandsara.marvelapp.stories.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import com.jenandsara.marvelapp.stories.model.StoriesModel
-import com.jenandsara.marvelapp.stories.repository.StoriesRepository
+import com.jenandsara.marvelapp.data.model.stories.StoriesResponse
+import com.jenandsara.marvelapp.domain.repository.StoriesRepository
 import kotlinx.coroutines.Dispatchers
 
 
@@ -14,7 +14,7 @@ class StoriesViewModel (val _repository: StoriesRepository) : ViewModel() {
     private var _offset: Int = 0
     private var _count: Int = 0
 
-    private var _storiesList: List<StoriesModel> = listOf()
+    private var _storiesList: List<StoriesResponse> = listOf()
 
     fun getStoriesList(id: Int) = liveData(Dispatchers.IO) {
         val response = _repository.getStoriesById(id)

@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.data.model.character.CharacterResponse
 
 class AvatarAdapter(
-    private var avatar: MutableList<CharacterModel>,
-    private val listener: (CharacterModel) -> Unit
+    private var avatar: MutableList<CharacterResponse>,
+    private val listener: (CharacterResponse) -> Unit
 ) : RecyclerView.Adapter<AvatarViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_avatar, parent, false)

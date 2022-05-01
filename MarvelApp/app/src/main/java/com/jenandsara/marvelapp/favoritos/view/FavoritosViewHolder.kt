@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.character.model.CharacterModel
 import com.jenandsara.marvelapp.favoritos.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.home.view.IGetCharacterClick
 import com.squareup.picasso.Picasso

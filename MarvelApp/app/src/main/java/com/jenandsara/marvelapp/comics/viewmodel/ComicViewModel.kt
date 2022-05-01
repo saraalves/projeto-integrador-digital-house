@@ -1,11 +1,10 @@
 package com.jenandsara.marvelapp.comics.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import com.jenandsara.marvelapp.comics.model.ComicsModel
-import com.jenandsara.marvelapp.comics.repository.ComicRepository
+import com.jenandsara.marvelapp.data.model.comics.ComicsResponse
+import com.jenandsara.marvelapp.domain.repository.ComicRepository
 import kotlinx.coroutines.Dispatchers
 
 class ComicViewModel (val _repository: ComicRepository) : ViewModel() {
@@ -14,7 +13,7 @@ class ComicViewModel (val _repository: ComicRepository) : ViewModel() {
     private var _offset: Int = 0
     private var _count: Int = 0
 
-    private var _comicList: List<ComicsModel> = listOf()
+    private var _comicList: List<ComicsResponse> = listOf()
 
     fun getComicList(id: Int) = liveData(Dispatchers.IO) {
 

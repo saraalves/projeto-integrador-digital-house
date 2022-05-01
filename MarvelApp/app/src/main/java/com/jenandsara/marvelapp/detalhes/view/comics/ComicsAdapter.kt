@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.comics.model.ComicsModel
+import com.jenandsara.marvelapp.data.model.comics.ComicsResponse
 
 class ComicsAdapter (
-    private var _comics: MutableList<ComicsModel>, private val _listener: (ComicsModel) -> Unit
+    private var _comics: MutableList<ComicsResponse>, private val _listener: (ComicsResponse) -> Unit
 ) : RecyclerView.Adapter<ComicsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicsViewHolder {

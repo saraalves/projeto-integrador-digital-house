@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.stories.model.StoriesModel
+import com.jenandsara.marvelapp.data.model.stories.StoriesResponse
 
 class StoriesAdapter (
-    private var _stories: MutableList<StoriesModel>, private val _listener: (StoriesModel) -> Unit
+    private var _stories: MutableList<StoriesResponse>, private val _listener: (StoriesResponse) -> Unit
 ) : RecyclerView.Adapter<StoriesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoriesViewHolder {

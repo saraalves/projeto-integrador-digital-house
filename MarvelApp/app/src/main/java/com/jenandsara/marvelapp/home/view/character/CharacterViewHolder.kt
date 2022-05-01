@@ -6,14 +6,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.character.model.CharacterModel
+import com.jenandsara.marvelapp.data.model.character.CharacterResponse
 import com.jenandsara.marvelapp.home.view.IGetCharacterClick
 import com.squareup.picasso.Picasso
 
@@ -24,8 +22,8 @@ class CharacterViewHolder(view: View, private val context: Context) : RecyclerVi
     private val toggleFavoritar = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleFavoritar)
     private val btnFavoritar = view.findViewById<MaterialButton>(R.id.btnFavoritar)
 
-    fun bind(character: CharacterModel, getCharacterClick: IGetCharacterClick) {
-        nome.text = character.nome
+    fun bind(character: CharacterResponse, getCharacterClick: IGetCharacterClick) {
+        nome.text = character.name
 
         btnFavoritar.isChecked = character.isFavorite
 

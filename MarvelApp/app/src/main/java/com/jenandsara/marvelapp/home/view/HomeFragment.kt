@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,15 +18,14 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jenandsara.marvelapp.character.model.CharacterModel
-import com.jenandsara.marvelapp.character.repository.CharacterRepository
+import com.jenandsara.marvelapp.data.model.character.CharacterResponse
+import com.jenandsara.marvelapp.domain.repository.CharacterRepository
 import com.jenandsara.marvelapp.character.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.detalhes.view.DetalhesActivity
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.comics.repository.ComicRepository
+import com.jenandsara.marvelapp.domain.repository.ComicRepository
 import com.jenandsara.marvelapp.comics.viewmodel.ComicViewModel
 import com.jenandsara.marvelapp.favoritos.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.home.view.avatar.AvatarAdapter
@@ -48,8 +46,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private lateinit var _avatarAdapter: AvatarAdapter
     private var position by Delegates.notNull<Int>()
 
-    private var _character = mutableListOf<CharacterModel>()
-    private var _recomendados = mutableListOf<CharacterModel>()
+    private var _character = mutableListOf<CharacterResponse>()
+    private var _recomendados = mutableListOf<CharacterResponse>()
 
     private val userId = Firebase.auth.currentUser?.uid
 
@@ -136,8 +134,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     private fun setupNavigation() {
         Intent(view?.context, DetalhesActivity::class.java).apply {
             bundleOf("ID" to _character[position].id)
-            bundleOf("NOME" to _character[position].nome)
-            bundleOf("DESCRIÇÃO" to _character[position].descricao)
+            bundleOf("NOME" to _character[position].name)
+            bundleOf("DESCRIÇÃO" to _character[position].description)
             bundleOf("IMAGEM" to _character[position].thumbnail?.getImagePath())
             startActivity(this)
         }
@@ -147,14 +145,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         _avatarAdapter = AvatarAdapter(_recomendados) {
             val intent = Intent(view?.context, DetalhesActivity::class.java)
             intent.putExtra("ID", it.id)
-            intent.putExtra("NOME", it.nome)
-            intent.putExtra("DESCRIÇÃO", it.descricao)
+            intent.putExtra("NOME", it.name)
+            intent.putExtra("DESCRIÇÃO", it.description)
             intent.putExtra("IMAGEM", it.thumbnail?.getImagePath())
             startActivity(intent)
         }
     }
 
-    private fun update(list: List<CharacterModel>) {
+    private fun update(list: List<CharacterResponse>) {
         list.forEach {
             _favoritosViewModel.isFavorite(it.id, userId!!).observe(viewLifecycleOwner) { b: Boolean ->
                 it.isFavorite = b
@@ -163,7 +161,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     }
 
-    private fun getList(list: List<CharacterModel>) {
+    private fun getList(list: List<CharacterResponse>) {
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
             list?.let {
                 showLoading(true)
@@ -235,7 +233,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         }
     }
 
-    private fun getListSearcheByName(list: List<CharacterModel>) {
+    private fun getListSearcheByName(list: List<CharacterResponse>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
             list?.let {
                 update(it)
@@ -315,8 +313,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
     override fun getCharacterClick(position: Int) {
         Intent(view?.context, DetalhesActivity::class.java).apply {
             putExtra("ID", _character[position].id)
-            putExtra("NOME", _character[position].nome)
-            putExtra("DESCRIÇÃO", _character[position].descricao)
+            putExtra("NOME", _character[position].name)
+            putExtra("DESCRIÇÃO", _character[position].description)
             putExtra("IMAGEM", _character[position].thumbnail?.getImagePath())
             startActivity(this)
         }
@@ -347,9 +345,9 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         } else {
             val character = _character[position]
             _favoritosViewModel.addCharacter(
-                character.nome,
+                character.name,
                 character.id,
-                character.descricao,
+                character.description,
                 character.thumbnail!!.getImagePath(),
                 userId!!
             )
