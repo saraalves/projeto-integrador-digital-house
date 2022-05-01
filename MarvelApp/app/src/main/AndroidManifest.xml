@@ -15,7 +15,8 @@
         android:theme="@style/MarvelAppTheme">
         <activity android:name=".aboutus.AboutUsActivity" />
         <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".detalhes.view.DetalhesActivity">
+        <activity android:name=".detalhes.view.DetalhesActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -25,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".cadastro.view.CadastroActivity" />
-        <activity android:name=".splashscreen.view.SplashScreenActivity">
+        <activity android:name=".splashscreen.view.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
