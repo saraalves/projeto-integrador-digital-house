@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window.FEATURE_NO_TITLE
-import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,12 +22,16 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
-import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
+import com.jenandsara.marvelapp.databinding.LoginActivityBinding
 import kotlinx.android.synthetic.main.dialog_digitar_email.view.*
 
 var LOGIN_TYPE = ""
 
 class LoginActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        LoginActivityBinding.inflate(layoutInflater)
+    }
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
@@ -37,15 +39,13 @@ class LoginActivity : AppCompatActivity() {
 
     private var alertDialog: AlertDialog? = null
 
-    private val imageFacebook: ImageView by lazy { findViewById<ImageView>(R.id.imgLoginFacebook) }
     private lateinit var callbackManager: CallbackManager
-
-    private val imageGoogle: ImageView by lazy { findViewById<ImageView>(R.id.imgLoginGoogle) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(FEATURE_NO_TITLE)
-        setContentView(R.layout.activity_login)
+        setContentView(binding.root)
+
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.app_name))
@@ -58,19 +58,17 @@ class LoginActivity : AppCompatActivity() {
 
         callbackManager = CallbackManager.Factory.create()
 
-        imageFacebook.setOnClickListener { loginFacebook() }
+        binding.imgLoginFacebook.setOnClickListener { loginFacebook() }
 
-        imageGoogle.setOnClickListener { signIn() }
+        binding.imgLoginGoogle.setOnClickListener { signIn() }
 
         validaCampos()
 
-        val textAlterarSenha = findViewById<TextView>(R.id.btnEsqueciSenha)
-        textAlterarSenha.setOnClickListener {
+        binding.btnEsqueciSenha.setOnClickListener {
             showDialog()
         }
 
-        val textIrProCadastro = findViewById<TextView>(R.id.btnNaoTenhoCadastro)
-        textIrProCadastro.setOnClickListener {
+        binding.btnNaoTenhoCadastro.setOnClickListener {
             val intent = Intent(this@LoginActivity, CadastroActivity::class.java)
             startActivity(intent)
             finish()
@@ -178,11 +176,11 @@ class LoginActivity : AppCompatActivity() {
     // configuração login com email e senha
 
     private fun validaCampos() {
-        val buttonLogin = findViewById<TextView>(R.id.btnLogin)
-        buttonLogin.setOnClickListener {
 
-            val email = findViewById<EditText>(R.id.etEmailLogin).text.toString()
-            val senha = findViewById<EditText>(R.id.etSenhaLogin).text.toString()
+        binding.btnLogin.setOnClickListener {
+
+            val email = binding.etEmailLogin.text.toString()
+            val senha = binding.etSenhaLogin.text.toString()
 
             if (checarCamposVazios(email, senha)) {
                 firebaseLoginSenha(email, senha)
@@ -194,10 +192,10 @@ class LoginActivity : AppCompatActivity() {
     private fun checarCamposVazios(email: String, senha: String): Boolean {
 
         if (email.trim().isEmpty()) {
-            findViewById<EditText>(R.id.etEmailLogin).error = CadastroActivity.ERRO_VAZIO
+            binding.etEmailLogin.error = CadastroActivity.ERRO_VAZIO
             return false
         } else if (senha.trim().isEmpty()) {
-            findViewById<EditText>(R.id.etSenhaLogin).error = CadastroActivity.ERRO_VAZIO
+            binding.etSenhaLogin.error = CadastroActivity.ERRO_VAZIO
             return false
         }
         return true
@@ -213,10 +211,15 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                         LOGIN_TYPE = "SENHA"
-                    } else Toast.makeText(baseContext, "Authentication has failed, verify your email adress", Toast.LENGTH_SHORT)
+                    } else Toast.makeText(
+                        baseContext,
+                        "Authentication has failed, verify your email adress",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 } else {
-                    Toast.makeText(baseContext, "Authentication has failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Authentication has failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }

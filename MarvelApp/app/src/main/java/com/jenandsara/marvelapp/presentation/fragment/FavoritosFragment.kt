@@ -12,22 +12,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jenandsara.marvelapp.presentation.activity.DetalhesActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.domain.repository.CharacterRepository
-import com.jenandsara.marvelapp.presentation.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.characterdatabase.CharacterEntity
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.repository.CharacterLocalRepository
-import com.jenandsara.marvelapp.presentation.viewmodel.FavoriteViewModel
+import com.jenandsara.marvelapp.databinding.FavoritosFragmentBinding
+import com.jenandsara.marvelapp.domain.repository.CharacterRepository
 import com.jenandsara.marvelapp.presentation.IGetCharacterClick
+import com.jenandsara.marvelapp.presentation.activity.DetalhesActivity
 import com.jenandsara.marvelapp.presentation.adapter.FavoritosAdapter
+import com.jenandsara.marvelapp.presentation.viewmodel.CharactersViewModel
+import com.jenandsara.marvelapp.presentation.viewmodel.FavoriteViewModel
 
 class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment(),
     IGetCharacterClick {
+
+    private var _binding: FavoritosFragmentBinding? = null
+    private val binding: FavoritosFragmentBinding get() = _binding!!
 
     private lateinit var _view: View
     private lateinit var _favoritosAdapter: FavoritosAdapter
@@ -46,7 +49,8 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_favoritos, container, false)
+        _binding = FavoritosFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,8 +58,8 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
         _view = view
 
-        noFavorites = view.findViewById(R.id.ctlNofavorites)
-        favoritoRecycler = view.findViewById(R.id.recyclerFavoritos)
+        noFavorites = binding.ctlNofavorites
+        favoritoRecycler = binding.recyclerFavoritos
         val viewGridManager = GridLayoutManager(view.context, 2)
         _favoritosAdapter = FavoritosAdapter(_listaFavoritosLocal, this)
 
@@ -126,7 +130,7 @@ class FavoritosFragment(private val onlyFavorites: Boolean = false) : Fragment()
 
     private fun addOrRemoveCharacter(character: CharacterEntity) {
                 Snackbar.make(
-                    _view.findViewById<View>(R.id.viewSnackbar),
+                    binding.viewSnackbar,
                     "Removed from favorites",
                     Snackbar.LENGTH_LONG
                 )

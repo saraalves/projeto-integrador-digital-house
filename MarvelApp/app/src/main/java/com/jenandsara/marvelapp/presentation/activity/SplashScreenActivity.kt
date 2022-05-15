@@ -1,6 +1,5 @@
 package com.jenandsara.marvelapp.presentation.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,11 +7,18 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.LinearLayout
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.databinding.LoginActivityBinding
+import com.jenandsara.marvelapp.databinding.SplashScreenActivityBinding
 
 class SplashScreenActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        SplashScreenActivityBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
+        setContentView(binding.root)
         animaImagem()
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -23,11 +29,10 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     fun animaImagem() {
-        val appLogo = findViewById<LinearLayout>(R.id.imgSplash)
-        appLogo.alpha = 0f
-        appLogo.y = 900f
+        binding.imgSplash.alpha = 0f
+        binding.imgSplash.y = 900f
 
-        appLogo.animate()
+        binding.imgSplash.animate()
             .alpha(1f)
             .y(250f)
             .setDuration(2000)

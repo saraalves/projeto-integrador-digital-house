@@ -14,24 +14,33 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
+import com.jenandsara.marvelapp.databinding.CadastroActivityBinding
+import com.jenandsara.marvelapp.databinding.DialogConfirmacaoBinding
+import com.jenandsara.marvelapp.databinding.HomeActivityBinding
 import kotlinx.android.synthetic.main.dialog_confirmacao.view.*
 
 class CadastroActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        CadastroActivityBinding.inflate(layoutInflater)
+    }
+    private val bindindDialog by lazy {
+        DialogConfirmacaoBinding.inflate(layoutInflater)
+    }
 
     private var alertDialog: AlertDialog? = null
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cadastro)
+        setContentView(binding.root)
 
         auth = Firebase.auth
 
-        findViewById<CheckBox>(R.id.checkboxCadastro).isChecked = false
-        findViewById<MaterialButton>(R.id.btnCadastro).isEnabled = false
+        binding.checkboxCadastro.isChecked = false
+        binding.btnCadastro.isEnabled = false
 
-        val toolbarCadastro = findViewById<MaterialToolbar>(R.id.toolbarCadastro)
-        toolbarCadastro.setOnClickListener {
+        binding.toolbarCadastro.setOnClickListener {
             showDialog()
         }
 
@@ -42,12 +51,11 @@ class CadastroActivity : AppCompatActivity() {
     private fun showDialog() {
 
         val dialogBuilder = AlertDialog.Builder(this@CadastroActivity)
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_confirmacao, null, false)
-        dialogBuilder.setView(dialogView)
+        dialogBuilder.setView(bindindDialog.root)
 
-        dialogView.btnContinuarEditando.setOnClickListener { alertDialog?.dismiss() }
+        bindindDialog.btnContinuarEditando.setOnClickListener { alertDialog?.dismiss() }
 
-        dialogView.btnConfirmar.setOnClickListener {
+        bindindDialog.btnConfirmar.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -59,8 +67,8 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     private fun setupHyperlink() {
-        val linkPrivacy = findViewById<TextView>(R.id.txtPrivacy)
-        val linkTermsAndConditions = findViewById<TextView>(R.id.txtTermsAndConditions)
+        val linkPrivacy = binding.txtPrivacy
+        val linkTermsAndConditions = binding.txtTermsAndConditions
         linkPrivacy.movementMethod = LinkMovementMethod.getInstance()
         linkTermsAndConditions.movementMethod = LinkMovementMethod.getInstance()
     }
@@ -70,21 +78,20 @@ class CadastroActivity : AppCompatActivity() {
         showDialog()
     }
 
-    private fun validaCampos(){
+    private fun validaCampos() {
 
-        val btnCadastro = findViewById<MaterialButton>(R.id.btnCadastro)
 
-        enableButton(btnCadastro)
+        enableButton(binding.btnCadastro)
 
-        btnCadastro.setOnClickListener {
-            val nome = findViewById<EditText>(R.id.etNomeCadastro).text.toString()
-            val email = findViewById<EditText>(R.id.etEmailCadastro).text.toString()
-            val senha = findViewById<EditText>(R.id.edtSenhaCadastro).text.toString()
-            val senhaConferir = findViewById<EditText>(R.id.edtRepeatSenhaCadastro).text.toString()
+        binding.btnCadastro.setOnClickListener {
+            val nome = binding.etNomeCadastro.text.toString()
+            val email = binding.etEmailCadastro.text.toString()
+            val senha = binding.edtSenhaCadastro.text.toString()
+            val senhaConferir = binding.edtRepeatSenhaCadastro.text.toString()
 
-            if(checarCamposVazios(nome, email,senha, senhaConferir)){
-                if(checarQtdDigitosSenha(8, senha)){
-                    if(senhasIguais(senha, senhaConferir)){
+            if (checarCamposVazios(nome, email, senha, senhaConferir)) {
+                if (checarQtdDigitosSenha(8, senha)) {
+                    if (senhasIguais(senha, senhaConferir)) {
                         criarCadastroFirebase(nome, email, senha)
                     }
                 }
@@ -93,56 +100,65 @@ class CadastroActivity : AppCompatActivity() {
 
     }
 
-    private fun checarCamposVazios(nome:String, email: String, senha: String, senhaRepeat: String): Boolean {
+    private fun checarCamposVazios(
+        nome: String,
+        email: String,
+        senha: String,
+        senhaRepeat: String
+    ): Boolean {
 
-        if(nome.trim().isEmpty()){
-            findViewById<EditText>(R.id.etNomeCadastro).error = ERRO_VAZIO
+        if (nome.trim().isEmpty()) {
+            binding.etNomeCadastro.error = ERRO_VAZIO
             return false
-        }else if(email.trim().isEmpty()){
-            findViewById<EditText>(R.id.etEmailCadastro).error = ERRO_VAZIO
+        } else if (email.trim().isEmpty()) {
+            binding.etEmailCadastro.error = ERRO_VAZIO
             return false
-        }else if(senha.trim().isEmpty()){
-            findViewById<EditText>(R.id.edtSenhaCadastro).error = ERRO_VAZIO
+        } else if (senha.trim().isEmpty()) {
+            binding.edtSenhaCadastro.error = ERRO_VAZIO
             return false
-        }else if(senhaRepeat.trim().isEmpty()){
-            findViewById<EditText>(R.id.edtRepeatSenhaCadastro).error = ERRO_VAZIO
+        } else if (senhaRepeat.trim().isEmpty()) {
+            binding.edtRepeatSenhaCadastro.error = ERRO_VAZIO
             return false
         }
         return true
     }
 
-    private fun enableButton(button: Button){
+    private fun enableButton(button: Button) {
         val checkbox = findViewById<CheckBox>(R.id.checkboxCadastro)
 
-        checkbox.setOnCheckedChangeListener { _, isChecked ->
+        binding.checkboxCadastro.setOnCheckedChangeListener { _, isChecked ->
             button.isEnabled = isChecked
         }
     }
 
-    private fun checarQtdDigitosSenha(qtdDigitos:Int, senha: String): Boolean {
-        if(senha.length >= qtdDigitos){
+    private fun checarQtdDigitosSenha(qtdDigitos: Int, senha: String): Boolean {
+        if (senha.length >= qtdDigitos) {
             return true
         } else {
-            findViewById<EditText>(R.id.edtSenhaCadastro).text.clear()
-            findViewById<EditText>(R.id.edtRepeatSenhaCadastro).text.clear()
-            findViewById<EditText>(R.id.edtSenhaCadastro).error = ERRO_DIGITOS
+            binding.edtSenhaCadastro.text?.clear()
+            binding.edtRepeatSenhaCadastro.text?.clear()
+            binding.edtSenhaCadastro.error = ERRO_DIGITOS
             return false
         }
     }
 
     private fun senhasIguais(senha: String, senhaRepeat: String): Boolean {
-        if(senha == senhaRepeat){
+        if (senha == senhaRepeat) {
             return true
         } else {
-            Toast.makeText(this@CadastroActivity, "Passwords must match each other", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                this@CadastroActivity,
+                "Passwords must match each other",
+                Toast.LENGTH_SHORT
+            )
                 .show()
-            findViewById<EditText>(R.id.edtSenhaCadastro).text.clear()
-            findViewById<EditText>(R.id.edtRepeatSenhaCadastro).text.clear()
+            binding.edtSenhaCadastro.text?.clear()
+            binding.edtRepeatSenhaCadastro.text?.clear()
             return false
         }
     }
 
-    private fun criarCadastroFirebase(nome: String, email: String, senha: String){
+    private fun criarCadastroFirebase(nome: String, email: String, senha: String) {
 
         auth.createUserWithEmailAndPassword(email, senha)
             .addOnCompleteListener(this) { task ->
@@ -154,19 +170,27 @@ class CadastroActivity : AppCompatActivity() {
                     }
 
                     user!!.updateProfile(profileUpdates).addOnCompleteListener {
-                        Toast.makeText(baseContext, "User has been successfully created", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            baseContext,
+                            "User has been successfully created",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         sendEmail()
                         val intent = Intent(this@CadastroActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
                 } else {
-                    Toast.makeText(baseContext, "An error ocurred while creating user's account", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext,
+                        "An error ocurred while creating user's account",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
 
-    private fun sendEmail(){
+    private fun sendEmail() {
         val user = Firebase.auth.currentUser
 
         user!!.sendEmailVerification()

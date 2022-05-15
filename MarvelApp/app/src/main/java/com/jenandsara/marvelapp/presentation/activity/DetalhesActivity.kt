@@ -9,45 +9,47 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jenandsara.marvelapp.R
-import com.jenandsara.marvelapp.data.model.comics.ComicsResponse
-import com.jenandsara.marvelapp.domain.repository.ComicRepository
-import com.jenandsara.marvelapp.presentation.viewmodel.ComicViewModel
-import com.jenandsara.marvelapp.presentation.adapter.comics.ComicsAdapter
-import com.jenandsara.marvelapp.presentation.adapter.stories.StoriesAdapter
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.repository.CharacterLocalRepository
-import com.jenandsara.marvelapp.presentation.viewmodel.FavoriteViewModel
+import com.jenandsara.marvelapp.data.model.comics.ComicsResponse
 import com.jenandsara.marvelapp.data.model.stories.StoriesResponse
+import com.jenandsara.marvelapp.databinding.DetalhesActivityBinding
+import com.jenandsara.marvelapp.databinding.DialogImageBinding
+import com.jenandsara.marvelapp.domain.repository.ComicRepository
 import com.jenandsara.marvelapp.domain.repository.StoriesRepository
+import com.jenandsara.marvelapp.presentation.adapter.comics.ComicsAdapter
+import com.jenandsara.marvelapp.presentation.adapter.stories.StoriesAdapter
+import com.jenandsara.marvelapp.presentation.viewmodel.ComicViewModel
+import com.jenandsara.marvelapp.presentation.viewmodel.FavoriteViewModel
 import com.jenandsara.marvelapp.presentation.viewmodel.StoriesViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_detalhes.*
-import kotlinx.android.synthetic.main.dialog_image.view.*
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import kotlin.properties.Delegates
 
 class DetalhesActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        DetalhesActivityBinding.inflate(layoutInflater)
+    }
+    private val bindingDialog by lazy {
+        DialogImageBinding.inflate(layoutInflater)
+    }
 
     private lateinit var _comicsAdapter: ComicsAdapter
     private lateinit var _storiesAdapter: StoriesAdapter
@@ -62,14 +64,12 @@ class DetalhesActivity : AppCompatActivity() {
 
     private var _id by Delegates.notNull<Int>()
 
-    private val imageDetail by lazy { findViewById<ImageView>(R.id.imgPersonagemDetail) }
-
     private val userId = Firebase.auth.currentUser?.uid
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalhes)
+        setContentView(binding.root)
 
         _id = intent.getIntExtra("ID", 0)
         val nome = intent.getStringExtra("NOME")
@@ -83,8 +83,8 @@ class DetalhesActivity : AppCompatActivity() {
         val managerStories = LinearLayoutManager(this)
         managerStories.orientation = LinearLayoutManager.HORIZONTAL
 
-        val comicsList = findViewById<RecyclerView>(R.id.recyclerComics)
-        val storiesList = findViewById<RecyclerView>(R.id.recyclerStrories)
+        val comicsList = binding.recyclerComics
+        val storiesList = binding.recyclerStrories
 
         localViewModelProvider()
 
@@ -108,27 +108,26 @@ class DetalhesActivity : AppCompatActivity() {
             setScrollViewComics()
             setScrollViewStories()
         } else {
-            findViewById<TextView>(R.id.txtComics).visibility = View.GONE
-            findViewById<TextView>(R.id.txtStories).visibility = View.GONE
+            binding.txtComics.visibility = View.GONE
+            binding.txtStories.visibility = View.GONE
             comicsList.visibility = View.GONE
             storiesList.visibility = View.GONE
-            findViewById<ConstraintLayout>(R.id.ctlNoconection).visibility = View.VISIBLE
+            binding.ctlNoconection.visibility = View.VISIBLE
         }
     }
 
     private fun setData(descricao: String?, nome: String?, imagem: String?) {
 
         if (descricao.isNullOrEmpty()) {
-            findViewById<TextView>(R.id.txtDescricao).text = "Hi, I'm ${nome} !"
+            binding.txtDescricao.text = "Hi, I'm ${nome} !"
 
-        } else findViewById<TextView>(R.id.txtDescricao).text = descricao
+        } else binding.txtDescricao.text = descricao
 
-        val toolbarCollapse = findViewById<CollapsingToolbarLayout>(R.id.collapseToolbar)
-        toolbarCollapse.title = nome
+        binding.collapseToolbar.title = nome
 
-        Picasso.get().load(imagem).into(findViewById<ImageView>(R.id.imgPersonagemDetail))
+        Picasso.get().load(imagem).into(binding.imgPersonagemDetail)
 
-        topAppBar.setOnClickListener {
+        binding.topAppBar.setOnClickListener {
             onBackPressed()
         }
 
@@ -139,7 +138,7 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun shareCharacter(nome: String?) {
-        val bitmap = getBitmapFromView(imageDetail)
+        val bitmap = getBitmapFromView(binding.imgPersonagemDetail)
 
         val icon: Bitmap = bitmap!!
         val share = Intent(Intent.ACTION_SEND)
@@ -175,8 +174,8 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun setScrollViewComics() {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerComics)
-        recyclerView?.run {
+        val recyclerView = binding.recyclerComics
+        recyclerView.run {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -198,8 +197,8 @@ class DetalhesActivity : AppCompatActivity() {
     }
 
     private fun setScrollViewStories() {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerStrories)
-        recyclerView?.run {
+        val recyclerView = binding.recyclerStrories
+        recyclerView.run {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -211,8 +210,8 @@ class DetalhesActivity : AppCompatActivity() {
 
                     if (totalItemCount > 0 && lastItem) {
                         _storiesViewModel.nextPage(_id).observe({ lifecycle }, {
-                           _stories.addAll(it)
-                           _storiesAdapter.notifyDataSetChanged()
+                            _stories.addAll(it)
+                            _storiesAdapter.notifyDataSetChanged()
                         })
                     }
                 }
@@ -271,7 +270,7 @@ class DetalhesActivity : AppCompatActivity() {
         _favoritosViewModel.deleteCharacter(id).observe(this) { it ->
             if (it) {
                 Snackbar.make(
-                    findViewById<View>(R.id.snackbarDetalhes),
+                    binding.snackbarDetalhes,
                     "Removed from favorites",
                     Snackbar.LENGTH_LONG
                 )
@@ -361,12 +360,11 @@ class DetalhesActivity : AppCompatActivity() {
         val imageDialog: AlertDialog?
 
         val dialogBuilder = AlertDialog.Builder(this@DetalhesActivity)
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_image, null, false)
-        dialogBuilder.setView(dialogView)
+        dialogBuilder.setView(bindingDialog.root)
 
         imageDialog = dialogBuilder.create()
         imageDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        Picasso.get().load(path).into(dialogView.imgComicExpanded)
+        Picasso.get().load(path).into(bindingDialog.imgComicExpanded)
         imageDialog.show()
 
     }

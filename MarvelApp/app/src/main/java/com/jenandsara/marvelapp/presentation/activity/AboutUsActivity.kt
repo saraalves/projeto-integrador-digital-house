@@ -1,21 +1,21 @@
 package com.jenandsara.marvelapp.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.widget.TextView
-import android.widget.Toolbar
-import com.google.android.material.appbar.MaterialToolbar
-import com.jenandsara.marvelapp.R
+import androidx.appcompat.app.AppCompatActivity
+import com.jenandsara.marvelapp.databinding.AboutUsActivityBinding
 
 class AboutUsActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        AboutUsActivityBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about_us)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarAboutUs)
-
-        toolbar.setOnClickListener {
+        binding.toolbarAboutUs.setOnClickListener {
             onBackPressed()
             finish()
         }
@@ -24,8 +24,8 @@ class AboutUsActivity : AppCompatActivity() {
     }
 
     private fun setupHyperlink() {
-        val linkGithubJenn = findViewById<TextView>(R.id.txtGithubJenn)
-        val linkGithubSara = findViewById<TextView>(R.id.txtGithubSara)
+        val linkGithubJenn = binding.txtGithubJenn
+        val linkGithubSara = binding.txtGithubSara
         linkGithubJenn.movementMethod = LinkMovementMethod.getInstance()
         linkGithubSara.movementMethod = LinkMovementMethod.getInstance()
     }

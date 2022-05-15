@@ -10,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -24,19 +22,22 @@ import com.jenandsara.marvelapp.presentation.viewmodel.CharactersViewModel
 import com.jenandsara.marvelapp.presentation.activity.DetalhesActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.jenandsara.marvelapp.R
 import com.jenandsara.marvelapp.domain.repository.ComicRepository
 import com.jenandsara.marvelapp.presentation.viewmodel.ComicViewModel
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.database.AppDatabase
 import com.jenandsara.marvelapp.presentation.adapter.avatar.AvatarAdapter
 import com.jenandsara.marvelapp.presentation.adapter.character.CharacterAdapter
 import com.jenandsara.marvelapp.data.datasource.local.datalocal.repository.CharacterLocalRepository
+import com.jenandsara.marvelapp.databinding.HomeFragmentBinding
 import com.jenandsara.marvelapp.presentation.viewmodel.FavoriteViewModel
 import com.jenandsara.marvelapp.presentation.IGetCharacterClick
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.home_fragment.*
 import kotlin.properties.Delegates
 
 class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGetCharacterClick {
+
+    private var _binding: HomeFragmentBinding? = null
+    private val binding: HomeFragmentBinding get() = _binding!!
 
     private lateinit var _view: View
     private lateinit var _viewModel: CharactersViewModel
@@ -56,7 +57,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,10 +70,10 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
             val manager = LinearLayoutManager(view.context)
             manager.orientation = LinearLayoutManager.HORIZONTAL
-            val avatar = view.findViewById<RecyclerView>(R.id.recyclerAvatar)
+            val avatar = binding.recyclerAvatar
 
             val viewGridManager = GridLayoutManager(view.context, 2)
-            val recyclerViewCard = view.findViewById<RecyclerView>(R.id.recyclerCard)
+            val recyclerViewCard = binding.recyclerCard
 
             comicViewModelProvider()
             viewModelProvider()
@@ -94,16 +96,16 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
             getRecomended()
 
         } else {
-            view.findViewById<ConstraintLayout>(R.id.ctlTeste).visibility = View.VISIBLE
-            view.findViewById<ConstraintLayout>(R.id.ctlConection).visibility = View.GONE
+            binding.ctlTeste.visibility = View.VISIBLE
+            binding.ctlConection.visibility = View.GONE
         }
     }
 
     override fun onResume() {
         super.onResume()
         if (!checkConectividade()) {
-            view?.findViewById<ConstraintLayout>(R.id.ctlTeste)?.visibility = View.VISIBLE
-            view?.findViewById<ConstraintLayout>(R.id.ctlConection)?.visibility = View.GONE
+            binding.ctlTeste.visibility = View.VISIBLE
+            binding.ctlConection.visibility = View.GONE
         } else {
             showLoading(true)
             getList(_character)
@@ -164,7 +166,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getList(list: List<CharacterResponse>) {
         _viewModel.getList().observe(viewLifecycleOwner) { list1 ->
-            list?.let {
+            list.let {
                 showLoading(true)
                 update(list1)
                 _favoritosViewModel.setFavoriteCharacter(list1, userId!!).observe(viewLifecycleOwner) {
@@ -189,29 +191,29 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
 
     private fun showLoading(isLoading: Boolean) {
-        val viewLoading = view?.findViewById<View>(R.id.loadingCard)
-        val txtTodosCard = view?.findViewById<View>(R.id.txtTodosHome)
-        val txtRecomendadosHome = view?.findViewById<View>(R.id.txtRecomendadosHome)
+        val viewLoading = binding.loadingCard
+        val txtTodosCard = binding.txtTodosHome
+        val txtRecomendadosHome = binding.txtRecomendadosHome
 
         if (isLoading) {
-            viewLoading?.visibility = View.VISIBLE
+            viewLoading.visibility = View.VISIBLE
             recyclerCard?.visibility = View.INVISIBLE
             recyclerAvatar?.visibility = View.INVISIBLE
-            txtTodosCard?.visibility = View.INVISIBLE
-            txtRecomendadosHome?.visibility = View.INVISIBLE
+            txtTodosCard.visibility = View.INVISIBLE
+            txtRecomendadosHome.visibility = View.INVISIBLE
         } else {
-            viewLoading?.visibility = View.GONE
+            viewLoading.visibility = View.GONE
             recyclerCard?.visibility = View.VISIBLE
             recyclerAvatar?.visibility = View.VISIBLE
-            txtTodosCard?.visibility = View.VISIBLE
-            txtRecomendadosHome?.visibility = View.VISIBLE
+            txtTodosCard.visibility = View.VISIBLE
+            txtRecomendadosHome.visibility = View.VISIBLE
         }
     }
 
 
     private fun setScrollView() {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerCard)
-        recyclerView?.run {
+        val recyclerView = binding.recyclerCard
+        recyclerView.run {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -226,7 +228,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                             update(it)
                             _character.addAll(it)
                             _characterAdapter.notifyDataSetChanged()
-//                            showLoading()
+    //                            showLoading()
                         })
                     }
                 }
@@ -236,7 +238,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun getListSearcheByName(list: List<CharacterResponse>) {
         _viewModel.getList().observe(viewLifecycleOwner) {
-            list?.let {
+            list.let {
                 update(it)
                 _character.addAll(it)
             }
@@ -246,14 +248,14 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
     private fun searchByName(view: View) {
 
-        val searchView = view.findViewById<SearchView>(R.id.searchView)
+        val searchView = binding.searchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 _viewModel.searchByName(query).observe(viewLifecycleOwner) {
                     if (it.isEmpty()) {
-                        view.findViewById<RecyclerView>(R.id.recyclerCard).visibility = View.GONE
-                        view.findViewById<TextView>(R.id.tvNoResult).visibility = View.VISIBLE
+                        binding.recyclerCard.visibility = View.GONE
+                        binding.tvNoResult.visibility = View.VISIBLE
                     } else {
                         _character.clear()
                         getListSearcheByName(it)
@@ -266,8 +268,8 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
                 if (newText.isNullOrEmpty()) {
                     _character.clear()
                     getListSearcheByName(_viewModel.initialList())
-                    view.findViewById<RecyclerView>(R.id.recyclerCard).visibility = View.VISIBLE
-                    view.findViewById<TextView>(R.id.tvNoResult).visibility = View.GONE
+                    binding.recyclerCard.visibility = View.VISIBLE
+                    binding.tvNoResult.visibility = View.GONE
                 } else {
                     _viewModel.searchByStartsWith(newText).observe(viewLifecycleOwner) {
                         _character.clear()
