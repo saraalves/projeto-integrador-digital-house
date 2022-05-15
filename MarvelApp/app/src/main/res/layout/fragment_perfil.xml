@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_app"
     android:orientation="vertical"
-    tools:context=".perfil.view.PerfilFragment">
+    tools:context=".presentation.fragment.PerfilFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPhotoPerfil"
