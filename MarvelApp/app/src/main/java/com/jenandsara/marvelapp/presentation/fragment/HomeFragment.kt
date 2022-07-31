@@ -66,6 +66,7 @@ class HomeFragment(private val onlyFavorites: Boolean = false) : Fragment(), IGe
 
         if (checkConectividade()) {
 
+
             _view = view
 
             val manager = LinearLayoutManager(view.context)
